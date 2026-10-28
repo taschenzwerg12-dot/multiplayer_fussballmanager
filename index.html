@@ -182,7 +182,7 @@ body.dragging,body.dragging *{cursor:grabbing!important;user-select:none}
 .ev.done.W{box-shadow:inset 3px 0 0 var(--win)}.ev.done.D{box-shadow:inset 3px 0 0 var(--draw)}.ev.done.L{box-shadow:inset 3px 0 0 var(--loss)}
 @media (max-width:520px){.day{min-height:54px;padding:3px}.ev{font-size:10px;padding:1px 2px}.day .dn{font-size:13px}}
 
-/* Champions-League-Blau */
+/* Champions-Cup-Blau */
 .clnext{background:radial-gradient(rgba(255,255,255,.16) 1px,transparent 1.6px) 0 0/22px 22px,radial-gradient(120% 90% at 85% 0%,#2f5ae0 0%,transparent 55%),linear-gradient(155deg,#0a1a55 0%,#14318f 60%,#0d2470 100%);border-color:#4466e0;color:#fff}
 .clnext .muted,.clnext .hint{color:#c3cff5}
 .clnext .vsmark{color:#a9bbf5}
@@ -342,6 +342,15 @@ tr.me td{background:color-mix(in srgb,var(--flood) 16%,transparent)!important}
 .startwrap{max-width:1080px;margin:5vh auto 0}
 .starthero h1{font-size:clamp(40px,7vw,68px);line-height:.95}
 .starthero h1 em{font-style:normal;color:var(--flood)}
+.lgtabs{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:8px;margin:20px 0 4px}
+.lgtab{display:grid;grid-template-columns:1fr auto;grid-template-rows:auto auto auto;gap:2px 8px;text-align:left;padding:0 12px 12px;background:var(--panel);border:1px solid var(--line);border-radius:3px;overflow:hidden;cursor:pointer;color:inherit;font:inherit}
+.lgtab .lgflag{grid-column:1/-1;height:5px;margin:0 -12px 10px}
+.lgtab .lgname{font-weight:800;font-size:17px;letter-spacing:-.01em}
+.lgtab .muted{grid-column:1}
+.lgtab .lgtop{grid-column:2;grid-row:2/4;display:flex;align-items:center;gap:2px}
+.lgtab:hover{border-color:var(--ink-dim,#888)}
+.lgtab.sel{border-color:var(--flood);box-shadow:0 0 0 2px var(--flood) inset}
+.lgtab:disabled{opacity:.35;cursor:not-allowed}
 .pgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px;margin:20px 0}
 .pclub{display:flex;flex-direction:column;align-items:center;gap:5px;padding:14px 8px 12px;background:linear-gradient(180deg,color-mix(in srgb,var(--pc) 22%,var(--panel)),var(--panel));border:1px solid var(--line);border-radius:3px;text-align:center;position:relative}
 .pclub:hover{border-color:var(--pc2)}
@@ -484,94 +493,94 @@ tr.rival td{background:rgba(221,90,82,.14)!important}
 /* ===================== DATEN (Stand: Oktober 2026) ===================== */
 // Stärke = geschätzter Wert 0–100. Kannst du jederzeit selbst ändern.
 const TEAMS = [
-  {id:'psg', name:'Paris Saint-Germain', short:'PSG', stadium:'Parc des Princes', str:86, c1:'#12306b', c2:'#e4483c', tc:'#ffffff'},
-  {id:'om',  name:'Marseille',  short:'OM',   stadium:'Stade Vélodrome', str:80, c1:'#e9f3fb', c2:'#2aa1dc', tc:'#0f3d63'},
-  {id:'asm', name:'Monaco',     short:'ASM',  stadium:'Stade Louis II', str:79, c1:'#d6262f', c2:'#ffffff', tc:'#ffffff'},
-  {id:'ol',  name:'Lyon',       short:'OL',   stadium:'Groupama Stadium', str:77, c1:'#f4f4f4', c2:'#1d3e8f', tc:'#1d3e8f'},
-  {id:'losc',name:'Lille',      short:'LOSC', stadium:'Stade Pierre-Mauroy', str:77, c1:'#c8102e', c2:'#0b1f4b', tc:'#ffffff'},
-  {id:'rcl', name:'Lens',       short:'RCL',  stadium:'Stade Bollaert-Delelis', str:76, c1:'#f2c200', c2:'#c8102e', tc:'#7a0716'},
-  {id:'srfc',name:'Rennes',     short:'SRFC', stadium:'Roazhon Park', str:75, c1:'#d1202f', c2:'#111111', tc:'#ffffff'},
-  {id:'ogcn',name:'Nice',       short:'OGCN', stadium:'Allianz Riviera', str:74, c1:'#1b1b1b', c2:'#c8102e', tc:'#ffffff'},
-  {id:'rcsa',name:'Strasbourg', short:'RCSA', stadium:'Stade de la Meinau', str:74, c1:'#1e5bb8', c2:'#ffffff', tc:'#ffffff'},
-  {id:'pfc', name:'Paris FC',   short:'PFC',  stadium:'Stade Jean-Bouin', str:72, c1:'#8fc8ef', c2:'#1c2a4a', tc:'#1c2a4a'},
-  {id:'tfc', name:'Toulouse',   short:'TFC',  stadium:'Stadium de Toulouse', str:71, c1:'#5b2a86', c2:'#ffffff', tc:'#ffffff'},
-  {id:'sb29',name:'Brest',      short:'SB29', stadium:'Stade Francis-Le Blé', str:71, c1:'#d71920', c2:'#ffffff', tc:'#ffffff'},
-  {id:'fcl', name:'Lorient',    short:'FCL',  stadium:'Stade du Moustoir', str:69, c1:'#f28c28', c2:'#111111', tc:'#111111'},
-  {id:'hac', name:'Le Havre',   short:'HAC',  stadium:'Stade Océane', str:68, c1:'#6cb4e4', c2:'#0b2545', tc:'#0b2545'},
-  {id:'sco', name:'Angers',     short:'SCO',  stadium:'Stade Raymond Kopa', str:68, c1:'#f5f5f5', c2:'#111111', tc:'#111111'},
-  {id:'aja', name:'Auxerre',    short:'AJA',  stadium:'Stade Abbé Deschamps', str:68, c1:'#ffffff', c2:'#1f4fa0', tc:'#1f4fa0'},
-  {id:'estac',name:'Troyes',    short:'ESTAC',stadium:"Stade de l'Aube", str:67, c1:'#2a6fdb', c2:'#ffffff', tc:'#ffffff'},
-  {id:'lmfc',name:'Le Mans',    short:'LMFC', stadium:'Stade Marie-Marvingt', str:66, c1:'#e8c32a', c2:'#d0202a', tc:'#7a0716'}
+  {id:'psg', name:'Paris Royal', short:'PRY', stadium:'Paris Royal Arena', str:86, c1:'#12306b', c2:'#e4483c', tc:'#ffffff'},
+  {id:'om',  name:'Olympique Massalia',  short:'OMS',   stadium:'Olympique Massalia Arena', str:80, c1:'#e9f3fb', c2:'#2aa1dc', tc:'#0f3d63'},
+  {id:'asm', name:'Monte Rocca',     short:'MRC',  stadium:'Monte Rocca Arena', str:79, c1:'#d6262f', c2:'#ffffff', tc:'#ffffff'},
+  {id:'ol',  name:'Lyon Rhône',       short:'LYR',   stadium:'Lyon Rhône Arena', str:77, c1:'#f4f4f4', c2:'#1d3e8f', tc:'#1d3e8f'},
+  {id:'losc',name:'Lille Flandres',      short:'LIF', stadium:'Lille Flandres Arena', str:77, c1:'#c8102e', c2:'#0b1f4b', tc:'#ffffff'},
+  {id:'rcl', name:'Racing Artois',       short:'RCA',  stadium:'Racing Artois Arena', str:76, c1:'#f2c200', c2:'#c8102e', tc:'#7a0716'},
+  {id:'srfc',name:'Rennes Bretagne',     short:'RBR', stadium:'Rennes Bretagne Arena', str:75, c1:'#d1202f', c2:'#111111', tc:'#ffffff'},
+  {id:'ogcn',name:'Nice Riviera',       short:'NRV', stadium:'Nice Riviera Arena', str:74, c1:'#1b1b1b', c2:'#c8102e', tc:'#ffffff'},
+  {id:'rcsa',name:'Strasbourg Rhin', short:'SRH', stadium:'Strasbourg Rhin Arena', str:74, c1:'#1e5bb8', c2:'#ffffff', tc:'#ffffff'},
+  {id:'pfc', name:'Paris Lutèce',   short:'PLU',  stadium:'Paris Lutèce Arena', str:72, c1:'#8fc8ef', c2:'#1c2a4a', tc:'#1c2a4a'},
+  {id:'tfc', name:'Toulouse Garonne',   short:'TGA',  stadium:'Toulouse Garonne Arena', str:71, c1:'#5b2a86', c2:'#ffffff', tc:'#ffffff'},
+  {id:'sb29',name:'Brest Atlantique',      short:'BAT', stadium:'Brest Atlantique Arena', str:71, c1:'#d71920', c2:'#ffffff', tc:'#ffffff'},
+  {id:'fcl', name:'Lorient Océan',    short:'LOC',  stadium:'Lorient Océan Arena', str:69, c1:'#f28c28', c2:'#111111', tc:'#111111'},
+  {id:'hac', name:'Le Havre Estuaire',   short:'HES',  stadium:'Le Havre Estuaire Arena', str:68, c1:'#6cb4e4', c2:'#0b2545', tc:'#0b2545'},
+  {id:'sco', name:'Angers Loire',     short:'ALO',  stadium:'Angers Loire Arena', str:68, c1:'#f5f5f5', c2:'#111111', tc:'#111111'},
+  {id:'aja', name:'Auxerre Yonne',    short:'AYO',  stadium:'Auxerre Yonne Arena', str:68, c1:'#ffffff', c2:'#1f4fa0', tc:'#1f4fa0'},
+  {id:'estac',name:'Troyes Champagne',    short:'TCH',stadium:'Troyes Champagne Arena', str:67, c1:'#2a6fdb', c2:'#ffffff', tc:'#ffffff'},
+  {id:'lmfc',name:'Le Mans Sarthe',    short:'LMS', stadium:'Le Mans Sarthe Arena', str:66, c1:'#e8c32a', c2:'#d0202a', tc:'#7a0716'}
 ];
 
-// Champions-League-Teilnehmer 2026/27 (außer PSG, Lens, Lille, die stehen oben). Stärke geschätzt.
+// Champions-Cup-Teilnehmer 2026/27 (außer PSG, Lens, Lille, die stehen oben). Stärke geschätzt.
 const CL_CLUBS = [
-  {id:'fcb',name:'Bayern München',short:'FCB',str:85,c1:'#dc052d',c2:'#ffffff',tc:'#ffffff'},
-  {id:'bar',name:'FC Barcelona',short:'BAR',str:85,c1:'#a50044',c2:'#004d98',tc:'#ffffff'},
-  {id:'mun',name:'Manchester United',short:'MUN',str:79,c1:'#da291c',c2:'#000000',tc:'#ffffff'},
-  {id:'com',name:'Como',short:'COM',str:76,c1:'#1d4f91',c2:'#ffffff',tc:'#ffffff'},
-  {id:'scp',name:'Sporting Lissabon',short:'SCP',str:79,c1:'#00805a',c2:'#ffffff',tc:'#ffffff'},
-  {id:'vfb',name:'VfB Stuttgart',short:'VFB',str:78,c1:'#f4f4f4',c2:'#e32219',tc:'#e32219'},
-  {id:'mci',name:'Manchester City',short:'MCI',str:84,c1:'#6cabdd',c2:'#1c2c5b',tc:'#1c2c5b'},
-  {id:'avl',name:'Aston Villa',short:'AVL',str:79,c1:'#670e36',c2:'#95bfe5',tc:'#95bfe5'},
-  {id:'bet',name:'Real Betis',short:'BET',str:77,c1:'#0bb363',c2:'#ffffff',tc:'#ffffff'},
-  {id:'bvb',name:'Borussia Dortmund',short:'BVB',str:80,c1:'#fde100',c2:'#000000',tc:'#000000'},
-  {id:'liv',name:'FC Liverpool',short:'LIV',str:85,c1:'#c8102e',c2:'#f6eb61',tc:'#ffffff'},
-  {id:'rma',name:'Real Madrid',short:'RMA',str:86,c1:'#f5f5f5',c2:'#febe10',tc:'#00529f'},
-  {id:'ars',name:'FC Arsenal',short:'ARS',str:86,c1:'#ef0107',c2:'#ffffff',tc:'#ffffff'},
-  {id:'aek',name:'AEK Athen',short:'AEK',str:72,c1:'#ffde00',c2:'#000000',tc:'#000000'},
-  {id:'rom',name:'AS Rom',short:'ROM',str:78,c1:'#8e1f2f',c2:'#f0bc42',tc:'#f0bc42'},
-  {id:'sha',name:'Schachtar Donezk',short:'SHA',str:74,c1:'#f26522',c2:'#000000',tc:'#000000'},
-  {id:'fen',name:'Fenerbahçe',short:'FEN',str:76,c1:'#163962',c2:'#ffed00',tc:'#ffed00'},
-  {id:'psv',name:'PSV Eindhoven',short:'PSV',str:77,c1:'#ed1c24',c2:'#ffffff',tc:'#ffffff'},
-  {id:'vil',name:'FC Villarreal',short:'VIL',str:79,c1:'#ffe667',c2:'#005187',tc:'#005187'},
-  {id:'bru',name:'FC Brügge',short:'BRU',str:75,c1:'#0057a8',c2:'#000000',tc:'#ffffff'},
-  {id:'sla',name:'Slavia Prag',short:'SLA',str:72,c1:'#e30613',c2:'#ffffff',tc:'#ffffff'},
-  {id:'atm',name:'Atlético Madrid',short:'ATM',str:82,c1:'#cb3524',c2:'#ffffff',tc:'#ffffff'},
-  {id:'int',name:'Inter Mailand',short:'INT',str:84,c1:'#0068a8',c2:'#000000',tc:'#ffffff'},
-  {id:'lask',name:'LASK',short:'LASK',str:69,c1:'#1a1a1a',c2:'#ffffff',tc:'#ffffff'},
-  {id:'nap',name:'SSC Neapel',short:'NAP',str:82,c1:'#12a0d7',c2:'#ffffff',tc:'#ffffff'},
-  {id:'gal',name:'Galatasaray',short:'GAL',str:78,c1:'#a90432',c2:'#fdb912',tc:'#fdb912'},
-  {id:'vik',name:'Viking Stavanger',short:'VIK',str:68,c1:'#002f6c',c2:'#ffffff',tc:'#ffffff'},
-  {id:'por',name:'FC Porto',short:'POR',str:79,c1:'#003893',c2:'#ffffff',tc:'#ffffff'},
-  {id:'rbl',name:'RB Leipzig',short:'RBL',str:80,c1:'#ffffff',c2:'#dd0741',tc:'#dd0741'},
-  {id:'fey',name:'Feyenoord',short:'FEY',str:75,c1:'#e2001a',c2:'#ffffff',tc:'#ffffff'},
-  {id:'sab',name:'Sabah FK',short:'SAB',str:64,c1:'#0b4ea2',c2:'#ffffff',tc:'#ffffff'},
-  {id:'slo',name:'Slovan Bratislava',short:'SLO',str:66,c1:'#6ab2e7',c2:'#ffffff',tc:'#0b2545'},
-  {id:'bod',name:'Bodø/Glimt',short:'BOD',str:73,c1:'#ffe600',c2:'#000000',tc:'#000000'}
+  {id:'fcb',name:'München Bavaria',short:'MBV',str:85,c1:'#dc052d',c2:'#ffffff',tc:'#ffffff'},
+  {id:'bar',name:'FC Catalunya',short:'CAT',str:85,c1:'#a50044',c2:'#004d98',tc:'#ffffff'},
+  {id:'mun',name:'Manchester Red',short:'MRE',str:79,c1:'#da291c',c2:'#000000',tc:'#ffffff'},
+  {id:'com',name:'Como Lario',short:'CLA',str:76,c1:'#1d4f91',c2:'#ffffff',tc:'#ffffff'},
+  {id:'scp',name:'Lisboa Verde',short:'LVE',str:79,c1:'#00805a',c2:'#ffffff',tc:'#ffffff'},
+  {id:'vfb',name:'Stuttgart Schwaben',short:'STS',str:78,c1:'#f4f4f4',c2:'#e32219',tc:'#e32219'},
+  {id:'mci',name:'Manchester Blue',short:'MBL',str:84,c1:'#6cabdd',c2:'#1c2c5b',tc:'#1c2c5b'},
+  {id:'avl',name:'Birmingham Claret',short:'BCL',str:79,c1:'#670e36',c2:'#95bfe5',tc:'#95bfe5'},
+  {id:'bet',name:'Sevilla Verde',short:'SVE',str:77,c1:'#0bb363',c2:'#ffffff',tc:'#ffffff'},
+  {id:'bvb',name:'Dortmund Westfalen',short:'DWF',str:80,c1:'#fde100',c2:'#000000',tc:'#000000'},
+  {id:'liv',name:'Merseyside Red',short:'MSR',str:85,c1:'#c8102e',c2:'#f6eb61',tc:'#ffffff'},
+  {id:'rma',name:'Madrid Chamartín',short:'MCH',str:86,c1:'#f5f5f5',c2:'#febe10',tc:'#00529f'},
+  {id:'ars',name:'North London',short:'NLO',str:86,c1:'#ef0107',c2:'#ffffff',tc:'#ffffff'},
+  {id:'aek',name:'Athen Union',short:'AUN',str:72,c1:'#ffde00',c2:'#000000',tc:'#000000'},
+  {id:'rom',name:'Roma Lupa',short:'RLU',str:78,c1:'#8e1f2f',c2:'#f0bc42',tc:'#f0bc42'},
+  {id:'sha',name:'Donbass Orange',short:'DOR',str:74,c1:'#f26522',c2:'#000000',tc:'#000000'},
+  {id:'fen',name:'Istanbul Kanarien',short:'IKA',str:76,c1:'#163962',c2:'#ffed00',tc:'#ffed00'},
+  {id:'psv',name:'Eindhoven Lichtstadt',short:'ELS',str:77,c1:'#ed1c24',c2:'#ffffff',tc:'#ffffff'},
+  {id:'vil',name:'Plana Amarillo',short:'PAM',str:79,c1:'#ffe667',c2:'#005187',tc:'#005187'},
+  {id:'bru',name:'Brügge Blauschwarz',short:'BBS',str:75,c1:'#0057a8',c2:'#000000',tc:'#ffffff'},
+  {id:'sla',name:'Prag Rot-Weiß',short:'PRW',str:72,c1:'#e30613',c2:'#ffffff',tc:'#ffffff'},
+  {id:'atm',name:'Madrid Rojiblanco',short:'MRB',str:82,c1:'#cb3524',c2:'#ffffff',tc:'#ffffff'},
+  {id:'int',name:'Milano Nerazzurro',short:'MNZ',str:84,c1:'#0068a8',c2:'#000000',tc:'#ffffff'},
+  {id:'lask',name:'Linz Athletik',short:'LAT',str:69,c1:'#1a1a1a',c2:'#ffffff',tc:'#ffffff'},
+  {id:'nap',name:'Napoli Vesuv',short:'NVE',str:82,c1:'#12a0d7',c2:'#ffffff',tc:'#ffffff'},
+  {id:'gal',name:'Istanbul Löwen',short:'ILO',str:78,c1:'#a90432',c2:'#fdb912',tc:'#fdb912'},
+  {id:'vik',name:'Stavanger Nord',short:'STN',str:68,c1:'#002f6c',c2:'#ffffff',tc:'#ffffff'},
+  {id:'por',name:'Porto Drachen',short:'POD',str:79,c1:'#003893',c2:'#ffffff',tc:'#ffffff'},
+  {id:'rbl',name:'Leipzig Sachsen',short:'LSA',str:80,c1:'#ffffff',c2:'#dd0741',tc:'#dd0741'},
+  {id:'fey',name:'Rotterdam Hafen',short:'RHA',str:75,c1:'#e2001a',c2:'#ffffff',tc:'#ffffff'},
+  {id:'sab',name:'Baku Kaspi',short:'BKA',str:64,c1:'#0b4ea2',c2:'#ffffff',tc:'#ffffff'},
+  {id:'slo',name:'Bratislava Donau',short:'BDO',str:66,c1:'#6ab2e7',c2:'#ffffff',tc:'#0b2545'},
+  {id:'bod',name:'Bodø Nordlicht',short:'BNL',str:73,c1:'#ffe600',c2:'#000000',tc:'#000000'}
 ];
 const CL_START = ['psg','rcl','losc',...CL_CLUBS.map(c=>c.id)];
-// Wann die Champions League gespielt wird: nach welchem Ligue-1-Spieltag
+// Wann die Champions Cup gespielt wird: nach welchem Liga-Spieltag
 const CL_PLAN = [['L1',2],['L2',6],['L3',7],['L4',9],['L5',12],['L6',14],['L7',19],['L8',20],['PO1',23],['PO2',24],['R16a',26],['R16b',27],['QFa',29],['QFb',30],['SFa',31],['SFb',32],['F',34]];
 const CL_LABEL = {PO:'Play-offs',R16:'Achtelfinale',QF:'Viertelfinale',SF:'Halbfinale',F:'Finale'};
 
-// PSG-Kader 2026/27 (Rückennummern laut psg.fr). Stärkewerte sind geschätzt.
+// Kader von Paris Royal (Rückennummern Stand 2026/27, Namen abgewandelt). Stärkewerte sind geschätzt.
 const PLAYERS = [
   // born = Geburtsdatum, r = Stärke jetzt, pot = Potenzial (wie gut er maximal werden kann, geschätzt)
-  {id:'chevalier', n:30, name:'Chevalier',     full:'Lucas Chevalier',  pos:'TW', born:'2001-11-06', r:83, pot:87},
-  {id:'safonov',   n:39, name:'Safonov',       full:'Matvey Safonov',   pos:'TW', born:'1999-02-25', r:80, pot:81},
-  {id:'longoni',   n:16, name:'Longoni',       full:'Alessandro Longoni',pos:'TW', born:'2008-01-31', r:66, pot:86},
-  {id:'hakimi',    n:2,  name:'Hakimi',        full:'Achraf Hakimi',    pos:'RV', born:'1998-11-04', r:87, pot:87},
-  {id:'marquinhos',n:5,  name:'Marquinhos',    full:'Marquinhos',       pos:'IV', born:'1994-05-14', r:85, pot:85},
-  {id:'pacho',     n:51, name:'Pacho',         full:'Willian Pacho',    pos:'IV', born:'2001-10-16', r:85, pot:87},
-  {id:'zabarnyi',  n:6,  name:'Zabarnyi',      full:'Illia Zabarnyi',   pos:'IV', born:'2002-09-01', r:82, pot:86},
-  {id:'hernandez', n:21, name:'L. Hernández',  full:'Lucas Hernández',  pos:'IV', alt:['LV'], born:'1996-02-14', r:80, pot:80},
-  {id:'beraldo',   n:4,  name:'Beraldo',       full:'Lucas Beraldo',    pos:'IV', alt:['LV'], born:'2003-11-24', r:78, pot:84},
-  {id:'mendes',    n:25, name:'Nuno Mendes',   full:'Nuno Mendes',      pos:'LV', born:'2002-06-19', r:87, pot:89},
-  {id:'digne',     n:12, name:'Digne',         full:'Lucas Digne',      pos:'LV', born:'1993-07-20', r:77, pot:77},
-  {id:'vitinha',   n:17, name:'Vitinha',       full:'Vitinha',          pos:'ZM', alt:['ZDM'], born:'2000-02-13', r:88, pot:89},
-  {id:'neves',     n:87, name:'João Neves',    full:'João Neves',       pos:'ZM', alt:['ZDM'], born:'2004-09-27', r:87, pot:91},
-  {id:'ruiz',      n:8,  name:'Fabián Ruiz',   full:'Fabián Ruiz',      pos:'ZM', born:'1996-04-03', r:84, pot:84},
-  {id:'zaire',     n:33, name:'Zaïre-Emery',   full:'Warren Zaïre-Emery',pos:'ZM', alt:['RV'], born:'2006-03-08', r:82, pot:89},
-  {id:'akliouche', n:11, name:'Akliouche',     full:'Maghnes Akliouche',pos:'OM', alt:['RF'], born:'2002-02-25', r:80, pot:84},
-  {id:'mayulu',    n:24, name:'Mayulu',        full:'Senny Mayulu',     pos:'ZM', alt:['OM'], born:'2006-05-17', r:76, pot:86},
-  {id:'dro',       n:27, name:'Dro Fernández', full:'Dro Fernández',    pos:'ZM', alt:['OM'], born:'2008-01-12', r:75, pot:89},
-  {id:'dembele',   n:10, name:'Dembélé',       full:'Ousmane Dembélé',  pos:'ST', alt:['RF'], born:'1997-05-15', r:89, pot:89},
-  {id:'kvara',     n:7,  name:'Kvaratskhelia', full:'Khvicha Kvaratskhelia',pos:'LF', born:'2001-02-12', r:87, pot:88},
-  {id:'doue',      n:14, name:'Doué',          full:'Désiré Doué',      pos:'RF', alt:['LF','OM'], born:'2005-06-03', r:85, pot:91},
-  {id:'ferran',    n:9,  name:'Ferran',        full:'Ferran Torres',    pos:'ST', alt:['LF'], born:'2000-02-29', r:82, pot:82},
-  {id:'godts',     n:22, name:'Godts',         full:'Mika Godts',       pos:'LF', alt:['RF'], born:'2005-06-07', r:79, pot:86},
-  {id:'ndjantou',  n:47, name:'Ndjantou',      full:'Quentin Ndjantou', pos:'ST', born:'2007-07-23', r:70, pot:85}
+  {id:'p30', n:30, name:'Chevaliir', full:'L. Chevaliir',  pos:'TW', born:'2001-11-06', r:83, pot:87},
+  {id:'p39', n:39, name:'Safonav', full:'M. Safonav',   pos:'TW', born:'1999-02-25', r:80, pot:81},
+  {id:'p16', n:16, name:'Longone', full:'A. Longone',pos:'TW', born:'2008-01-31', r:66, pot:86},
+  {id:'p2', n:2, name:'Hakime', full:'A. Hakime',    pos:'RV', born:'1998-11-04', r:87, pot:87},
+  {id:'p5', n:5, name:'Marquinhas', full:'Marquinhas',       pos:'IV', born:'1994-05-14', r:85, pot:85},
+  {id:'p51', n:51, name:'Pacha', full:'W. Pacha',    pos:'IV', born:'2001-10-16', r:85, pot:87},
+  {id:'p6', n:6, name:'Zabarnye', full:'I. Zabarnye',   pos:'IV', born:'2002-09-01', r:82, pot:86},
+  {id:'p21', n:21, name:'Hernándiz', full:'L. Hernándiz',  pos:'IV', alt:['LV'], born:'1996-02-14', r:80, pot:80},
+  {id:'p4', n:4, name:'Beralda', full:'L. Beralda',    pos:'IV', alt:['LV'], born:'2003-11-24', r:78, pot:84},
+  {id:'p25', n:25, name:'Mendis', full:'N. Mendis',      pos:'LV', born:'2002-06-19', r:87, pot:89},
+  {id:'p12', n:12, name:'Digni', full:'L. Digni',      pos:'LV', born:'1993-07-20', r:77, pot:77},
+  {id:'p17', n:17, name:'Vitinho', full:'Vitinho',          pos:'ZM', alt:['ZDM'], born:'2000-02-13', r:88, pot:89},
+  {id:'p87', n:87, name:'Nevis', full:'J. Nevis',       pos:'ZM', alt:['ZDM'], born:'2004-09-27', r:87, pot:91},
+  {id:'p8', n:8, name:'Ruez', full:'F. Ruez',      pos:'ZM', born:'1996-04-03', r:84, pot:84},
+  {id:'p33', n:33, name:'Zaïre-Emeri', full:'W. Zaïre-Emeri',pos:'ZM', alt:['RV'], born:'2006-03-08', r:82, pot:89},
+  {id:'p11', n:11, name:'Akliouchi', full:'M. Akliouchi',pos:'OM', alt:['RF'], born:'2002-02-25', r:80, pot:84},
+  {id:'p24', n:24, name:'Mayulo', full:'S. Mayulo',     pos:'ZM', alt:['OM'], born:'2006-05-17', r:76, pot:86},
+  {id:'p27', n:27, name:'Fernándiz', full:'D. Fernándiz',    pos:'ZM', alt:['OM'], born:'2008-01-12', r:75, pot:89},
+  {id:'p10', n:10, name:'Dembéli', full:'O. Dembéli',  pos:'ST', alt:['RF'], born:'1997-05-15', r:89, pot:89},
+  {id:'p7', n:7, name:'Kvaratskhelio', full:'K. Kvaratskhelio',pos:'LF', born:'2001-02-12', r:87, pot:88},
+  {id:'p14', n:14, name:'Doui', full:'D. Doui',      pos:'RF', alt:['LF','OM'], born:'2005-06-03', r:85, pot:91},
+  {id:'p9', n:9, name:'Torris', full:'F. Torris',    pos:'ST', alt:['LF'], born:'2000-02-29', r:82, pot:82},
+  {id:'p22', n:22, name:'Gadts', full:'M. Gadts',       pos:'LF', alt:['RF'], born:'2005-06-07', r:79, pot:86},
+  {id:'p47', n:47, name:'Ndjantoo', full:'Q. Ndjantoo', pos:'ST', born:'2007-07-23', r:70, pot:85}
 ];
 
 // Namen für ausgedachte Jugendspieler
@@ -634,7 +643,7 @@ const CN = () => T(ME).name, CS = () => T(ME).short;
 const strengthOf = id => id===ME ? psgStrength() : (isMP()&&id===S.mp.other&&mpTeams[id]) ? mpTeams[id].strength : T(id).str;
 
 /* ===================== FINANZEN (alle Werte in Mio. €, geschätzt) ===================== */
-const SAL = {chevalier:6,safonov:3,longoni:1,hakimi:12,marquinhos:13,pacho:6,zabarnyi:6,hernandez:8,beraldo:3,mendes:8,digne:4,vitinha:10,neves:8,ruiz:7,zaire:5,akliouche:5,mayulu:1.5,dro:2,dembele:18,kvara:11,doue:7,ferran:7,godts:3,ndjantou:1};
+const SAL = {p30:6,p39:3,p16:1,p2:12,p5:13,p51:6,p6:6,p21:8,p4:3,p25:8,p12:4,p17:10,p87:8,p8:7,p33:5,p11:5,p24:1.5,p27:2,p10:18,p7:11,p14:7,p9:7,p22:3,p47:1};
 const RUNNING_COST = 200;   // Personal, Stadion, Reisen pro Jahr
 const TICKETS = {lig:4.5, cl:6};
 const L1_TV = [45,38,33,29,26,24,22,20,19,18,17,16,15,14,13,12,11,10];
@@ -650,7 +659,7 @@ const BRANDS = {brust:['Skyline Airways','Orion Telecom','Bluewave Bank','Sahara
   aermel:['Nordwind Energy','Pixelon','Quanta Pay','Lyra Insurance','Brightpath','Mistral Tech'],
   train:['Coda Water','Peak Nutrition','Volta Drinks','Ironleaf','Arcadia Health']};
 const fmtM = v => { const a=Math.abs(v), t=a>=100?String(Math.round(a)):a.toFixed(1).replace('.',','); return `${v<0?'−':''}${t} Mio. €` };
-const CATS = {tickets:'Ticketverkauf',tv:'TV-Geld Ligue 1',prize:'CL-Prämien',sponsor:'Sponsoren',bonus:'Sponsor-Prämien',merch:'Trikotverkauf',
+const CATS = {tickets:'Ticketverkauf',tv:'TV-Geld Liga',prize:'Cup-Prämien',sponsor:'Sponsoren',bonus:'Sponsor-Prämien',merch:'Trikotverkauf',
   transferIn:'Spielerverkäufe',handgeld:'Handgelder',pack:'Pack-Gewinne',wages:'Gehälter',transferOut:'Ablösesummen',ops:'Personal & Stadion',scout:'Scouting & Talente',agency:'Agenturen',kit:'Trikot-Produktion',sponsorEnd:'Vertragsablösen'};
 
 function initFin(){
@@ -675,7 +684,7 @@ const wageBill = () => S.players.reduce((a,p)=>a+salOf(p),0) + (S.academy||[]).r
 const sponsorIncome = () => Object.values(S.sponsors).reduce((a,x)=>a+(x?x.annual:0),0);
 function reputation(){ // 60..100: wie begehrt PSG gerade bei Sponsoren ist
   const h=S.history.slice(-2); let r=psgStrength();
-  h.forEach(x=>{ if(x.pos===1) r+=3; if(x.cl==='Champions-League-Sieger!') r+=6; else if(/Finale|Halbfinale/.test(x.cl||'')) r+=2 });
+  h.forEach(x=>{ if(x.pos===1) r+=3; if(x.cl==='Champions-Cup-Sieger!') r+=6; else if(/Finale|Halbfinale/.test(x.cl||'')) r+=2 });
   return Math.max(60,Math.min(100,r));
 }
 // Zeit vergeht: Gehälter, Sponsoren, Trikotverkauf, Training
@@ -693,549 +702,1870 @@ function passTime(days){
   develop(days);
 }
 
-const TRANSFER_POOL = `fcb|Harry Kane|Kane|ST||1993-07-28|89|89|9
-fcb|Jamal Musiala|Musiala|OM|LF|2003-02-26|88|92|10
-fcb|Michael Olise|Olise|RF|OM|2001-12-12|88|90|17
-fcb|Joshua Kimmich|Kimmich|ZDM|RV,ZM|1995-02-08|87|87|6
-fcb|Luis Díaz|Luis Díaz|LF|RF|1997-01-13|86|86|14
-fcb|Dayot Upamecano|Upamecano|IV||1998-10-27|84|85|2
-fcb|Jonathan Tah|Tah|IV||1996-02-11|84|84|4
-fcb|Kim Min-jae|Kim Min-jae|IV||1996-11-15|83|83|3
-fcb|Alphonso Davies|Davies|LV||2000-11-02|82|84|19
-fcb|Aleksandar Pavlović|Pavlović|ZDM|ZM|2004-05-03|83|88|45
-fcb|Lennart Karl|L. Karl|OM|RF|2008-02-22|74|89|42
-fcb|Tom Bischof|Bischof|ZM|LV|2005-06-28|78|85|8
-fcb|Manuel Neuer|Neuer|TW||1986-03-27|84|84|1
-rma|Kylian Mbappé|Mbappé|ST|LF|1998-12-20|91|91|10
-rma|Vinícius Júnior|Vinícius|LF||2000-07-12|89|90|7
-rma|Jude Bellingham|Bellingham|OM|ZM|2003-06-29|89|92|5
-rma|Federico Valverde|Valverde|ZM|RV|1998-07-22|88|88|8
-rma|Thibaut Courtois|Courtois|TW||1992-05-11|88|88|1
-rma|Trent Alexander-Arnold|Alexander-Arnold|RV||1998-10-07|86|86|12
-rma|Aurélien Tchouaméni|Tchouaméni|ZDM|IV|2000-01-27|85|86|14
-rma|Eduardo Camavinga|Camavinga|ZM|LV|2002-11-10|84|87|6
-rma|Arda Güler|Güler|OM|RF|2005-02-25|84|90|15
-rma|Dean Huijsen|Huijsen|IV||2005-04-14|83|89|24
-rma|Éder Militão|Militão|IV||1998-01-19|84|84|3
-rma|Antonio Rüdiger|Rüdiger|IV||1993-03-03|83|83|22
-rma|Rodrygo|Rodrygo|RF|LF|2001-01-09|85|86|11
-rma|Franco Mastantuono|Mastantuono|RF|OM|2007-08-14|77|90|30
-rma|Endrick|Endrick|ST||2006-07-21|77|88|9
-rma|Álvaro Carreras|Carreras|LV||2003-03-23|81|85|18
-bar|Lamine Yamal|Yamal|RF||2007-07-13|90|96|10
-bar|Pedri|Pedri|ZM|OM|2002-11-25|89|91|8
-bar|Raphinha|Raphinha|LF|RF|1996-12-14|88|88|11
-bar|Rodri|Rodri|ZDM||1996-06-22|88|88|16
-bar|Frenkie de Jong|de Jong|ZM|ZDM|1997-05-12|86|86|21
-bar|Pau Cubarsí|Cubarsí|IV||2007-01-22|83|90|5
-bar|Jules Koundé|Koundé|RV|IV|1998-11-12|85|85|23
-bar|Alejandro Balde|Balde|LV||2003-10-18|82|86|3
-bar|Joan García|Joan García|TW||2001-05-04|84|87|1
-bar|Gavi|Gavi|ZM||2004-08-05|83|88|6
-bar|Fermín López|Fermín|OM|ZM|2003-05-11|82|86|7
-bar|Dani Olmo|Olmo|OM||1998-05-07|84|84|20
-bar|Anthony Gordon|Gordon|LF||2001-02-24|84|85|17
-bar|Karim Adeyemi|Adeyemi|LF|RF|2002-01-18|81|84|14
-ars|Bukayo Saka|Saka|RF||2001-09-05|88|90|7
-ars|William Saliba|Saliba|IV||2001-03-24|88|89|2
-ars|Declan Rice|Rice|ZM|ZDM|1999-01-14|88|88|41
-ars|Martin Ødegaard|Ødegaard|OM||1998-12-17|86|86|8
-ars|Gabriel Magalhães|Gabriel|IV||1997-12-19|86|86|6
-ars|David Raya|Raya|TW||1995-09-15|86|86|1
-ars|Viktor Gyökeres|Gyökeres|ST||1998-06-04|85|85|14
-ars|Martín Zubimendi|Zubimendi|ZDM||1999-02-02|85|86|36
-ars|Bruno Guimarães|Bruno G.|ZM|ZDM|1997-11-16|86|86|39
-ars|Eberechi Eze|Eze|OM|LF|1998-06-29|84|84|10
-ars|Jurriën Timber|Timber|RV|IV|2001-06-17|84|86|12
-ars|Piero Hincapié|Hincapié|IV|LV|2002-01-09|82|85|5
-ars|Myles Lewis-Skelly|Lewis-Skelly|LV|ZM|2006-09-26|79|87|49
-liv|Florian Wirtz|Wirtz|OM|LF|2003-05-03|88|92|7
-liv|Virgil van Dijk|van Dijk|IV||1991-07-08|86|86|4
-liv|Alexander Isak|Isak|ST||1999-09-21|87|87|9
-liv|Alisson Becker|Alisson|TW||1992-10-02|87|87|1
-liv|Alexis Mac Allister|Mac Allister|ZM||1998-12-24|86|86|10
-liv|Ryan Gravenberch|Gravenberch|ZDM|ZM|2002-05-16|85|87|38
-liv|Dominik Szoboszlai|Szoboszlai|ZM|OM|2000-10-25|84|85|8
-liv|Hugo Ekitike|Ekitike|ST||2002-06-20|84|87|22
-liv|Bradley Barcola|Barcola|LF|RF|2002-09-02|84|86|29
-liv|Jeremie Frimpong|Frimpong|RV|RF|2000-12-10|84|84|30
-liv|Cody Gakpo|Gakpo|LF||1999-05-07|84|84|18
-liv|Milos Kerkez|Kerkez|LV||2003-11-07|82|85|6
-liv|Giovanni Leoni|Leoni|IV||2006-12-21|76|87|15
-liv|Jérémy Jacquet|Jacquet|IV||2005-07-13|78|86|5
-mci|Erling Haaland|Haaland|ST||2000-07-21|91|91|9
-mci|Gianluigi Donnarumma|Donnarumma|TW||1999-02-25|89|89|1
-mci|Rúben Dias|Rúben Dias|IV||1997-05-14|86|86|3
-mci|Joško Gvardiol|Gvardiol|IV|LV|2002-01-23|85|87|24
-mci|Phil Foden|Foden|OM|RF|2000-05-28|86|86|47
-mci|Enzo Fernández|Enzo|ZM|ZDM|2001-01-17|85|86|17
-mci|Rayan Cherki|Cherki|OM|RF|2003-08-17|84|88|10
-mci|Jérémy Doku|Doku|LF|RF|2002-05-27|84|85|11
-mci|Marc Guéhi|Guéhi|IV||2000-07-13|84|85|6
-mci|Antoine Semenyo|Semenyo|RF|LF|2000-01-07|83|84|42
-mci|Elliot Anderson|E. Anderson|ZM|ZDM|2002-11-06|82|86|5
-mci|Rayan Aït-Nouri|Aït-Nouri|LV||2001-06-06|82|83|21
-int|Lautaro Martínez|Lautaro|ST||1997-08-22|87|87|10
-int|Nicolò Barella|Barella|ZM||1997-02-07|86|86|23
-int|Marcus Thuram|Thuram|ST|LF|1997-08-06|85|85|9
-int|Hakan Çalhanoğlu|Çalhanoğlu|ZDM||1994-02-08|84|84|20
-int|Federico Dimarco|Dimarco|LV||1997-11-10|84|84|32
-int|Manuel Akanji|Akanji|IV||1995-07-19|83|83|25
-int|Yann Bisseck|Bisseck|IV||2000-11-29|82|84|31
-int|Ange-Yoan Bonny|Bonny|ST||2003-10-25|79|84|14
-bvb|Serhou Guirassy|Guirassy|ST||1996-03-12|85|85|9
-bvb|Gregor Kobel|Kobel|TW||1997-12-06|86|86|1
-bvb|Nico Schlotterbeck|Schlotterbeck|IV|LV|1999-12-01|84|85|4
-bvb|Jobe Bellingham|J. Bellingham|ZM|OM|2005-09-23|79|86|7
-bvb|Ethan Nwaneri|Nwaneri|OM|RF|2007-03-21|78|88|18
-bvb|Felix Nmecha|Nmecha|ZM||1999-10-10|80|81|8
-bvb|Maximilian Beier|Beier|ST|LF|2002-10-17|80|83|14
-atm|Julián Álvarez|J. Álvarez|ST||2000-01-31|88|89|19
-atm|Jan Oblak|Oblak|TW||1993-01-07|86|86|13
-atm|Cristian Romero|C. Romero|IV||1998-04-27|85|85|21
-atm|Álex Baena|Baena|OM|LF|2001-07-20|84|85|10
-atm|Ademola Lookman|Lookman|LF||1997-10-20|84|84|11
-atm|Dávid Hancko|Hancko|IV|LV|1997-12-13|83|83|17
-atm|Morten Hjulmand|Hjulmand|ZDM||1999-06-25|83|84|23
-atm|Pablo Barrios|Barrios|ZM||2003-06-15|82|86|8
-atm|Jonathan David|J. David|ST||2000-01-14|83|83|15
-atm|Marcos Llorente|Llorente|RV|ZM|1995-01-30|82|82|14
-atm|Giuliano Simeone|G. Simeone|RF||2002-12-18|80|83|20
-nap|Kevin De Bruyne|De Bruyne|OM|ZM|1991-06-28|85|85|11
-nap|Scott McTominay|McTominay|ZM||1996-12-08|85|85|8
-nap|Alessandro Buongiorno|Buongiorno|IV||1999-06-06|83|84|4
-nap|Rasmus Højlund|Højlund|ST||2003-02-04|82|85|19
-nap|Giovanni Di Lorenzo|Di Lorenzo|RV||1993-08-04|82|82|22
-nap|Amir Rrahmani|Rrahmani|IV||1994-02-24|81|81|13
-nap|David Neres|Neres|RF|LF|1997-03-03|81|81|7
-che|Cole Palmer|Palmer|OM|RF|2002-05-06|87|89|10
-che|Moisés Caicedo|Caicedo|ZDM|ZM|2001-11-02|87|88|25
-che|Estêvão|Estêvão|RF||2007-04-24|82|92|41
-che|Reece James|R. James|RV||1999-12-08|84|84|24
-che|João Pedro|João Pedro|ST|OM|2001-09-26|83|85|9
-che|Pedro Neto|Pedro Neto|RF|LF|2000-03-09|83|83|7
-che|Levi Colwill|Colwill|IV|LV|2003-02-24|82|86|6
-che|Morgan Rogers|M. Rogers|OM|LF|2002-07-26|82|85|17
-che|Emiliano Martínez|E. Martínez|TW||1992-09-02|84|84|1
-che|Malo Gusto|Gusto|RV||2003-05-19|81|84|27
-che|Jamie Gittens|Gittens|LF||2004-08-08|80|85|11
-che|Jorrel Hato|Hato|LV|IV|2006-03-07|79|87|21
-che|Geovany Quenda|Quenda|RF||2007-04-30|78|88|23
-che|Roméo Lavia|Lavia|ZDM||2004-01-06|79|84|45
-om|Amine Gouiri|Gouiri|ST|LF|2000-02-16|81|82|9
-om|Pierre-Emile Højbjerg|Højbjerg|ZDM||1995-08-05|81|81|23
-om|Nayef Aguerd|Aguerd|IV||1996-03-30|80|80|21
-om|Igor Paixão|Igor Paixão|LF||2000-06-28|80|81|14
-om|Angel Gomes|A. Gomes|ZM|OM|2000-08-31|79|81|7
-om|Timothy Weah|Weah|RF|RV|2000-02-22|78|79|22
-asm|Denis Zakaria|Zakaria|ZDM||1996-11-20|81|81|6
-asm|Aleksandr Golovin|Golovin|OM||1996-05-30|80|80|10
-asm|Folarin Balogun|Balogun|ST||2001-07-28|80|83|9
-asm|Lamine Camara|L. Camara|ZM||2004-01-01|80|86|15
-asm|Vanderson|Vanderson|RV||2001-06-21|80|82|2
-asm|Ansu Fati|Ansu Fati|LF||2002-10-31|79|81|31
-asm|Takumi Minamino|Minamino|OM|LF|1995-01-16|79|79|18
-asm|Christian Mawissa|Mawissa|IV||2005-04-18|77|84|13
-ol|Loïs Openda|Openda|ST||2000-02-16|81|82|17
-ol|Corentin Tolisso|Tolisso|ZM||1994-08-03|78|78|8
-ol|Moussa Niakhaté|Niakhaté|IV||1996-03-08|79|79|19
-ol|Nicolás Tagliafico|Tagliafico|LV||1992-08-31|78|78|3
-ol|Ernest Nuamah|Nuamah|RF|LF|2003-11-01|77|82|7
-ol|Tyler Morton|Morton|ZDM||2002-10-31|77|81|23`;
-const L1_SQUADS = `losc|1|GK|Berke Özer
-losc|2|DF|Loun Srdanovic
-losc|3|DF|Nathan Ngoy
-losc|4|DF|Alexsandro
-losc|7|FW|Matias Fernandez-Pardo
-losc|8|FW|Ethan Mbappé
-losc|9|FW|Olivier Giroud
-losc|10|MF|Hákon Haraldsson
-losc|11|FW|Osame Sahraoui
-losc|14|FW|Marius Broholm
-losc|15|DF|Romain Perraud
-losc|16|GK|Arnaud Bodart
-losc|17|MF|Ngal'ayel Mukau
-losc|19|FW|Başar Önal
-losc|20|FW|Noah Edjouma
-losc|21|MF|Benjamin André
-losc|22|DF|Tiago Santos
-losc|23|DF|Tanguy Nianzou
-losc|24|DF|Calvin Verdonk
-losc|26|DF|Isaac Cossier
-losc|27|FW|Félix Correia
-losc|28|FW|Gaëtan Perrin
-losc|29|FW|Hamza Igamane
-losc|35|FW|Soriba Diaoune
-losc|36|DF|Ousmane Touré
-srfc|5|DF|Gonçalo Oliveira
-srfc|6|MF|Djaoui Cissé
-srfc|9|FW|Esteban Lepaul
-srfc|10|MF|Ludovic Blas
-srfc|11|FW|Musa Al-Taamari
-srfc|12|FW|Eliezer Mayenda
-srfc|14|DF|Bryan Reynolds
-srfc|16|GK|Nicolas Lemaître
-srfc|17|MF|Sebastian Szymański
-srfc|18|DF|Aboubakar Nagida
-srfc|21|MF|Valentin Rongier
-srfc|22|FW|Boulaye Dia
-srfc|24|DF|Anthony Rouault
-srfc|26|DF|Quentin Merlin
-srfc|28|MF|Adrien Thomasson
-srfc|30|GK|Brice Samba
-srfc|35|FW|Elías Legendre
-srfc|36|DF|Alidu Seidu
-srfc|45|MF|Mahdi Camara
-srfc|48|DF|Abdelhamid Aït Boudlal
-srfc|64|DF|Jonathan Do Marcolino
-srfc|90|FW|Issa Soumaré
-rcl|1|GK|Régis Gurtner
-rcl|2|DF|Ruben Aguilar
-rcl|3|DF|Maik Nawrocki
-rcl|4|DF|Nidal Čelik
-rcl|5|MF|Andrija Bulatović
-rcl|6|DF|Samson Baidoo
-rcl|7|FW|Florian Sotoca
-rcl|8|MF|Yacine Titraoui
-rcl|9|FW|Thorgan Hazard
-rcl|10|MF|Florian Thauvin
-rcl|11|FW|Odsonne Édouard
-rcl|13|DF|Jhoanner Chávez
-rcl|14|DF|Matthieu Udol
-rcl|16|GK|Mathieu Gorgelin
-rcl|19|FW|Abdallah Sima
-rcl|20|DF|Jean-Clair Todibo
-rcl|21|MF|Amadou Haidara
-rcl|22|MF|Michał Skóraś
-rcl|23|DF|Saud Abdulhamid
-rcl|24|DF|Jonathan Gradit
-rcl|25|DF|Ismaëlo Ganiou
-rcl|27|MF|Michaël Cuisance
-rcl|28|FW|Junior Kadile
-rcl|29|FW|Franjo Ivanović
-rcl|40|GK|Robin Risser
-ogcn|2|DF|Ali Abdi
-ogcn|5|DF|Mohamed Abdelmonem
-ogcn|6|MF|Hicham Boudaoui
-ogcn|7|FW|Gauthier Hein
-ogcn|8|MF|Morgan Sanson
-ogcn|9|FW|Mohamed Amoura
-ogcn|10|FW|Sofiane Diop
-ogcn|11|FW|Elye Wahi
-ogcn|19|MF|Laurent Abergel
-ogcn|21|FW|Isak Jansson
-ogcn|22|MF|Issiaga Camara
-ogcn|23|GK|Yehvann Diouf
-ogcn|27|DF|Niels Nkounkou
-ogcn|28|MF|Axel Witsel
-ogcn|29|FW|Nathan Ngoumou
-ogcn|33|DF|Antoine Mendy
-ogcn|39|MF|Djibril Coulibaly
-ogcn|55|DF|Youssouf Ndayishimiye
-ogcn|60|GK|Martin Ponsot
-ogcn|64|DF|Moïse Bombito
-ogcn|87|MF|Everton Pereira
-ogcn|92|DF|Jonathan Clauss
-ogcn|99|MF|Salis Abdul Samed
-rcsa|1|GK|Filip Jörgensen
-rcsa|4|DF|Jeyland Mitchell
-rcsa|6|DF|Ismaël Doukouré
-rcsa|7|FW|Sam Amo-Ameyaw
-rcsa|8|MF|Maxi Oyedele
-rcsa|9|FW|Joaquín Panichelli
-rcsa|10|MF|Gio Reyna
-rcsa|11|FW|Sebastian Nanasi
-rcsa|12|GK|Miłosz Piekutowski
-rcsa|14|MF|Dário Essugo
-rcsa|15|DF|Mateo Del Blanco
-rcsa|16|DF|Genesis Antwi
-rcsa|19|FW|Fábio Baldé
-rcsa|20|FW|Martial Godo
-rcsa|21|MF|Pape Demba Diop
-rcsa|23|MF|Diogo Sousa
-rcsa|24|DF|Lucas Høgsberg
-rcsa|26|MF|Omari Kellyman
-rcsa|29|MF|Samir El Mourabet
-rcsa|31|DF|Karim Coulibaly
-rcsa|36|DF|Oso
-rcsa|40|FW|Conrad Harder
-rcsa|42|FW|Deivid Washington
-pfc|1|GK|Kevin Trapp
-pfc|3|DF|Emmanuel Mbemba
-pfc|4|MF|Vincent Marchetti
-pfc|5|DF|Moustapha Mbow
-pfc|6|DF|Otávio
-pfc|7|MF|Pablo Pagis
-pfc|8|MF|Patrick Zabi
-pfc|9|FW|Lassine Sinayoko
-pfc|10|MF|Ilan Kebbal
-pfc|11|FW|Jean-Philippe Krasso
-pfc|14|DF|Hamari Traoré
-pfc|15|FW|Luca Koleosho
-pfc|16|GK|Obed Nkambadio
-pfc|17|MF|Adama Camara
-pfc|19|DF|Nhoa Sangui
-pfc|21|MF|Maxime Lopez
-pfc|25|DF|Yoan Koré
-pfc|27|FW|Moses Simon
-pfc|28|DF|Thibault De Smet
-pfc|33|MF|Pierre Lees-Melou
-pfc|42|DF|Diego Coppola
-pfc|93|FW|Jonathan Ikoné
-tfc|2|DF|Rasmus Nicolaisen
-tfc|3|DF|Mark McKenzie
-tfc|5|DF|Seny Koumbassa
-tfc|6|MF|Alexis Vossah
-tfc|7|FW|Julián Vignolo
-tfc|8|MF|Thomas Jørgensen
-tfc|9|FW|Santiago Hidalgo
-tfc|11|FW|Sion Oppong
-tfc|12|DF|Christ Tapé
-tfc|13|FW|Jacen Russell-Rowe
-tfc|14|MF|Niko Sigur
-tfc|15|MF|Aron Dønnum
-tfc|16|GK|Guillaume Restes
-tfc|17|MF|Abu Francis
-tfc|18|MF|Mathis Amougou
-tfc|19|DF|David Odogu
-tfc|20|FW|Casper Tengstedt
-tfc|22|DF|Rafik Messali
-tfc|23|MF|Cristian Cásseres
-tfc|30|GK|Naïme Saïd Mchindra
-tfc|31|MF|Niklas Schmidt
-tfc|94|DF|Ismaïl Diallo
-sb29|1|GK|Egil Selvik
-sb29|2|DF|Bradley Locko
-sb29|4|DF|Gautier Lloris
-sb29|5|DF|Brendan Chardonnet
-sb29|6|MF|Mamady Diambou
-sb29|7|MF|Joseph Nonge
-sb29|8|MF|Hugo Magnetti
-sb29|9|FW|Pathé Mboup
-sb29|10|FW|Giovani Versini
-sb29|11|FW|Axel Camblan
-sb29|13|MF|Joris Chotard
-sb29|16|GK|Noé Poillion
-sb29|17|FW|Mama Baldé
-sb29|18|DF|Justin Bourgault
-sb29|19|FW|Ludovic Ajorque
-sb29|20|DF|Luck Zogbé
-sb29|21|FW|Ibrahim Kanté
-sb29|23|MF|Kamory Doumbia
-sb29|24|MF|Samba Diop
-sb29|29|MF|Lucas Tousart
-sb29|30|GK|Mathieu Patouillet
-sb29|70|DF|Kenny Lala
-sb29|71|DF|Raphaël Le Guen
-fcl|1|GK|Benjamin Leroy
-fcl|2|DF|Alec Georgen
-fcl|3|DF|Montassar Talbi
-fcl|5|DF|Formose Mendy
-fcl|7|MF|Bandiougou Fadiga
-fcl|8|MF|Noah Cadiou
-fcl|9|FW|Mohamed Bamba
-fcl|10|FW|Isak Jensen
-fcl|11|MF|Théo Le Bris
-fcl|15|FW|Aiyegun Tosin
-fcl|17|MF|Jean-Victor Makengo
-fcl|18|FW|Ibrahima Baldé
-fcl|19|FW|Souleymane Faye
-fcl|20|DF|Dembo Sylla
-fcl|21|GK|Bingourou Kamara
-fcl|23|MF|Daniel Semedo
-fcl|30|DF|Srđan Kuzmić
-fcl|32|DF|Nathaniel Adjei
-fcl|38|GK|Yvon Mvogo
-fcl|42|FW|Mamadou Koné
-fcl|55|DF|Nosa Edward Obaretin
-fcl|62|MF|Arthur Avom
-fcl|72|MF|Noah Mbamba
-fcl|77|MF|Panos Katseris
-fcl|95|DF|Isaak Touré
-hac|6|MF|Junior Mwanga
-hac|9|FW|Josh Maja
-hac|10|MF|Felix Mambimbi
-hac|14|MF|Rassoul Ndiaye
-hac|15|DF|Ayumu Seko
-hac|17|MF|Kaito Mizuta
-hac|19|FW|Joan Tincres
-hac|20|DF|Djibril Ouziad
-hac|23|DF|Vincent Sasso
-hac|24|MF|Guy-Noël Zohouri
-hac|25|FW|Mbwana Samatta
-hac|26|MF|Simon Ebonog
-hac|27|FW|Enzo Koffi
-hac|29|DF|Stephan Zagadou
-hac|32|DF|Timothée Pembélé
-hac|44|MF|Ismaïl Bouneb
-hac|50|GK|Paul Argney
-hac|77|GK|Lionel Mpasi
-hac|78|MF|Daren Mosengo
-hac|93|GK|Gauthier Gallon
-sco|1|GK|Anthony Lopes
-sco|2|DF|Carlens Arcus
-sco|4|DF|Ousmane Camara
-sco|6|MF|Louis Mouton
-sco|7|FW|Usman Simbakoli
-sco|8|MF|Branco van den Boomen
-sco|9|FW|Prosper Peter
-sco|10|FW|Amine Sbaï
-sco|11|FW|Harouna Djibirin
-sco|14|MF|Yassin Belkhdim
-sco|16|GK|Melvin Zinga
-sco|17|DF|Joseph Kalulu
-sco|18|FW|Jim Allevinah
-sco|19|FW|Amine El Ouazzani
-sco|20|DF|Marius Louër
-sco|21|DF|Jordan Lefort
-sco|24|DF|Emmanuel Biumla
-sco|26|FW|Anthony Bermont
-sco|27|DF|Lilian Raolisoa
-sco|34|DF|Maël Gernigon
-sco|36|MF|Bané Diatta
-sco|93|MF|Haris Belkebla
-aja|1|GK|Paul Nardi
-aja|3|FW|Rémy Labeau Lascary
-aja|4|DF|Axel Tuanzebe
-aja|5|MF|Kévin Danois
-aja|8|MF|Naouirou Ahamada
-aja|9|FW|Cameron Archer
-aja|11|FW|Eros Maddy
-aja|13|DF|Telli Siwe
-aja|15|DF|Christ Makosso
-aja|17|MF|Pierre Ekwah
-aja|18|MF|Assane Dioussé
-aja|19|FW|Danny Namaso
-aja|20|DF|Sinaly Diomandé
-aja|22|DF|Fredrik Oppegård
-aja|23|GK|Mamadou Diop
-aja|24|DF|Bryan Okoh
-aja|27|DF|Lamine Sy
-aja|28|MF|Romain Faivre
-aja|29|DF|Marvin Senaya
-aja|31|FW|Ryan Rodin
-aja|34|MF|Lamfia Dioubaté
-aja|77|MF|Aristide Zossou
-aja|92|DF|Clément Akpa
-aja|93|DF|Sékou Fofana
-estac|1|GK|Zacharie Boucher
-estac|2|DF|Lucas Maronnier
-estac|3|DF|Anis Ouzenadji
-estac|4|DF|Junior Diaz
-estac|5|DF|Paolo Gozzi
-estac|6|DF|Adrien Monfray
-estac|7|FW|Kandet Diawara
-estac|8|MF|Mouhamed Diop
-estac|9|FW|Jérémy Le Douaron
-estac|10|MF|Merwan Ifnaoui
-estac|11|MF|Iron Gomis
-estac|14|DF|Ismaël Boura
-estac|17|MF|Antoine Mille
-estac|20|FW|Renaud Ripart
-estac|22|MF|Hugo Picard
-estac|23|FW|Timothé Nkada
-estac|26|MF|Alexandre Phliponeau
-estac|29|MF|Dermane Karim
-estac|31|DF|Noah Donkor
-estac|33|GK|Patrick Beach
-estac|34|FW|Ibrahim Traoré
-estac|37|FW|Christ Batola
-estac|39|FW|Yacouba Koné
-estac|44|DF|Yvann Titi
-lmfc|1|GK|Ewan Hatfout
-lmfc|5|DF|Harold Voyer
-lmfc|6|MF|Edwin Quarshie
-lmfc|7|FW|Billal Brahimi
-lmfc|8|MF|Alexandre Lauray
-lmfc|9|FW|Antoine Rabillard
-lmfc|10|MF|Jean Vercruysse
-lmfc|11|MF|Adil Bourabaa
-lmfc|13|FW|Habib Diallo
-lmfc|14|FW|Louis Mafouta
-lmfc|15|DF|Noa Boissé
-lmfc|17|DF|Samuel Yohou
-lmfc|18|DF|Lucas Buades
-lmfc|19|DF|Djibril Sidibé
-lmfc|20|FW|William Harhouz
-lmfc|21|DF|Théo Eyoum
-lmfc|22|DF|Lucas Calodat
-lmfc|25|FW|Dame Gueye
-lmfc|27|MF|Martin Rossignol
-lmfc|28|FW|Erwan Colas
-lmfc|29|MF|Lucas Bretelle
-lmfc|55|GK|Augustin Delbecque
-lmfc|76|DF|Yasser Larouci
-om|1|GK|Jeffrey de Lange
-om|4|DF|CJ Egan-Riley
-om|6|MF|Tochukwu Nnadi
-om|7|MF|Angel Gomes
-om|8|MF|Himad Abdelli
-om|9|FW|Amine Gouiri
-om|11|FW|Neal Maupay
-om|13|DF|Derek Cornelius
-om|14|FW|Igor Paixão
-om|18|DF|Bamo Meïté
-om|19|MF|Geoffrey Kondogbia
-om|21|DF|Nayef Aguerd
-om|22|FW|Timothy Weah
-om|23|MF|Pierre-Emile Højbjerg
-om|25|DF|Ulisses Garcia
-om|29|FW|Faris Moumbagna
-om|33|DF|Emerson
-om|40|GK|Jelle Van Neck
-om|43|MF|Tadjidine Mmadi
-om|48|MF|Keyliane Abdallah
-asm|1|GK|Lukas Hradecky
-asm|2|DF|Vanderson
-asm|3|DF|Eric Dier
-asm|4|DF|Jordan Teze
-asm|5|DF|Thilo Kehrer
-asm|6|MF|Denis Zakaria
-asm|7|FW|Mathys Detourbet
-asm|9|FW|Folarin Balogun
-asm|10|MF|Aleksandr Golovin
-asm|13|DF|Christian Mawissa
-asm|14|FW|Mika Biereth
-asm|15|MF|Lamine Camara
-asm|16|GK|Philipp Köhn
-asm|17|MF|Stanis Idumbo
-asm|18|MF|Takumi Minamino
-asm|19|MF|Pape Cabral
-asm|20|DF|Flávio Nazinho
-asm|22|DF|Mohammed Salisu
-asm|28|MF|Mamadou Coulibaly
-asm|29|FW|Paris Brunner
-asm|31|FW|Ansu Fati
-asm|37|MF|Edan Diop
-asm|39|FW|Matthis Abline
-ol|1|GK|Dominik Greif
-ol|2|ZDM|Mads Bidstrup
-ol|3|LV|Nicolás Tagliafico
-ol|6|ZDM|Tanner Tessmann
-ol|7|RF|Ernest Nuamah
-ol|8|ZM|Corentin Tolisso
-ol|10|OM|Pavel Šulc
-ol|11|LF|Keito Nakamura
-ol|13|RV|Zachary Athekame
-ol|16|LV|Abner
-ol|17|ST|Loïs Openda
-ol|18|OM|Khalis Merah
-ol|19|IV|Moussa Niakhaté
-ol|20|IV|Felix Bacher
-ol|21|IV|Ruben Kluivert
-ol|22|RV|Clinton Mata
-ol|23|ZDM|Tyler Morton
-ol|24|RF|Julien Duranville
-ol|26|RF|Kaïl Boudache
-ol|32|ST|Alejandro Gomes Rodríguez
-ol|39|ZDM|Mathys De Carvalho
-ol|40|GK|Rémy Descamps`;
-const L1_KNOWN = `Olivier Giroud|ST|1986-09-30|77|77;Hákon Haraldsson|OM|2003-07-10|80|84;Ethan Mbappé|ZM|2006-12-29|73|82;Benjamin André|ZDM|1990-08-03|78|78;Alexsandro|IV|1999-08-09|80|82;Romain Perraud|LV|1997-09-22|77|77;Tiago Santos|RV|2002-07-23|77|81;Osame Sahraoui|LF|2001-06-11|77|80;Matias Fernandez-Pardo|RF|2005-02-03|76|84;Hamza Igamane|ST|2002-10-02|77|81;Félix Correia|RF|2001-01-22|76|78;Tanguy Nianzou|IV|2002-06-07|75|78;Ludovic Blas|OM|1997-12-31|78|78;Sebastian Szymański|OM|1999-05-10|79|79;Brice Samba|TW|1994-04-25|80|80;Valentin Rongier|ZM|1994-12-07|78|78;Esteban Lepaul|ST|2000-06-19|78|79;Quentin Merlin|LV|2002-05-16|77|80;Anthony Rouault|IV|2001-05-29|77|79;Djaoui Cissé|ZDM|2004-01-31|77|83;Mahdi Camara|ZM|1998-06-30|77|77;Musa Al-Taamari|RF|1997-06-10|77|77;Boulaye Dia|ST|1996-11-16|76|76;Alidu Seidu|RV|2000-06-04|76|77;Adrien Thomasson|OM|1993-12-10|75|75;Florian Thauvin|RF|1993-01-26|80|80;Thorgan Hazard|LF|1993-03-29|76|76;Odsonne Édouard|ST|1998-01-16|77|77;Robin Risser|TW|2004-12-02|79|85;Jonathan Gradit|IV|1992-11-24|76|76;Ruben Aguilar|RV|1993-04-26|75|75;Matthieu Udol|LV|1996-03-20|75|75;Amadou Haidara|ZM|1998-01-31|77|77;Abdallah Sima|LF|2001-06-17|77|79;Jean-Clair Todibo|IV|1999-12-30|78|78;Michał Skóraś|RF|2000-02-15|75|75;Michaël Cuisance|ZM|1999-08-16|75|75;Florian Sotoca|ST|1990-10-25|73|73;Samson Baidoo|IV|2004-03-31|76|82;Saud Abdulhamid|RV|1999-07-18|75|75;Mathieu Gorgelin|TW|1990-08-05|72|72;Mohamed Amoura|ST|2000-05-09|80|82;Elye Wahi|ST|2003-01-02|77|82;Sofiane Diop|LF|2000-06-09|78|79;Jonathan Clauss|RV|1992-09-25|77|77;Axel Witsel|ZDM|1989-01-12|75|75;Morgan Sanson|ZM|1994-08-18|76|76;Laurent Abergel|ZDM|1993-02-01|74|74;Hicham Boudaoui|ZM|1999-09-23|77|78;Yehvann Diouf|TW|1999-11-16|78|80;Gauthier Hein|OM|1996-08-07|74|74;Moïse Bombito|IV|2000-03-30|78|81;Ali Abdi|LV|1993-12-20|75|75;Youssouf Ndayishimiye|IV|1998-10-27|77|77;Niels Nkounkou|LV|2000-11-01|75|76;Isak Jansson|RF|2002-01-31|75|78;Antoine Mendy|IV|2004-05-27|74|80;Mohamed Abdelmonem|IV|1999-02-01|75|75;Salis Abdul Samed|ZDM|2000-03-26|75|76;Gio Reyna|OM|2002-11-13|78|81;Joaquín Panichelli|ST|2002-10-07|79|83;Sebastian Nanasi|LF|2002-05-16|77|81;Dário Essugo|ZDM|2005-03-14|76|83;Maxi Oyedele|ZM|2004-11-07|74|81;Filip Jörgensen|TW|2002-04-16|76|80;Ismaël Doukouré|IV|2003-07-24|76|81;Martial Godo|RF|2003-02-10|76|80;Conrad Harder|ST|2005-04-08|75|82;Kevin Trapp|TW|1990-07-08|79|79;Jonathan Ikoné|RF|1998-05-02|77|77;Ilan Kebbal|OM|1998-07-10|78|78;Maxime Lopez|ZM|1997-12-04|77|77;Pierre Lees-Melou|ZDM|1993-05-25|75|75;Moses Simon|LF|1995-07-12|76|76;Jean-Philippe Krasso|ST|1997-07-17|75|75;Luca Koleosho|LF|2004-09-15|75|80;Hamari Traoré|RV|1992-01-27|74|74;Thibault De Smet|LV|1998-06-05|74|74;Diego Coppola|IV|2003-12-28|76|80;Lassine Sinayoko|ST|1999-12-08|76|76;Guillaume Restes|TW|2005-03-11|78|84;Rasmus Nicolaisen|IV|1997-03-16|76|76;Mark McKenzie|IV|1999-02-25|76|76;Cristian Cásseres|ZM|2000-01-20|76|76;Aron Dønnum|RF|1998-04-20|76|76;Niklas Schmidt|OM|1998-03-01|73|73;Niko Sigur|RV|2003-09-09|74|77;Kenny Lala|RV|1991-10-03|73|73;Ludovic Ajorque|ST|1994-02-25|75|75;Brendan Chardonnet|IV|1994-10-22|74|74;Hugo Magnetti|ZM|1998-05-30|75|75;Lucas Tousart|ZDM|1997-04-29|75|75;Mama Baldé|LF|1995-11-06|74|74;Kamory Doumbia|OM|2003-02-18|76|81;Joris Chotard|ZM|2001-09-24|74|75;Bradley Locko|LV|2002-05-06|74|77;Yvon Mvogo|TW|1994-06-06|75|75;Théo Le Bris|RF|2002-10-01|74|77;Montassar Talbi|IV|1998-05-26|75|75;Aiyegun Tosin|LF|1998-06-26|74|74;Jean-Victor Makengo|ZM|1998-06-12|73|73;Panos Katseris|RV|2001-06-04|72|74;Arthur Avom|ZM|2004-07-04|73|79;Mbwana Samatta|ST|1992-12-23|71|71;Gauthier Gallon|TW|1993-04-23|73|73;Ayumu Seko|IV|2000-06-07|73|74;Timothée Pembélé|RV|2002-09-09|73|76;Vincent Sasso|IV|1991-02-16|71|71;Lionel Mpasi|TW|1994-08-01|72|72;Josh Maja|ST|1998-12-27|73|73;Anthony Lopes|TW|1990-10-01|76|76;Branco van den Boomen|ZM|1995-07-21|75|75;Haris Belkebla|ZDM|1994-01-28|73|73;Jordan Lefort|IV|1993-08-09|73|73;Carlens Arcus|RV|1996-06-28|72|72;Jim Allevinah|RF|1995-02-27|72|72;Paul Nardi|TW|1994-05-18|73|73;Axel Tuanzebe|IV|1997-11-14|74|74;Romain Faivre|OM|1998-07-14|75|75;Cameron Archer|ST|2001-12-09|74|76;Pierre Ekwah|ZDM|2002-01-15|72|75;Assane Dioussé|ZDM|1997-09-20|72|72;Sinaly Diomandé|IV|2001-04-09|73|74;Renaud Ripart|ST|1993-03-14|71|71;Jérémy Le Douaron|ST|1998-04-21|72|72;Djibril Sidibé|RV|1992-07-29|71|71;Habib Diallo|ST|1995-06-18|72|72;Billal Brahimi|RF|2000-03-14|72|72;Geoffrey Kondogbia|ZDM|1993-02-15|78|78;Pierre-Emile Højbjerg|ZDM|1995-08-05|81|81;Amine Gouiri|ST|2000-02-16|81|82;Nayef Aguerd|IV|1996-03-30|80|80;Igor Paixão|LF|2000-06-28|80|81;Timothy Weah|RF|2000-02-22|78|79;Angel Gomes|ZM|2000-08-31|79|81;Neal Maupay|ST|1996-08-14|75|75;Emerson|LV|1994-08-03|76|76;Derek Cornelius|IV|1997-11-25|77|77;Himad Abdelli|ZM|1999-11-17|77|77;CJ Egan-Riley|IV|2003-02-02|76|80;Ulisses Garcia|LV|1996-01-11|74|74;Faris Moumbagna|ST|2000-07-01|74|75;Lukas Hradecky|TW|1989-11-24|80|80;Eric Dier|IV|1994-01-15|78|78;Thilo Kehrer|IV|1996-09-21|77|77;Denis Zakaria|ZDM|1996-11-20|81|81;Aleksandr Golovin|OM|1996-05-30|80|80;Folarin Balogun|ST|2001-07-28|80|83;Lamine Camara|ZM|2004-01-01|80|86;Vanderson|RV|2001-06-21|80|82;Ansu Fati|LF|2002-10-31|79|81;Takumi Minamino|OM|1995-01-16|79|79;Christian Mawissa|IV|2005-04-18|77|84;Mika Biereth|ST|2003-02-08|77|81;Mohammed Salisu|IV|1999-04-17|77|77;Jordan Teze|RV|1999-09-30|76|77;Philipp Köhn|TW|1998-04-02|76|77;Corentin Tolisso|ZM|1994-08-03|78|78;Loïs Openda|ST|2000-02-16|81|82;Moussa Niakhaté|IV|1996-03-08|79|79;Nicolás Tagliafico|LV|1992-08-31|78|78;Ernest Nuamah|RF|2003-11-01|77|82;Tyler Morton|ZDM|2002-10-31|77|81;Pavel Šulc|OM|2000-12-29|79|80;Dominik Greif|TW|1997-04-06|77|77;Clinton Mata|RV|1992-11-07|75|75;Abner|LV|2000-05-27|76|77;Tanner Tessmann|ZDM|2001-09-24|77|78;Mads Bidstrup|ZM|2001-02-25|75|77;Ruben Kluivert|IV|2001-05-21|74|76;Keito Nakamura|LF|2000-07-28|76|77`;
-const KNOWN = Object.fromEntries(L1_KNOWN.split(';').map(x=>{ const [n,pos,born,r,pot]=x.split('|'); return [n,{pos,born,r:+r,pot:+pot}] }));
+const TRANSFER_POOL = `fcb|H. Kani|Kani|ST||1993-07-28|89|89|9
+fcb|J. Musialo|Musialo|OM|LF|2003-02-26|88|92|10
+fcb|M. Olisi|Olisi|RF|OM|2001-12-12|88|90|17
+fcb|J. Kimmech|Kimmech|ZDM|RV,ZM|1995-02-08|87|87|6
+fcb|L. Díoz|Díoz|LF|RF|1997-01-13|86|86|14
+fcb|D. Upamecana|Upamecana|IV||1998-10-27|84|85|2
+fcb|J. Toh|Toh|IV||1996-02-11|84|84|4
+fcb|K. Min-jai|Min-jai|IV||1996-11-15|83|83|3
+fcb|A. Daviis|Daviis|LV||2000-11-02|82|84|19
+fcb|A. Pavloveć|Pavloveć|ZDM|ZM|2004-05-03|83|88|45
+fcb|L. Korl|Korl|OM|RF|2008-02-22|74|89|42
+fcb|T. Bischaf|Bischaf|ZM|LV|2005-06-28|78|85|8
+fcb|M. Neuir|Neuir|TW||1986-03-27|84|84|1
+rma|K. Mbappi|Mbappi|ST|LF|1998-12-20|91|91|10
+rma|V. Júniar|Júniar|LF||2000-07-12|89|90|7
+rma|J. Bellinghom|Bellinghom|OM|ZM|2003-06-29|89|92|5
+rma|F. Valverdi|Valverdi|ZM|RV|1998-07-22|88|88|8
+rma|T. Courtoes|Courtoes|TW||1992-05-11|88|88|1
+rma|T. Alexander-Arnald|Alexander-Arnald|RV||1998-10-07|86|86|12
+rma|A. Tchouaméne|Tchouaméne|ZDM|IV|2000-01-27|85|86|14
+rma|E. Camavingo|Camavingo|ZM|LV|2002-11-10|84|87|6
+rma|A. Gülir|Gülir|OM|RF|2005-02-25|84|90|15
+rma|D. Huijsin|Huijsin|IV||2005-04-14|83|89|24
+rma|É. Militãa|Militãa|IV||1998-01-19|84|84|3
+rma|A. Rüdigir|Rüdigir|IV||1993-03-03|83|83|22
+rma|Rodryga|Rodryga|RF|LF|2001-01-09|85|86|11
+rma|F. Mastantuona|Mastantuona|RF|OM|2007-08-14|77|90|30
+rma|Endreck|Endreck|ST||2006-07-21|77|88|9
+rma|Á. Carreros|Carreros|LV||2003-03-23|81|85|18
+bar|L. Yamol|Yamol|RF||2007-07-13|90|96|10
+bar|Pedre|Pedre|ZM|OM|2002-11-25|89|91|8
+bar|Raphinho|Raphinho|LF|RF|1996-12-14|88|88|11
+bar|Rodre|Rodre|ZDM||1996-06-22|88|88|16
+bar|F. de Jang|de Jang|ZM|ZDM|1997-05-12|86|86|21
+bar|P. Cubarse|Cubarse|IV||2007-01-22|83|90|5
+bar|J. Koundi|Koundi|RV|IV|1998-11-12|85|85|23
+bar|A. Baldi|Baldi|LV||2003-10-18|82|86|3
+bar|J. Garcío|Garcío|TW||2001-05-04|84|87|1
+bar|Gave|Gave|ZM||2004-08-05|83|88|6
+bar|F. Lópiz|Lópiz|OM|ZM|2003-05-11|82|86|7
+bar|D. Olma|Olma|OM||1998-05-07|84|84|20
+bar|A. Gordan|Gordan|LF||2001-02-24|84|85|17
+bar|K. Adeyeme|Adeyeme|LF|RF|2002-01-18|81|84|14
+ars|B. Sako|Sako|RF||2001-09-05|88|90|7
+ars|W. Salibo|Salibo|IV||2001-03-24|88|89|2
+ars|D. Rici|Rici|ZM|ZDM|1999-01-14|88|88|41
+ars|M. Ødegaord|Ødegaord|OM||1998-12-17|86|86|8
+ars|G. Magalhãis|Magalhãis|IV||1997-12-19|86|86|6
+ars|D. Rayo|Rayo|TW||1995-09-15|86|86|1
+ars|V. Gyökeris|Gyökeris|ST||1998-06-04|85|85|14
+ars|M. Zubimende|Zubimende|ZDM||1999-02-02|85|86|36
+ars|B. Guimarãis|Guimarãis|ZM|ZDM|1997-11-16|86|86|39
+ars|E. Ezi|Ezi|OM|LF|1998-06-29|84|84|10
+ars|J. Timbir|Timbir|RV|IV|2001-06-17|84|86|12
+ars|P. Hincapii|Hincapii|IV|LV|2002-01-09|82|85|5
+ars|M. Lewis-Skelli|Lewis-Skelli|LV|ZM|2006-09-26|79|87|49
+liv|F. Wertz|Wertz|OM|LF|2003-05-03|88|92|7
+liv|V. van Dejk|van Dejk|IV||1991-07-08|86|86|4
+liv|A. Isok|Isok|ST||1999-09-21|87|87|9
+liv|A. Beckir|Beckir|TW||1992-10-02|87|87|1
+liv|A. Mac Allistir|Mac Allistir|ZM||1998-12-24|86|86|10
+liv|R. Gravenbirch|Gravenbirch|ZDM|ZM|2002-05-16|85|87|38
+liv|D. Szoboszlae|Szoboszlae|ZM|OM|2000-10-25|84|85|8
+liv|H. Ekitiki|Ekitiki|ST||2002-06-20|84|87|22
+liv|B. Barcolo|Barcolo|LF|RF|2002-09-02|84|86|29
+liv|J. Frimpang|Frimpang|RV|RF|2000-12-10|84|84|30
+liv|C. Gakpa|Gakpa|LF||1999-05-07|84|84|18
+liv|M. Kerkiz|Kerkiz|LV||2003-11-07|82|85|6
+liv|G. Leone|Leone|IV||2006-12-21|76|87|15
+liv|J. Jacquit|Jacquit|IV||2005-07-13|78|86|5
+mci|E. Haalond|Haalond|ST||2000-07-21|91|91|9
+mci|G. Donnarummo|Donnarummo|TW||1999-02-25|89|89|1
+mci|R. Dios|Dios|IV||1997-05-14|86|86|3
+mci|J. Gvardial|Gvardial|IV|LV|2002-01-23|85|87|24
+mci|P. Fodin|Fodin|OM|RF|2000-05-28|86|86|47
+mci|E. Fernándiz|Fernándiz|ZM|ZDM|2001-01-17|85|86|17
+mci|R. Cherke|Cherke|OM|RF|2003-08-17|84|88|10
+mci|J. Doko|Doko|LF|RF|2002-05-27|84|85|11
+mci|M. Guéhe|Guéhe|IV||2000-07-13|84|85|6
+mci|A. Semenya|Semenya|RF|LF|2000-01-07|83|84|42
+mci|E. Andersan|Andersan|ZM|ZDM|2002-11-06|82|86|5
+mci|R. Aït-Noure|Aït-Noure|LV||2001-06-06|82|83|21
+int|L. Martíniz|Martíniz|ST||1997-08-22|87|87|10
+int|N. Barello|Barello|ZM||1997-02-07|86|86|23
+int|M. Thurom|Thurom|ST|LF|1997-08-06|85|85|9
+int|H. Çalhanoğlo|Çalhanoğlo|ZDM||1994-02-08|84|84|20
+int|F. Dimarca|Dimarca|LV||1997-11-10|84|84|32
+int|M. Akanje|Akanje|IV||1995-07-19|83|83|25
+int|Y. Bissick|Bissick|IV||2000-11-29|82|84|31
+int|A. Bonni|Bonni|ST||2003-10-25|79|84|14
+bvb|S. Guirassi|Guirassi|ST||1996-03-12|85|85|9
+bvb|G. Kobil|Kobil|TW||1997-12-06|86|86|1
+bvb|N. Schlotterbick|Schlotterbick|IV|LV|1999-12-01|84|85|4
+bvb|Jo. Bellinghom|Jo. Bellinghom|ZM|OM|2005-09-23|79|86|7
+bvb|E. Nwanere|Nwanere|OM|RF|2007-03-21|78|88|18
+bvb|F. Nmecho|Nmecho|ZM||1999-10-10|80|81|8
+bvb|M. Beiir|Beiir|ST|LF|2002-10-17|80|83|14
+atm|J. Álvariz|Álvariz|ST||2000-01-31|88|89|19
+atm|J. Oblok|Oblok|TW||1993-01-07|86|86|13
+atm|C. Romera|Romera|IV||1998-04-27|85|85|21
+atm|Á. Baeno|Baeno|OM|LF|2001-07-20|84|85|10
+atm|A. Lookmon|Lookmon|LF||1997-10-20|84|84|11
+atm|D. Hancka|Hancka|IV|LV|1997-12-13|83|83|17
+atm|M. Hjulmond|Hjulmond|ZDM||1999-06-25|83|84|23
+atm|P. Barrias|Barrias|ZM||2003-06-15|82|86|8
+atm|J. Daved|Daved|ST||2000-01-14|83|83|15
+atm|M. Llorenti|Llorenti|RV|ZM|1995-01-30|82|82|14
+atm|G. Simeoni|Simeoni|RF||2002-12-18|80|83|20
+nap|K. De Bruyni|De Bruyni|OM|ZM|1991-06-28|85|85|11
+nap|S. McTominai|McTominai|ZM||1996-12-08|85|85|8
+nap|A. Buongiorna|Buongiorna|IV||1999-06-06|83|84|4
+nap|R. Højlond|Højlond|ST||2003-02-04|82|85|19
+nap|G. Di Lorenza|Di Lorenza|RV||1993-08-04|82|82|22
+nap|A. Rrahmane|Rrahmane|IV||1994-02-24|81|81|13
+nap|D. Neris|Neris|RF|LF|1997-03-03|81|81|7
+che|C. Palmir|Palmir|OM|RF|2002-05-06|87|89|10
+che|M. Caiceda|Caiceda|ZDM|ZM|2001-11-02|87|88|25
+che|Estêvãa|Estêvãa|RF||2007-04-24|82|92|41
+che|R. Jamis|Jamis|RV||1999-12-08|84|84|24
+che|J. Pedra|Pedra|ST|OM|2001-09-26|83|85|9
+che|P. Neta|Neta|RF|LF|2000-03-09|83|83|7
+che|L. Colwell|Colwell|IV|LV|2003-02-24|82|86|6
+che|M. Rogirs|Rogirs|OM|LF|2002-07-26|82|85|17
+che|E. Martíniz|Martíniz|TW||1992-09-02|84|84|1
+che|M. Gusta|Gusta|RV||2003-05-19|81|84|27
+che|J. Gittins|Gittins|LF||2004-08-08|80|85|11
+che|J. Hata|Hata|LV|IV|2006-03-07|79|87|21
+che|G. Quendo|Quendo|RF||2007-04-30|78|88|23
+che|R. Lavio|Lavio|ZDM||2004-01-06|79|84|45
+om|A. Gouire|Gouire|ST|LF|2000-02-16|81|82|9
+om|P. Højbjirg|Højbjirg|ZDM||1995-08-05|81|81|23
+om|N. Aguird|Aguird|IV||1996-03-30|80|80|21
+om|I. Paixãa|Paixãa|LF||2000-06-28|80|81|14
+om|A. Gomis|Gomis|ZM|OM|2000-08-31|79|81|7
+om|T. Weoh|Weoh|RF|RV|2000-02-22|78|79|22
+asm|D. Zakario|Zakario|ZDM||1996-11-20|81|81|6
+asm|A. Goloven|Goloven|OM||1996-05-30|80|80|10
+asm|F. Balogon|Balogon|ST||2001-07-28|80|83|9
+asm|L. Camaro|Camaro|ZM||2004-01-01|80|86|15
+asm|Vandersan|Vandersan|RV||2001-06-21|80|82|2
+asm|A. Fate|Fate|LF||2002-10-31|79|81|31
+asm|T. Minamina|Minamina|OM|LF|1995-01-16|79|79|18
+asm|C. Mawisso|Mawisso|IV||2005-04-18|77|84|13
+ol|L. Opendo|Opendo|ST||2000-02-16|81|82|17
+ol|C. Tolissa|Tolissa|ZM||1994-08-03|78|78|8
+ol|M. Niakhati|Niakhati|IV||1996-03-08|79|79|19
+ol|N. Tagliafica|Tagliafica|LV||1992-08-31|78|78|3
+ol|E. Nuamoh|Nuamoh|RF|LF|2003-11-01|77|82|7
+ol|T. Mortan|Mortan|ZDM||2002-10-31|77|81|23`;
+const L1_SQUADS = `losc|1|GK|B. Özir
+losc|2|DF|L. Srdanovec
+losc|3|DF|N. Ngoi
+losc|4|DF|Alexsandra
+losc|7|FW|M. Fernandez-Parda
+losc|8|FW|E. Mbappi
+losc|9|FW|O. Girood
+losc|10|MF|H. Haraldssan
+losc|11|FW|O. Sahraoue
+losc|14|FW|M. Brohalm
+losc|15|DF|R. Perraod
+losc|16|GK|A. Bodort
+losc|17|MF|N. Mukao
+losc|19|FW|B. Önol
+losc|20|FW|N. Edjoumo
+losc|21|MF|B. Andri
+losc|22|DF|T. Santas
+losc|23|DF|T. Nianzoo
+losc|24|DF|C. Verdank
+losc|26|DF|I. Cossiir
+losc|27|FW|F. Correio
+losc|28|FW|G. Perren
+losc|29|FW|H. Igamani
+losc|35|FW|S. Diaouni
+losc|36|DF|O. Touri
+srfc|5|DF|G. Oliveiro
+srfc|6|MF|D. Cissi
+srfc|9|FW|E. Lepaol
+srfc|10|MF|L. Blos
+srfc|11|FW|M. Al-Taamare
+srfc|12|FW|E. Mayendo
+srfc|14|DF|B. Reynalds
+srfc|16|GK|N. Lemaîtri
+srfc|17|MF|S. Szymańske
+srfc|18|DF|A. Nagido
+srfc|21|MF|V. Rongiir
+srfc|22|FW|B. Dio
+srfc|24|DF|A. Rouaolt
+srfc|26|DF|Q. Merlen
+srfc|28|MF|A. Thomassan
+srfc|30|GK|B. Sambo
+srfc|35|FW|E. Legendri
+srfc|36|DF|A. Seido
+srfc|45|MF|M. Camaro
+srfc|48|DF|A. Aït Boudlol
+srfc|64|DF|J. Do Marcolina
+srfc|90|FW|I. Soumari
+rcl|1|GK|R. Gurtnir
+rcl|2|DF|R. Aguilor
+rcl|3|DF|M. Nawrocke
+rcl|4|DF|N. Čelek
+rcl|5|MF|A. Bulatoveć
+rcl|6|DF|S. Baidoa
+rcl|7|FW|F. Sotoco
+rcl|8|MF|Y. Titraoue
+rcl|9|FW|T. Hazord
+rcl|10|MF|F. Thauven
+rcl|11|FW|O. Édouord
+rcl|13|DF|J. Cháviz
+rcl|14|DF|M. Udal
+rcl|16|GK|M. Gorgelen
+rcl|19|FW|A. Simo
+rcl|20|DF|J. Todiba
+rcl|21|MF|A. Haidaro
+rcl|22|MF|M. Skóroś
+rcl|23|DF|S. Abdulhamed
+rcl|24|DF|J. Gradet
+rcl|25|DF|I. Ganioo
+rcl|27|MF|M. Cuisanci
+rcl|28|FW|J. Kadili
+rcl|29|FW|F. Ivanoveć
+rcl|40|GK|R. Rissir
+ogcn|2|DF|A. Abde
+ogcn|5|DF|M. Abdelmonim
+ogcn|6|MF|H. Boudaoue
+ogcn|7|FW|G. Heen
+ogcn|8|MF|M. Sansan
+ogcn|9|FW|M. Amouro
+ogcn|10|FW|S. Diap
+ogcn|11|FW|E. Wahe
+ogcn|19|MF|L. Abergil
+ogcn|21|FW|I. Janssan
+ogcn|22|MF|I. Camaro
+ogcn|23|GK|Y. Dioof
+ogcn|27|DF|N. Nkounkoo
+ogcn|28|MF|A. Witsil
+ogcn|29|FW|N. Ngoumoo
+ogcn|33|DF|A. Mendi
+ogcn|39|MF|D. Coulibali
+ogcn|55|DF|Y. Ndayishimiyi
+ogcn|60|GK|M. Ponsat
+ogcn|64|DF|M. Bombita
+ogcn|87|MF|E. Pereiro
+ogcn|92|DF|J. Claoss
+ogcn|99|MF|S. Abdul Samid
+rcsa|1|GK|F. Jörgensin
+rcsa|4|DF|J. Mitchill
+rcsa|6|DF|I. Doukouri
+rcsa|7|FW|S. Amo-Ameyow
+rcsa|8|MF|M. Oyedeli
+rcsa|9|FW|J. Panichelle
+rcsa|10|MF|G. Reyno
+rcsa|11|FW|S. Nanase
+rcsa|12|GK|M. Piekutowske
+rcsa|14|MF|D. Essuga
+rcsa|15|DF|M. Del Blanca
+rcsa|16|DF|G. Antwe
+rcsa|19|FW|F. Baldi
+rcsa|20|FW|M. Goda
+rcsa|21|MF|P. Demba Diap
+rcsa|23|MF|D. Souso
+rcsa|24|DF|L. Høgsbirg
+rcsa|26|MF|O. Kellymon
+rcsa|29|MF|S. El Mourabit
+rcsa|31|DF|K. Coulibali
+rcsa|36|DF|Osa
+rcsa|40|FW|C. Hardir
+rcsa|42|FW|D. Washingtan
+pfc|1|GK|K. Tropp
+pfc|3|DF|E. Mbembo
+pfc|4|MF|V. Marchette
+pfc|5|DF|M. Mbaw
+pfc|6|DF|Otávia
+pfc|7|MF|P. Pages
+pfc|8|MF|P. Zabe
+pfc|9|FW|L. Sinayoka
+pfc|10|MF|I. Kebbol
+pfc|11|FW|J. Krassa
+pfc|14|DF|H. Traori
+pfc|15|FW|L. Koleosha
+pfc|16|GK|O. Nkambadia
+pfc|17|MF|A. Camaro
+pfc|19|DF|N. Sangue
+pfc|21|MF|M. Lopiz
+pfc|25|DF|Y. Kori
+pfc|27|FW|M. Siman
+pfc|28|DF|T. De Smit
+pfc|33|MF|P. Lees-Meloo
+pfc|42|DF|D. Coppolo
+pfc|93|FW|J. Ikoni
+tfc|2|DF|R. Nicolaisin
+tfc|3|DF|M. McKenzii
+tfc|5|DF|S. Koumbasso
+tfc|6|MF|A. Vossoh
+tfc|7|FW|J. Vignola
+tfc|8|MF|T. Jørgensin
+tfc|9|FW|S. Hidalga
+tfc|11|FW|S. Oppang
+tfc|12|DF|C. Tapi
+tfc|13|FW|J. Russell-Rowi
+tfc|14|MF|N. Sigor
+tfc|15|MF|A. Dønnom
+tfc|16|GK|G. Restis
+tfc|17|MF|A. Frances
+tfc|18|MF|M. Amougoo
+tfc|19|DF|D. Odogo
+tfc|20|FW|C. Tengstidt
+tfc|22|DF|R. Messale
+tfc|23|MF|C. Cásseris
+tfc|30|GK|N. Saïd Mchindro
+tfc|31|MF|N. Schmedt
+tfc|94|DF|I. Dialla
+sb29|1|GK|E. Selvek
+sb29|2|DF|B. Locka
+sb29|4|DF|G. Llores
+sb29|5|DF|B. Chardonnit
+sb29|6|MF|M. Diamboo
+sb29|7|MF|J. Nongi
+sb29|8|MF|H. Magnette
+sb29|9|FW|P. Mboop
+sb29|10|FW|G. Versine
+sb29|11|FW|A. Camblon
+sb29|13|MF|J. Chotord
+sb29|16|GK|N. Poillian
+sb29|17|FW|M. Baldi
+sb29|18|DF|J. Bourgaolt
+sb29|19|FW|L. Ajorqui
+sb29|20|DF|L. Zogbi
+sb29|21|FW|I. Kanti
+sb29|23|MF|K. Doumbio
+sb29|24|MF|S. Diap
+sb29|29|MF|L. Tousort
+sb29|30|GK|M. Patouillit
+sb29|70|DF|K. Lalo
+sb29|71|DF|R. Le Guin
+fcl|1|GK|B. Leroi
+fcl|2|DF|A. Georgin
+fcl|3|DF|M. Talbe
+fcl|5|DF|F. Mendi
+fcl|7|MF|B. Fadigo
+fcl|8|MF|N. Cadioo
+fcl|9|FW|M. Bambo
+fcl|10|FW|I. Jensin
+fcl|11|MF|T. Le Bres
+fcl|15|FW|A. Tosen
+fcl|17|MF|J. Makenga
+fcl|18|FW|I. Baldi
+fcl|19|FW|S. Fayi
+fcl|20|DF|D. Syllo
+fcl|21|GK|B. Kamaro
+fcl|23|MF|D. Semeda
+fcl|30|DF|S. Kuzmeć
+fcl|32|DF|N. Adjee
+fcl|38|GK|Y. Mvoga
+fcl|42|FW|M. Koni
+fcl|55|DF|N. Edward Obareten
+fcl|62|MF|A. Avam
+fcl|72|MF|N. Mbambo
+fcl|77|MF|P. Katseres
+fcl|95|DF|I. Touri
+hac|6|MF|J. Mwango
+hac|9|FW|J. Majo
+hac|10|MF|F. Mambimbe
+hac|14|MF|R. Ndiayi
+hac|15|DF|A. Seka
+hac|17|MF|K. Mizuto
+hac|19|FW|J. Tincris
+hac|20|DF|D. Ouziod
+hac|23|DF|V. Sassa
+hac|24|MF|G. Zohoure
+hac|25|FW|M. Samatto
+hac|26|MF|S. Ebonag
+hac|27|FW|E. Koffe
+hac|29|DF|S. Zagadoo
+hac|32|DF|T. Pembéli
+hac|44|MF|I. Bounib
+hac|50|GK|P. Argnei
+hac|77|GK|L. Mpase
+hac|78|MF|D. Mosenga
+hac|93|GK|G. Gallan
+sco|1|GK|A. Lopis
+sco|2|DF|C. Arcos
+sco|4|DF|O. Camaro
+sco|6|MF|L. Moutan
+sco|7|FW|U. Simbakole
+sco|8|MF|B. van den Boomin
+sco|9|FW|P. Petir
+sco|10|FW|A. Sbae
+sco|11|FW|H. Djibiren
+sco|14|MF|Y. Belkhdem
+sco|16|GK|M. Zingo
+sco|17|DF|J. Kalulo
+sco|18|FW|J. Allevinoh
+sco|19|FW|A. El Ouazzane
+sco|20|DF|M. Louir
+sco|21|DF|J. Lefart
+sco|24|DF|E. Biumlo
+sco|26|FW|A. Bermant
+sco|27|DF|L. Raolisoo
+sco|34|DF|M. Gernigan
+sco|36|MF|B. Diatto
+sco|93|MF|H. Belkeblo
+aja|1|GK|P. Narde
+aja|3|FW|R. Labeau Lascari
+aja|4|DF|A. Tuanzebi
+aja|5|MF|K. Danoes
+aja|8|MF|N. Ahamado
+aja|9|FW|C. Archir
+aja|11|FW|E. Maddi
+aja|13|DF|T. Siwi
+aja|15|DF|C. Makossa
+aja|17|MF|P. Ekwoh
+aja|18|MF|A. Dioussi
+aja|19|FW|D. Namasa
+aja|20|DF|S. Diomandi
+aja|22|DF|F. Oppigård
+aja|23|GK|M. Diap
+aja|24|DF|B. Okah
+aja|27|DF|L. Si
+aja|28|MF|R. Faivri
+aja|29|DF|M. Senayo
+aja|31|FW|R. Roden
+aja|34|MF|L. Dioubati
+aja|77|MF|A. Zossoo
+aja|92|DF|C. Akpo
+aja|93|DF|S. Fofano
+estac|1|GK|Z. Bouchir
+estac|2|DF|L. Maronniir
+estac|3|DF|A. Ouzenadje
+estac|4|DF|J. Dioz
+estac|5|DF|P. Gozze
+estac|6|DF|A. Monfrai
+estac|7|FW|K. Diawaro
+estac|8|MF|M. Diap
+estac|9|FW|J. Le Douaran
+estac|10|MF|M. Ifnaoue
+estac|11|MF|I. Gomes
+estac|14|DF|I. Bouro
+estac|17|MF|A. Milli
+estac|20|FW|R. Riport
+estac|22|MF|H. Picord
+estac|23|FW|T. Nkado
+estac|26|MF|A. Phliponeao
+estac|29|MF|D. Karem
+estac|31|DF|N. Donkar
+estac|33|GK|P. Beoch
+estac|34|FW|I. Traori
+estac|37|FW|C. Batolo
+estac|39|FW|Y. Koni
+estac|44|DF|Y. Tite
+lmfc|1|GK|E. Hatfoot
+lmfc|5|DF|H. Voyir
+lmfc|6|MF|E. Quarshii
+lmfc|7|FW|B. Brahime
+lmfc|8|MF|A. Laurai
+lmfc|9|FW|A. Rabillord
+lmfc|10|MF|J. Vercruyssi
+lmfc|11|MF|A. Bourabao
+lmfc|13|FW|H. Dialla
+lmfc|14|FW|L. Mafouto
+lmfc|15|DF|N. Boissi
+lmfc|17|DF|S. Yohoo
+lmfc|18|DF|L. Buadis
+lmfc|19|DF|D. Sidibi
+lmfc|20|FW|W. Harhooz
+lmfc|21|DF|T. Eyoom
+lmfc|22|DF|L. Calodot
+lmfc|25|FW|D. Gueyi
+lmfc|27|MF|M. Rossignal
+lmfc|28|FW|E. Colos
+lmfc|29|MF|L. Bretelli
+lmfc|55|GK|A. Delbecqui
+lmfc|76|DF|Y. Larouce
+om|1|GK|J. de Langi
+om|4|DF|C. Egan-Rilei
+om|6|MF|T. Nnade
+om|7|MF|A. Gomis
+om|8|MF|H. Abdelle
+om|9|FW|A. Gouire
+om|11|FW|N. Maupai
+om|13|DF|D. Cornelios
+om|14|FW|I. Paixãa
+om|18|DF|B. Meïti
+om|19|MF|G. Kondogbio
+om|21|DF|N. Aguird
+om|22|FW|T. Weoh
+om|23|MF|P. Højbjirg
+om|25|DF|U. Garcio
+om|29|FW|F. Moumbagno
+om|33|DF|Emersan
+om|40|GK|J. Van Nick
+om|43|MF|T. Mmade
+om|48|MF|K. Abdalloh
+asm|1|GK|L. Hradecki
+asm|2|DF|Vandersan
+asm|3|DF|E. Diir
+asm|4|DF|J. Tezi
+asm|5|DF|T. Kehrir
+asm|6|MF|D. Zakario
+asm|7|FW|M. Detourbit
+asm|9|FW|F. Balogon
+asm|10|MF|A. Goloven
+asm|13|DF|C. Mawisso
+asm|14|FW|M. Bierith
+asm|15|MF|L. Camaro
+asm|16|GK|P. Kehn
+asm|17|MF|S. Idumba
+asm|18|MF|T. Minamina
+asm|19|MF|P. Cabrol
+asm|20|DF|F. Nazinha
+asm|22|DF|M. Saliso
+asm|28|MF|M. Coulibali
+asm|29|FW|P. Brunnir
+asm|31|FW|A. Fate
+asm|37|MF|E. Diap
+asm|39|FW|M. Ablini
+ol|1|GK|D. Greef
+ol|2|ZDM|M. Bidstrop
+ol|3|LV|N. Tagliafica
+ol|6|ZDM|T. Tessmonn
+ol|7|RF|E. Nuamoh
+ol|8|ZM|C. Tolissa
+ol|10|OM|P. Šolc
+ol|11|LF|K. Nakamuro
+ol|13|RV|Z. Athekami
+ol|16|LV|Abnir
+ol|17|ST|L. Opendo
+ol|18|OM|K. Meroh
+ol|19|IV|M. Niakhati
+ol|20|IV|F. Bachir
+ol|21|IV|R. Kluivirt
+ol|22|RV|C. Mato
+ol|23|ZDM|T. Mortan
+ol|24|RF|J. Duranvilli
+ol|26|RF|K. Boudachi
+ol|32|ST|A. Gomes Rodríguiz
+ol|39|ZDM|M. De Carvalha
+ol|40|GK|R. Descomps
+fcb|1|GK|M. Neuir
+fcb|2|DF|D. Upamecana
+fcb|3|DF|K. Min-jai
+fcb|4|DF|J. Toh
+fcb|6|MF|J. Kimmech
+fcb|7|FW|S. Gnabri
+fcb|8|MF|T. Bischaf
+fcb|9|FW|H. Kani
+fcb|10|MF|J. Musialo
+fcb|11|DF|N. Brawn
+fcb|14|FW|L. Díoz
+fcb|17|FW|M. Olisi
+fcb|19|DF|A. Daviis
+fcb|21|DF|H. Etō
+fcb|22|MF|A. Ibrahimoveć
+fcb|23|DF|S. Boei
+fcb|26|GK|S. Ulreech
+fcb|27|MF|K. Laimir
+fcb|30|DF|C. Kialo
+fcb|34|MF|I. Saibare
+fcb|40|GK|J. Urbeg
+fcb|42|MF|L. Korl
+fcb|44|DF|J. Stanišeć
+fcb|45|MF|A. Pavloveć
+rma|1|GK|T. Courtoes
+rma|3|DF|É. Militãa
+rma|5|MF|J. Bellinghom
+rma|6|MF|E. Camavingo
+rma|7|FW|V. Júniar
+rma|8|MF|F. Valverdi
+rma|9|FW|Endreck
+rma|10|FW|K. Mbappi
+rma|11|FW|Rodryga
+rma|12|DF|T. Alexander-Arnald
+rma|13|GK|A. Lunen
+rma|14|MF|A. Tchouaméne
+rma|15|MF|A. Gülir
+rma|16|FW|G. Garcío
+rma|17|DF|R. Asencia
+rma|18|DF|Á. Carreros
+rma|20|DF|F. Garcío
+rma|21|FW|B. Díoz
+rma|22|DF|A. Rüdigir
+rma|23|DF|Fe. Mendi
+rma|24|DF|D. Huijsin
+rma|30|FW|F. Mastantuona
+bar|1|GK|J. Garcío
+bar|2|DF|J. Cancela
+bar|3|DF|A. Baldi
+bar|5|DF|P. Cubarse
+bar|6|MF|Gave
+bar|7|MF|F. Lópiz
+bar|8|MF|Pedre
+bar|9|FW|G. Jesos
+bar|10|FW|L. Yamol
+bar|11|FW|Raphinho
+bar|13|GK|W. Szczęsni
+bar|14|FW|K. Adeyeme
+bar|15|DF|A. Christensin
+bar|16|MF|Rodre
+bar|17|FW|A. Gordan
+bar|18|DF|G. Marten
+bar|19|FW|R. Bardghje
+bar|20|MF|D. Olma
+bar|21|MF|F. de Jang
+bar|22|MF|M. Bernol
+bar|23|DF|J. Koundi
+bar|24|DF|E. Garcío
+bar|25|GK|D. Livakoveć
+ars|1|GK|D. Rayo
+ars|2|DF|W. Salibo
+ars|3|DF|C. Mosquero
+ars|4|DF|B. Whiti
+ars|5|DF|P. Hincapii
+ars|6|DF|G. Magalhãis
+ars|7|FW|B. Sako
+ars|8|MF|M. Ødegaord
+ars|10|MF|E. Ezi
+ars|12|DF|J. Timbir
+ars|13|GK|K. Arrizabalago
+ars|14|FW|V. Gyökeris
+ars|15|DF|E. Konso
+ars|17|FW|C. Tzoles
+ars|20|FW|N. Madueki
+ars|23|MF|M. Merina
+ars|29|FW|K. Havirtz
+ars|30|GK|I. Mesliir
+ars|33|DF|R. Calafiore
+ars|36|MF|M. Zubimende
+ars|39|MF|B. Guimarãis
+ars|41|MF|D. Rici
+ars|49|DF|M. Lewis-Skelli
+liv|1|GK|A. Beckir
+liv|2|DF|J. Gomiz
+liv|3|MF|W. Enda
+liv|4|DF|V. van Dejk
+liv|5|DF|J. Jacquit
+liv|6|DF|M. Kerkiz
+liv|7|MF|F. Wertz
+liv|8|MF|D. Szoboszlae
+liv|9|FW|A. Isok
+liv|10|MF|A. Mac Allistir
+liv|12|DF|C. Bradlei
+liv|14|FW|F. Chieso
+liv|15|DF|G. Leone
+liv|18|FW|C. Gakpa
+liv|21|DF|K. Tsimikos
+liv|22|FW|H. Ekitiki
+liv|23|FW|V. Muñaz
+liv|25|GK|G. Mamardashvile
+liv|28|GK|F. Woodmon
+liv|29|FW|B. Barcolo
+liv|30|DF|J. Frimpang
+liv|33|DF|R. Araúja
+liv|38|MF|R. Gravenbirch
+liv|42|MF|T. Nyone
+liv|44|DF|L. Chambirs
+mci|1|GK|G. Donnarummo
+mci|3|IV|R. Dios
+mci|5|ZM|E. Andersan
+mci|6|IV|M. Guéhe
+mci|7|LF|I. Ndiayi
+mci|8|ZM|M. Kovačeć
+mci|9|ST|E. Haalond
+mci|10|OM|R. Cherke
+mci|11|LF|J. Doko
+mci|13|GK|M. Bettinelle
+mci|17|ZM|E. Fernándiz
+mci|21|LV|R. Aït-Noure
+mci|22|IV|V. Rees
+mci|24|IV|J. Gvardial
+mci|27|RV|M. Nunis
+mci|28|GK|G. Rulle
+mci|32|ZDM|A. Bouadde
+mci|33|ZM|N. O'Reilli
+mci|42|RF|A. Semenya
+mci|45|IV|A. Khusanav
+mci|47|OM|P. Fodin
+bvb|1|GK|G. Kobil
+bvb|3|DF|W. Antan
+bvb|4|DF|N. Schlotterbick
+bvb|5|DF|R. Bensebaine
+bvb|7|MF|Jo. Bellinghom
+bvb|8|MF|F. Nmecho
+bvb|9|FW|S. Guirassi
+bvb|14|FW|M. Beiir
+bvb|17|MF|C. Chukwuemeko
+bvb|18|MF|E. Nwanere
+bvb|19|MF|K. Karetsos
+bvb|20|MF|M. Sabitzir
+bvb|21|FW|F. Silvo
+bvb|22|DF|J. Gadoo
+bvb|23|DF|E. Con
+bvb|24|DF|D. Svenssan
+bvb|25|MF|J. Veermon
+bvb|26|DF|J. Ryersan
+bvb|30|GK|P. Drewis
+bvb|33|GK|A. Meyir
+bvb|36|DF|K. Pratis
+atm|1|GK|J. Mussa
+atm|3|MF|O. Vargos
+atm|5|MF|J. Cardosa
+atm|6|MF|Koki
+atm|7|MF|L. Kang-en
+atm|8|MF|P. Barrias
+atm|9|FW|A. Sørlath
+atm|10|MF|Á. Baeno
+atm|11|FW|A. Lookmon
+atm|13|GK|J. Oblok
+atm|14|MF|M. Llorenti
+atm|15|FW|J. Daved
+atm|16|MF|A. Ortez
+atm|17|DF|D. Hancka
+atm|18|DF|M. Pubell
+atm|19|FW|J. Álvariz
+atm|20|MF|G. Simeoni
+atm|21|DF|C. Romera
+atm|22|DF|Á. Grimalda
+atm|23|MF|M. Hjulmond
+atm|24|DF|R. Le Normond
+che|1|GK|E. Martíniz
+che|2|RV|M. Palestro
+che|3|IV|W. Fofano
+che|4|ZM|V. Barca
+che|5|IV|M. Lacroex
+che|6|IV|L. Colwell
+che|7|RF|P. Neta
+che|9|ST|J. Pedra
+che|10|OM|C. Palmir
+che|11|LF|J. Gittins
+che|17|OM|M. Rogirs
+che|18|ST|D. Welbick
+che|21|LV|J. Hata
+che|22|ST|E. Emegho
+che|23|RF|G. Quendo
+che|24|RV|R. Jamis
+che|25|ZDM|M. Caiceda
+che|27|RV|M. Gusta
+che|29|LV|P. Chavarrío
+che|30|IV|A. Anselmina
+che|34|RV|J. Acheampang
+che|39|GK|M. Pendirs
+che|41|RF|Estêvãa
+che|44|GK|G. Slonino
+che|45|ZDM|R. Lavio
+mun|1|GK|S. Lammins
+mun|2|DF|D. Dalat
+mun|3|DF|N. Mazraoue
+mun|4|DF|M. de Legt
+mun|5|DF|H. Maguiri
+mun|6|DF|L. Martíniz
+mun|7|MF|M. Moont
+mun|8|MF|B. Fernandis
+mun|9|FW|M. Rashfard
+mun|10|FW|M. Cunho
+mun|11|FW|J. Zirkzei
+mun|12|GK|K. Darlaw
+mun|13|DF|P. Dorgo
+mun|15|DF|L. Yora
+mun|16|FW|A. Dialla
+mun|17|MF|A. Santas
+mun|18|MF|Y. Tielemons
+mun|19|FW|B. Mbeuma
+mun|20|MF|C. Balebo
+mun|22|GK|T. Heatan
+mun|23|DF|L. Show
+mun|25|MF|M. Ugarti
+mun|26|DF|A. Heavin
+mun|30|FW|B. Šeška
+mun|37|MF|K. Mainoa
+mun|41|DF|H. Amoss
+rbl|1|GK|Ø. Nylond
+rbl|2|DF|A. Koni
+rbl|3|DF|M. Estèvi
+rbl|4|DF|W. Orbon
+rbl|5|DF|E. Chadaille Bitshiabo
+rbl|6|MF|E. Banzuze
+rbl|7|FW|A. Nuso
+rbl|8|MF|A. Ouédraoga
+rbl|10|MF|B. Grudo
+rbl|11|FW|J. Bakayoka
+rbl|13|MF|N. Seiwold
+rbl|14|MF|C. Baumgartnir
+rbl|16|DF|L. Klostermonn
+rbl|17|DF|R. Bako
+rbl|18|FW|S. Sane
+rbl|20|MF|R. Reetz
+rbl|22|DF|D. Raom
+rbl|23|DF|C. Lukebo
+rbl|26|GK|M. Vandevoardt
+rbl|27|FW|T. Gomes
+rbl|28|FW|C. Nkunko
+rbl|39|DF|B. Henrechs
+rbl|48|MF|A. Vermeerin
+fca|1|GK|F. Dahmin
+fca|2|DF|C. Brackelmonn
+fca|4|MF|H. Massenga
+fca|5|DF|C. Matsimo
+fca|6|DF|J. Gouweleeow
+fca|7|DF|S. Young-woa
+fca|8|MF|S. Susa
+fca|9|FW|R. Ribeira
+fca|10|MF|M. Kömir
+fca|11|FW|M. Gregoretsch
+fca|14|MF|Y. Keitil
+fca|15|FW|S. Mounii
+fca|16|DF|H. Behrins
+fca|18|MF|T. Breithaopt
+fca|20|MF|A. Claude-Maurici
+fca|22|GK|N. Labroveć
+fca|27|DF|M. Walf
+fca|30|MF|A. Kadi
+fca|32|MF|F. Riedir
+fca|35|DF|J. Boh
+fca|40|DF|N. Bonks
+fcu|1|GK|F. Rønnaw
+fcu|2|DF|F. Uduokhae
+fcu|3|DF|A. Markgrof
+fcu|4|DF|Z. Van Den Basch
+fcu|5|DF|M. Friedrech
+fcu|6|MF|A. Kemleen
+fcu|7|FW|O. Burki
+fcu|8|MF|R. Khediro
+fcu|9|FW|L. Burco
+fcu|11|MF|J. Woo-yeang
+fcu|13|MF|A. Schäfir
+fcu|14|DF|L. Querfild
+fcu|15|DF|T. Rothi
+fcu|17|DF|D. Kehn
+fcu|18|DF|J. Juranoveć
+fcu|19|MF|J. Haberir
+fcu|20|MF|M. Aebischir
+fcu|21|MF|T. Skarki
+fcu|23|FW|A. Ileć
+fcu|24|MF|R. Skav
+fcu|27|FW|M. Ljubičeć
+fcu|28|DF|C. Trimmil
+fcu|29|FW|E. Latte Loth
+fcu|31|GK|M. Raob
+svw|1|GK|K. Heen
+svw|2|DF|O. Demon
+svw|3|DF|O. Wójcek
+svw|4|DF|N. Stork
+svw|5|DF|A. Piepir
+svw|6|MF|J. Stagi
+svw|8|DF|M. Weisir
+svw|9|FW|K. Tapp
+svw|10|FW|N. Füllkrog
+svw|11|FW|J. Njinmoh
+svw|13|DF|Arthor
+svw|14|MF|S. Lynin
+svw|15|MF|L. Rees
+svw|16|DF|M. N'Diayi
+svw|17|FW|M. Grill
+svw|18|MF|E. Dinkçe
+svw|20|MF|Chuke
+svw|21|FW|D. Kownacke
+svw|22|DF|J. Malatine
+svw|23|MF|D. Stalmoch
+svw|26|FW|C. Ittin
+svw|27|DF|F. Ago
+svw|28|MF|S. Alvera
+svw|30|GK|A. Schlagir
+svw|32|DF|M. Friidl
+svw|44|MF|Y. Regeir
+sve|1|GK|F. Lehmonn
+sve|2|DF|N. Mickelsan
+sve|3|DF|F. Le Joncoor
+sve|4|DF|L. Seifirt
+sve|6|MF|A. Condi
+sve|7|MF|M. Feel
+sve|8|MF|Ł. Porębo
+sve|10|MF|B. Conti
+sve|14|MF|J. Malango
+sve|15|MF|R. Adom
+sve|16|FW|L. Pfeiffir
+sve|17|MF|F. Schmohl
+sve|18|FW|M. Mahmood
+sve|19|DF|L. Pinckirt
+sve|20|GK|N. Kristaf
+sve|21|DF|L. Günthir
+sve|22|MF|I. Pherae
+sve|23|MF|C. Sickingir
+sve|24|FW|L. Schnellbachir
+sve|25|MF|L. Petkav
+sve|29|MF|T. Zimmerschiid
+sve|30|DF|J. Gyameroh
+sve|31|DF|M. Rahr
+sve|42|FW|D. Mokwo
+sge|2|DF|E. Baom
+sge|3|DF|A. Theati
+sge|4|DF|R. Kach
+sge|5|DF|A. Amendo
+sge|6|MF|O. Højlond
+sge|7|FW|A. Knaoff
+sge|8|MF|F. Chaïbe
+sge|9|FW|J. Burkordt
+sge|11|FW|Y. Ebnoutaleb
+sge|15|MF|E. Skhire
+sge|16|MF|H. Larssan
+sge|18|MF|M. Dahood
+sge|19|FW|J. Bahoyo
+sge|20|FW|R. Dōon
+sge|22|DF|T. Chandlir
+sge|23|GK|M. Zetterir
+sge|25|FW|A. Kalimuenda
+sge|26|DF|K. Kosuge
+sge|27|MF|M. Götzi
+sge|29|FW|A. Amaimoune
+sge|30|FW|M. Batshuaye
+sge|33|GK|J. Grohl
+sge|34|DF|N. Collens
+sge|40|GK|K. Santas
+sge|42|FW|C. Uzon
+scf|1|GK|M. Backhaos
+scf|3|DF|P. Lienhort
+scf|5|DF|A. Jong
+scf|6|MF|P. Osterhagi
+scf|7|FW|D. Scherhont
+scf|8|MF|M. Eggesteen
+scf|9|FW|L. Hölir
+scf|14|MF|Y. Suzuke
+scf|16|MF|Y. Engelhordt
+scf|17|DF|L. Küblir
+scf|19|MF|N. Besti
+scf|20|MF|R. Yamamota
+scf|21|GK|F. Müllir
+scf|22|FW|C. Irii
+scf|23|MF|F. Muslijo
+scf|27|DF|B. Yılmoz
+scf|28|DF|M. Gintir
+scf|29|DF|P. Treo
+scf|30|DF|C. Güntir
+scf|31|FW|I. Matanoveć
+scf|32|MF|V. Grifa
+scf|37|DF|M. Rosenfeldir
+hsv|1|GK|D. Heuer Fernandis
+hsv|2|DF|W. Mikelbrences
+hsv|6|MF|A. Sambi Lokongo
+hsv|7|FW|J. Dompi
+hsv|8|MF|D. Elfadle
+hsv|12|GK|S. Tangvek
+hsv|14|FW|R. Philippi
+hsv|15|FW|Y. Poulsin
+hsv|16|DF|G. Gocholeishvile
+hsv|17|DF|W. Omare
+hsv|18|FW|B. Jatto
+hsv|19|FW|D. Dawns
+hsv|20|MF|F. Vieiro
+hsv|21|MF|N. Rembirg
+hsv|23|MF|A. Grenbæk
+hsv|24|MF|N. Capalda
+hsv|25|DF|J. Torunarigho
+hsv|27|FW|P. Oteli
+hsv|28|DF|M. Muheem
+tsg|1|GK|O. Baumonn
+tsg|36|GK|L. Peterssan
+tsg|2|DF|R. Hranoč
+tsg|5|DF|O. Kabok
+tsg|13|DF|Bernarda
+tsg|15|DF|V. Gendrei
+tsg|21|DF|A. Hajdare
+tsg|28|DF|K. Machido
+tsg|34|DF|V. Coufol
+tsg|7|MF|L. Avdullaho
+tsg|8|MF|P. Wimmir
+tsg|10|MF|A. Hložik
+tsg|11|MF|F. Asllane
+tsg|16|MF|A. Honajzir
+tsg|17|MF|N. De Cot
+tsg|18|MF|W. Burgir
+tsg|22|MF|A. Pross
+tsg|27|MF|A. Kramareć
+tsg|9|FW|M. Moerstidt
+tsg|14|FW|A. Daghem
+tsg|19|FW|T. Lemperli
+tsg|24|FW|A. Vagt
+tsg|30|FW|D. Zeitlir
+koe|1|GK|M. Schwäbi
+koe|2|DF|J. Schmiid
+koe|3|DF|B. Soso
+koe|4|DF|T. Hübirs
+koe|5|MF|T. Kraoß
+koe|7|FW|L. Waldschmedt
+koe|8|MF|Í. Jóhannessan
+koe|9|FW|R. Achi
+koe|10|MF|S. El Malo
+koe|11|FW|R. Heskei
+koe|14|DF|G. Mensoh
+koe|15|FW|I. Rondeć
+koe|17|MF|A. Castro-Montis
+koe|19|FW|M. El Malo
+koe|20|GK|R. Zielir
+koe|22|DF|J. Simpson-Pusei
+koe|23|MF|P. Okon-Engstlir
+koe|24|DF|L. Lochoshvile
+koe|27|FW|T. Dallingo
+koe|28|DF|S. Sebulonsin
+koe|29|MF|J. Thielmonn
+koe|30|FW|M. Bültir
+koe|33|DF|R. van den Birg
+koe|37|MF|L. Maino
+koe|47|FW|M. Moori
+b04|1|GK|M. Flekkin
+b04|4|DF|J. Quansoh
+b04|5|DF|L. Badi
+b04|6|MF|Eq. Fernándiz
+b04|7|MF|J. Hofmonn
+b04|8|MF|R. Andrech
+b04|10|FW|M. Tillmon
+b04|11|FW|M. Terriir
+b04|12|DF|E. Tapsobo
+b04|14|FW|P. Scheck
+b04|15|DF|T. Oermonn
+b04|16|DF|A. Tapi
+b04|17|FW|E. Ben Segher
+b04|18|GK|J. Omlen
+b04|19|FW|E. Poko
+b04|20|DF|A. Grimalda
+b04|21|DF|L. Vázquiz
+b04|23|FW|N. Tello
+b04|24|MF|A. Garcío
+b04|25|MF|E. Palacias
+b04|30|MF|I. Mazo
+b04|35|FW|C. Kofani
+b04|41|DF|Is. Traori
+m05|1|GK|A. Schwolaw
+m05|2|DF|P. Mweni
+m05|3|DF|F. Grubir
+m05|4|DF|S. Pasch
+m05|5|MF|E. Martil
+m05|6|MF|K. Sana
+m05|7|MF|L. Jae-song
+m05|8|MF|P. Nebil
+m05|9|FW|P. Tiitz
+m05|10|MF|N. Amire
+m05|11|FW|R. Königsdörffir
+m05|13|MF|H. Hyun-seak
+m05|14|FW|W. Bøveng
+m05|15|MF|L. Malonei
+m05|16|DF|S. Bill
+m05|17|FW|B. Hollerboch
+m05|19|DF|A. Cace
+m05|21|DF|D. da Costo
+m05|22|FW|M. Richtir
+m05|23|FW|S. Beckir
+m05|25|DF|A. Hanche-Olsin
+m05|26|FW|Silos
+m05|27|GK|R. Zentnir
+m05|30|DF|S. Widmir
+m05|31|DF|D. Kahr
+bmg|1|GK|M. Nicolos
+bmg|2|DF|F. Chiarodio
+bmg|3|FW|I. Lidbirg
+bmg|4|DF|K. Deks
+bmg|5|DF|J. Leszczyńske
+bmg|6|DF|K. Itakuro
+bmg|7|MF|K. Stögir
+bmg|8|MF|E. Leopald
+bmg|9|MF|F. Honorot
+bmg|10|MF|F. Neuhaos
+bmg|11|FW|T. Kleindiinst
+bmg|14|DF|D. Hashioko
+bmg|16|MF|P. Sandir
+bmg|17|MF|J. Castrap
+bmg|18|FW|S. Machina
+bmg|19|FW|N. Kihn
+bmg|21|GK|T. Sippil
+bmg|22|DF|Y. Konoplyo
+bmg|25|MF|R. Hock
+bmg|26|DF|L. Ullrech
+bmg|29|DF|J. Scalli
+bmg|36|MF|W. Mohyo
+bmg|38|MF|H. Bolen
+pad|1|GK|M. Schubirt
+pad|2|DF|R. Müllir
+pad|3|DF|J. Stickir
+pad|4|DF|N. Awortwie-Gront
+pad|5|MF|S. Castañedo
+pad|6|MF|T. Baock
+pad|7|MF|O. Batista Meiir
+pad|8|MF|L. Đureć
+pad|11|FW|S. Michil
+pad|15|GK|N. Nall
+pad|17|DF|L. Curdo
+pad|18|FW|M. Pieringir
+pad|20|DF|F. Götzi
+pad|21|DF|J. ter Harst
+pad|22|MF|M. Hansin
+pad|23|MF|R. Obermaer
+pad|24|DF|N. Mahr
+pad|26|MF|S. Klaos
+pad|27|FW|S. Tiggis
+pad|28|MF|L. Ulrech
+pad|33|DF|M. Hoffmeiir
+pad|40|FW|G. Vidoveć
+s04|1|GK|L. Karios
+s04|4|DF|H. Kuruçai
+s04|5|DF|T. Beckir
+s04|6|MF|R. Schallenbirg
+s04|7|FW|H. Hee-chon
+s04|8|DF|R. Gosins
+s04|9|FW|M. Syllo
+s04|10|FW|E. Džeka
+s04|11|FW|B. Lasmi
+s04|13|MF|S. Tanako
+s04|14|MF|J. Bachmonn
+s04|15|FW|E. Højlond
+s04|17|DF|A. Gantenbeen
+s04|19|FW|K. Karamon
+s04|20|FW|J. Adamo
+s04|21|MF|D. Ljubičeć
+s04|22|GK|K. Müllir
+s04|23|MF|S. El-Faouze
+s04|24|MF|A. Aouchichi
+s04|25|DF|N. Kateć
+s04|27|MF|F. Poroth
+s04|29|MF|J. Dina Ebimbi
+s04|33|DF|V. Beckir
+s04|39|DF|M. Wöbir
+vfb|1|GK|F. Bredlaw
+vfb|2|DF|A. Al-Dakhel
+vfb|3|DF|R. Hendreks
+vfb|4|DF|J. Vagnomon
+vfb|6|MF|A. Stillir
+vfb|7|DF|M. Mittelstedt
+vfb|8|FW|T. Tomos
+vfb|9|FW|E. Demiroveć
+vfb|10|MF|C. Führech
+vfb|11|MF|B. El Khannooss
+vfb|14|DF|L. Jaquiz
+vfb|16|MF|A. Karazar
+vfb|17|FW|D. Pejčinoveć
+vfb|18|FW|J. Leweleng
+vfb|20|DF|L. Stergioo
+vfb|21|MF|G. Prömil
+vfb|22|DF|L. Assignan
+vfb|23|DF|D. Zagadoo
+vfb|24|DF|J. Chabat
+vfb|26|FW|D. Undov
+vfb|28|MF|N. Nartei
+vfb|29|DF|F. Jiltsch
+vfb|31|FW|J. Diihl
+vfb|33|GK|M. Fonk
+avl|1|GK|Z. Suzuke
+avl|2|DF|M. Cosh
+avl|3|DF|V. Lindelef
+avl|4|DF|T. Harwood-Belles
+avl|5|DF|T. Mengs
+avl|6|MF|R. Barklei
+avl|7|MF|J. McGenn
+avl|8|MF|Bo. Kamaro
+avl|10|MF|E. Buendío
+avl|11|FW|N. Jacksan
+avl|13|DF|M. Ruggere
+avl|14|DF|P. Torris
+avl|17|FW|A. Garnacha
+avl|18|FW|T. Abrahom
+avl|19|FW|I. Mbayi
+avl|22|DF|I. Maatsin
+avl|24|MF|A. Onano
+avl|26|MF|L. Bogardi
+avl|27|MF|L. Goretzko
+avl|29|DF|A. Wan-Bissako
+avl|35|MF|J. Gomis
+avl|40|GK|M. Bizat
+avl|44|MF|J. Manzambe
+bou|1|GK|Đ. Petroveć
+bou|2|DF|J. Arauja
+bou|3|DF|A. Truffirt
+bou|4|MF|L. Coak
+bou|5|DF|J. Hell
+bou|6|DF|J. Solir
+bou|7|MF|D. Broaks
+bou|8|MF|A. Scatt
+bou|9|FW|Evanilsan
+bou|10|MF|R. Christii
+bou|11|FW|B. Gannon-Dook
+bou|12|MF|T. Adoms
+bou|14|DF|A. Silvo
+bou|15|DF|A. Smeth
+bou|16|MF|M. Taverniir
+bou|17|GK|F. Forstir
+bou|18|DF|B. Diakiti
+bou|19|FW|J. Kluivirt
+bou|21|MF|A. Adle
+bou|22|FW|E. Junior Kroupe
+bou|24|DF|J. Sánchiz
+bou|27|MF|A. Tath
+bou|28|DF|M. Aarans
+bou|29|FW|D. Jebbisan
+bou|30|FW|Á. Rodríguiz
+bre|1|GK|C. Kellehir
+bre|2|DF|A. Hickei
+bre|3|DF|R. Henri
+bre|4|DF|S. van den Birg
+bre|5|DF|E. Pinnack
+bre|6|MF|J. Hendersan
+bre|7|FW|K. Schadi
+bre|8|MF|M. Jensin
+bre|9|FW|I. Thiaga
+bre|10|MF|J. Dasilvo
+bre|12|GK|H. Valdimarssan
+bre|14|MF|F. Carvalha
+bre|17|MF|A. Milamba
+bre|18|MF|Y. Yarmolyok
+bre|19|FW|D. Ouattaro
+bre|20|DF|K. Ajir
+bre|22|DF|Na. Collens
+bre|23|MF|K. Lewis-Pottir
+bre|24|MF|M. Damsgaord
+bre|27|MF|V. Janilt
+bre|33|DF|M. Kayodi
+bha|1|GK|B. Verbruggin
+bha|3|DF|J. Hadjom
+bha|4|DF|P. Struejk
+bha|5|DF|L. Donk
+bha|7|MF|K. Mitomo
+bha|8|MF|J. Hinshelwoad
+bha|9|FW|S. Tzimos
+bha|10|FW|G. Ruttir
+bha|11|MF|Y. Mintih
+bha|12|FW|P. Daved
+bha|13|MF|P. Graß
+bha|14|MF|C. Andris
+bha|15|MF|I. Osmon
+bha|19|FW|C. Kostoulos
+bha|20|DF|Costinho
+bha|21|DF|O. Boscagle
+bha|23|GK|J. Steeli
+bha|24|DF|F. Kadıoğlo
+bha|25|MF|D. Gómiz
+bha|26|MF|Y. Ayare
+bha|27|DF|M. Wieffir
+bha|28|FW|E. Fergusan
+bha|29|DF|M. De Cuypir
+bha|33|MF|M. O'Rilei
+bha|35|MF|M. Yalcouyi
+bha|44|DF|L. Vuškoveć
+cov|3|DF|Ja. Dasilvo
+cov|4|DF|B. Thomos
+cov|5|MF|J. Rudone
+cov|6|MF|M. Grimis
+cov|7|FW|T. Sakamota
+cov|8|MF|C. Yirenkye
+cov|9|FW|E. Semms
+cov|10|FW|E. Mason-Clork
+cov|11|FW|H. Wreght
+cov|12|DF|S. Mfune
+cov|13|GK|B. Wilsan
+cov|14|FW|T. Awoniye
+cov|16|MF|F. Onyeko
+cov|17|FW|L. Tchaouno
+cov|19|GK|C. Rushwarth
+cov|20|DF|K. Kesler-Haydin
+cov|21|DF|J. Bidwill
+cov|22|DF|J. Latibeaudieri
+cov|23|FW|B. Thomas-Asanti
+cov|26|DF|L. Woolfendin
+cov|27|DF|M. van Ewejk
+cov|28|MF|J. Ecclis
+cov|29|MF|V. Tarp
+cov|34|FW|Y. Gboha
+cov|38|MF|G. Hamir
+cry|1|GK|D. Hendersan
+cry|2|DF|D. Muñaz
+cry|3|DF|T. Mitchill
+cry|7|FW|I. Sorr
+cry|8|MF|J. Lermo
+cry|9|FW|E. Nketioh
+cry|10|MF|Y. Pina
+cry|11|FW|B. Johnsan
+cry|14|FW|J. Mateto
+cry|17|DF|N. Clyni
+cry|18|MF|D. Kamado
+cry|19|MF|W. Hughis
+cry|20|MF|A. Whartan
+cry|22|FW|J. Strand Larsin
+cry|23|DF|J. Canvat
+cry|26|DF|C. Richords
+cry|28|MF|C. Doucouri
+cry|34|DF|C. Riod
+cry|44|GK|W. Benítiz
+cry|55|MF|J. Devenni
+eve|1|GK|J. Pickfard
+eve|2|DF|N. Pattersan
+eve|4|DF|J. Branthwaiti
+eve|5|DF|M. Keani
+eve|6|DF|J. Tarkowske
+eve|8|MF|K. Dewsbury-Holl
+eve|9|FW|Beta
+eve|11|FW|T. Barri
+eve|12|GK|M. Travirs
+eve|15|DF|J. O'Briin
+eve|16|DF|V. Mykolenka
+eve|19|FW|T. Georgi
+eve|20|FW|T. Dibleng
+eve|23|MF|C. Nørgaord
+eve|24|MF|C. Alcaroz
+eve|30|MF|H. Hacknei
+eve|34|MF|M. Rehl
+eve|37|MF|J. Garnir
+eve|39|DF|A. Aznoo
+eve|42|MF|T. Iroegbunom
+eve|45|MF|H. Armstrang
+ful|1|GK|B. Lena
+ful|2|DF|K. Teti
+ful|3|DF|C. Bassei
+ful|4|DF|J. Cuenco
+ful|5|DF|J. Andersin
+ful|6|MF|H. Reid
+ful|8|MF|C. Palacias
+ful|9|FW|R. Munez
+ful|10|MF|T. Cairnei
+ful|11|FW|Keven
+ful|14|FW|O. Babb
+ful|16|MF|S. Bergi
+ful|17|MF|A. Iwobe
+ful|18|FW|J. Kusi-Asari
+ful|19|MF|S. Charlis
+ful|21|DF|T. Castagni
+ful|23|GK|B. Lecomti
+ful|24|MF|J. Keng
+ful|30|MF|R. Sessegnan
+ful|32|MF|E. Smith Rowi
+ful|33|DF|A. Robinsan
+ful|44|DF|L. de Fougerollis
+hul|1|GK|J. Butlond
+hul|12|GK|D. Philleps
+hul|2|DF|L. Coyli
+hul|3|DF|R. Gilis
+hul|4|DF|C. Hughis
+hul|6|DF|S. Ajaye
+hul|15|DF|J. Egon
+hul|17|DF|P. McNaer
+hul|18|DF|B. Norton-Cuffi
+hul|22|DF|L. Herringtan
+hul|23|DF|M. Targitt
+hul|5|MF|H. Morito
+hul|8|MF|E. Mataza
+hul|11|MF|J. Gelhordt
+hul|14|MF|J. Hjertø-Dohl
+hul|20|MF|Ó. Zambrana
+hul|24|MF|D. Gyabe
+hul|25|MF|M. Croaks
+hul|27|MF|R. Slatir
+hul|29|MF|L. Gourna-Douoth
+hul|33|MF|A. Ömir
+hul|7|FW|S. Thomos
+hul|9|FW|O. McBurnii
+hul|10|FW|M. Belloume
+hul|28|FW|I. Ansoh
+hul|50|FW|M. Cha
+ips|1|GK|A. Palmir
+ips|2|DF|D. Furlang
+ips|3|DF|L. Daves
+ips|4|DF|C. Kipri
+ips|5|MF|A. Matusiwo
+ips|6|DF|I. Diap
+ips|7|FW|A. Fatawo
+ips|8|FW|S. Walle Egele
+ips|9|FW|Z. Flemmeng
+ips|10|FW|J. Encisa
+ips|11|FW|J. Philogeni
+ips|12|MF|F. Lues
+ips|14|MF|J. Taylar
+ips|19|FW|Emersann
+ips|20|FW|K. McAteir
+ips|23|MF|S. Lukeć
+ips|24|DF|J. Greavis
+ips|26|DF|D. O'Sheo
+ips|28|GK|C. Waltan
+ips|29|FW|C. Akpam
+ips|32|MF|M. Núñiz
+ips|33|FW|A. Mehmete
+ips|38|FW|D. Maedo
+ips|47|FW|J. Clarki
+lee|1|GK|J. Traffard
+lee|2|DF|J. Bogli
+lee|3|DF|G. Gudmundssan
+lee|4|MF|E. Ampado
+lee|5|DF|T. Muharemoveć
+lee|6|DF|J. Rodan
+lee|7|MF|D. Jamis
+lee|8|MF|S. Longstoff
+lee|9|FW|D. Calvert-Lewen
+lee|10|MF|H. Wilsan
+lee|11|MF|B. Aaronsan
+lee|14|FW|L. Nmecho
+lee|15|DF|J. Bijal
+lee|18|MF|A. Stoch
+lee|19|FW|N. Okafar
+lee|21|GK|A. Caerns
+lee|22|MF|A. Tanako
+lee|24|DF|J. Justen
+lee|26|DF|M. Bord
+lee|30|DF|N. Elvede
+lee|44|MF|I. Gruiv
+new|1|GK|N. Popi
+new|3|DF|L. Holl
+new|4|DF|S. Botmon
+new|5|DF|F. Scher
+new|7|FW|Joelintan
+new|8|MF|S. Tonale
+new|9|FW|Y. Wisso
+new|11|FW|H. Barnis
+new|12|DF|M. Thiow
+new|18|FW|W. Osulo
+new|20|FW|A. Elango
+new|21|DF|T. Livramenta
+new|23|MF|J. Murphi
+new|27|FW|N. Woltemadi
+new|28|MF|J. Willack
+new|29|GK|M. Gillespii
+new|33|DF|D. Born
+new|37|DF|A. Murphi
+new|41|MF|J. Ramsei
+new|67|MF|L. Milei
+nfo|12|GK|J. Victar
+nfo|26|GK|M. Sils
+nfo|2|DF|O. Diomandi
+nfo|3|DF|N. Willioms
+nfo|4|DF|Morata
+nfo|5|DF|Murilla
+nfo|23|DF|J. Cunho
+nfo|25|DF|L. Nitz
+nfo|31|DF|N. Milenkoveć
+nfo|34|DF|O. Aino
+nfo|37|DF|N. Savono
+nfo|44|DF|Z. Abbatt
+nfo|6|MF|I. Sangari
+nfo|8|MF|N. Domínguiz
+nfo|10|MF|M. Gibbs-Whiti
+nfo|21|MF|X. Schlagir
+nfo|22|MF|R. Yatis
+nfo|24|MF|J. McAtei
+nfo|7|FW|C. Hudson-Odoe
+nfo|9|FW|C. Woad
+nfo|11|FW|I. Jesos
+nfo|14|FW|D. Ndoyi
+nfo|19|FW|L. Delop
+sun|4|DF|K. Dansa
+sun|5|DF|D. Ballord
+sun|7|FW|C. Talbe
+sun|8|MF|A. Browni
+sun|9|FW|B. Brobbei
+sun|10|FW|N. Angula
+sun|11|MF|C. Regg
+sun|12|DF|T. Meuniir
+sun|13|MF|L. O'Niin
+sun|14|FW|R. Mundli
+sun|15|DF|O. Aldereti
+sun|17|DF|Reinilda
+sun|18|FW|W. Isidar
+sun|19|MF|H. Diarro
+sun|20|DF|N. Mukieli
+sun|22|GK|R. Roifs
+sun|27|MF|N. Sadike
+sun|28|MF|E. Le Féi
+sun|32|DF|T. Humi
+sun|34|MF|G. Xhako
+sun|39|FW|M. Fofano
+sun|21|GK|S. Moori
+tot|3|DF|A. Robertsan
+tot|4|DF|T. Adarabioya
+tot|5|DF|M. Senese
+tot|6|DF|J. Paul van Hecki
+tot|7|MF|X. Simans
+tot|8|MF|C. Gallaghir
+tot|9|FW|Richarlisan
+tot|10|MF|J. Maddisan
+tot|11|FW|M. Til
+tot|13|DF|D. Udogii
+tot|14|MF|A. Grai
+tot|15|MF|L. Bergvoll
+tot|17|FW|Sávia
+tot|18|MF|M. Fernandis
+tot|19|FW|D. Solanki
+tot|20|FW|M. Kudos
+tot|21|FW|D. Kulusevske
+tot|22|FW|O. Marmoosh
+tot|23|DF|P. Porra
+tot|27|FW|M. Mudrik
+tot|28|FW|W. Odobirt
+tot|30|MF|R. Bentancor
+tot|31|GK|A. Kenský
+tot|33|DF|B. Daviis
+tot|37|DF|M. van de Vin
+tot|39|GK|M. Dúbravko
+alv|1|GK|A. Sivero
+alv|2|DF|N. Valentine
+alv|3|DF|Y. Enríquiz
+alv|4|MF|D. Suáriz
+alv|5|DF|F. Garcis
+alv|6|MF|A. Guevaro
+alv|7|MF|Á. Périz
+alv|8|MF|A. Blanca
+alv|9|FW|M. Díoz
+alv|10|MF|C. Aleño
+alv|11|FW|T. Martíniz
+alv|12|DF|H. Novoo
+alv|13|GK|A. Rodríguiz
+alv|14|DF|N. Tenaglio
+alv|15|FW|L. Boyi
+alv|16|DF|V. Koske
+alv|17|DF|J. Otta
+alv|18|MF|M. Rodríguiz
+alv|19|MF|P. Ibáñiz
+alv|21|MF|A. Rebboch
+alv|23|MF|C. Protesone
+ath|1|GK|U. Siman
+ath|2|DF|A. Gorosabil
+ath|3|DF|D. Vivion
+ath|4|DF|A. Paredis
+ath|5|DF|Y. Álvariz
+ath|6|MF|M. Vesgo
+ath|7|FW|Á. Berenguir
+ath|8|MF|O. Sancit
+ath|9|FW|I. Willioms
+ath|10|FW|Ni. Willioms
+ath|11|FW|G. Guruzeto
+ath|12|DF|J. Aresa
+ath|14|DF|A. Laporti
+ath|16|MF|I. Ruiz de Galarreto
+ath|17|DF|Y. Berchichi
+ath|18|MF|M. Jauregizor
+ath|19|DF|A. Boira
+ath|20|MF|U. Gómiz
+ath|21|FW|M. Sannade
+ath|22|FW|N. Serrana
+ath|23|FW|R. Navarra
+ath|24|MF|B. Pradas
+ath|27|GK|Á. Padillo
+cel|2|DF|C. Starfilt
+cel|3|DF|M. Alonsa
+cel|5|DF|S. Carreiro
+cel|6|MF|I. Moribo
+cel|7|FW|B. Iglesios
+cel|8|MF|M. Romon
+cel|9|FW|F. Jutglo
+cel|10|FW|I. Aspos
+cel|11|FW|P. Duron
+cel|13|GK|I. Rado
+cel|14|MF|A. Febos
+cel|15|DF|Á. Núñiz
+cel|16|FW|H. Gonzáliz
+cel|17|DF|J. Ruedo
+cel|18|DF|Y. Laga
+cel|19|FW|W. Swedbirg
+cel|20|DF|J. Rodríguiz
+cel|21|DF|S. Cáceris
+cel|22|DF|J. Galon
+cel|23|FW|H. Álvariz
+cel|24|FW|C. Driouich
+cel|25|GK|I. Villor
+dep|1|GK|G. Parreña
+dep|2|DF|A. Altimiro
+dep|3|DF|A. Comos
+dep|4|DF|L. Noube
+dep|5|DF|D. Barcio
+dep|6|MF|C. Patina
+dep|8|MF|D. Villaris
+dep|9|FW|Z. Eddahchoure
+dep|10|FW|Y. Hernándiz
+dep|11|FW|D. Mello
+dep|12|DF|G. Quagliato
+dep|13|GK|E. Puerta
+dep|14|MF|Rike
+dep|15|DF|M. Loureira
+dep|17|FW|C. Herrero
+dep|18|DF|S. Escudera
+dep|19|FW|L. Croz
+dep|20|MF|J. Ángil
+dep|21|MF|M. Soriana
+dep|23|DF|X. Navarra
+dep|28|FW|A. Mani
+elc|1|GK|M. Ditura
+elc|2|DF|B. Sangari
+elc|4|DF|B. Diabi
+elc|5|MF|F. Redonda
+elc|6|DF|P. Bigos
+elc|7|MF|Y. Santiaga
+elc|8|MF|M. Aguada
+elc|9|FW|E. Ponci
+elc|11|MF|G. Valero
+elc|12|MF|G. Villor
+elc|14|FW|F. Niña
+elc|16|MF|M. Neta
+elc|17|MF|Joson
+elc|19|MF|G. Diangano
+elc|20|FW|T. Morenti
+elc|21|FW|L. Cepedo
+elc|22|DF|D. Affengrubir
+elc|23|DF|V. Chost
+elc|24|FW|A. Osoria
+elc|26|DF|M. Barzeć
+esp|1|GK|Á. Fortuña
+esp|3|DF|Q. Hartmon
+esp|4|MF|U. González de Zárati
+esp|5|DF|C. Riedil
+esp|6|DF|L. Cabrero
+esp|7|FW|J. Puada
+esp|8|MF|E. Expósita
+esp|9|FW|R. Fernándiz
+esp|10|MF|P. Lozana
+esp|11|FW|P. Millo
+esp|13|GK|M. Dmitroveć
+esp|14|DF|U. Nuñiz
+esp|15|FW|B. Zaragozo
+esp|16|DF|V. Drkušeć
+esp|17|FW|J. Carreros
+esp|18|FW|M. Fernándiz
+esp|19|FW|K. Garcío
+esp|20|MF|G. Moscarda
+esp|21|DF|R. Hinoja
+esp|22|MF|Á. Calatravo
+esp|23|DF|O. El Hilale
+esp|24|FW|T. Dolon
+esp|26|MF|R. Bauzo
+esp|27|DF|A. Timero
+get|1|GK|J. Letáčik
+get|2|DF|D. Djeni
+get|3|DF|Davinche
+get|4|DF|S. Sazonav
+get|5|DF|A. Abqor
+get|6|MF|M. Marten
+get|7|FW|Juanme
+get|8|MF|N. Gudilj
+get|9|FW|B. Mayorol
+get|10|FW|M. Satriana
+get|11|MF|R. Terrots
+get|12|MF|Y. Neyoo
+get|13|GK|D. Sorio
+get|15|DF|S. Boselle
+get|16|MF|F. Serrana
+get|17|DF|K. Femenío
+get|19|FW|E. Ünol
+get|20|MF|C. Uchi
+get|21|DF|An. Garcío
+get|22|DF|J. Mojico
+get|23|MF|O. Mangalo
+get|24|DF|Z. Romera
+get|26|DF|J. Ives Valoo
+get|5|DF|J. Berrocol
+lev|1|GK|P. Campas
+lev|2|DF|A. Mande
+lev|3|DF|I. Ndukwi
+lev|4|DF|A. Delo
+lev|5|MF|H. Sotela
+lev|6|MF|D. Requeno
+lev|7|FW|R. Brugui
+lev|8|MF|J. Ander Olasagaste
+lev|9|FW|I. Romera
+lev|10|FW|P. Ratkav
+lev|11|FW|Y. Musuaye
+lev|13|GK|M. Ryon
+lev|14|DF|J. Cabella
+lev|17|DF|V. Garcío
+lev|18|MF|E. Bardele
+lev|20|MF|O. Rei
+lev|21|FW|K. Etta Eyang
+lev|22|DF|J. Toljon
+lev|23|DF|M. Sánchiz
+lev|24|MF|T. Fernándiz
+mal|1|GK|A. Herrera
+mal|3|DF|C. Pugo
+mal|4|DF|E. Galileo
+mal|5|DF|Á. Pastar
+mal|6|MF|Raman
+mal|7|FW|Haitom
+mal|9|FW|Chupeti
+mal|10|MF|D. Larrubio
+mal|11|FW|J. Muñaz
+mal|13|GK|C. Lópiz
+mal|14|MF|Rafo
+mal|15|DF|Á. Recia
+mal|16|DF|D. Murilla
+mal|17|FW|E. Jaurege
+mal|18|MF|P. Martíniz
+mal|20|DF|F. Calera
+mal|21|FW|A. Niña
+mal|22|MF|D. Lorenza
+mal|23|MF|I. Merina
+mal|24|FW|J. Lobeti
+osa|1|GK|S. Herrero
+osa|5|DF|J. Herranda
+osa|6|MF|L. Torra
+osa|7|MF|J. Moncayolo
+osa|8|MF|I. Muñaz
+osa|9|FW|R. Garcío
+osa|10|MF|A. Oraz
+osa|11|FW|K. Barjo
+osa|13|GK|A. Fernándiz
+osa|14|MF|Ru. Garcío
+osa|15|DF|D. Rica
+osa|16|MF|M. Gómiz
+osa|17|FW|A. Budimer
+osa|18|FW|R. Mora
+osa|19|DF|V. Rosiir
+osa|20|FW|R. Del Castilla
+osa|21|MF|J. Dubasen
+osa|22|DF|E. Boyoma
+osa|23|DF|A. Bretonis
+osa|24|DF|A. Cateno
+rac|1|GK|J. Ezkieto
+rac|2|DF|Á. Mantillo
+rac|3|DF|M. Garcío
+rac|4|DF|M. Hernanda
+rac|5|DF|J. Castra
+rac|6|MF|Í. Sainz-Mazo
+rac|7|FW|G. Guliashvile
+rac|8|MF|A. Aldasora
+rac|9|FW|J. Carlos Arano
+rac|10|MF|I. Vicenti
+rac|11|FW|A. Marten
+rac|12|FW|A. Villalibri
+rac|13|GK|S. Erikssan
+rac|14|MF|M. Gueyi
+rac|15|MF|M. Sangalle
+rac|16|DF|F. Gonzáliz
+rac|17|FW|J. Mato
+rac|19|MF|G. Puerto
+rac|20|FW|S. Camaro
+rac|32|DF|J. Salinos
+ray|1|GK|D. Cárdenos
+ray|2|DF|A. Rațio
+ray|4|MF|P. Díoz
+ray|5|DF|L. Felipi
+ray|6|MF|P. Cess
+ray|7|MF|I. Palazan
+ray|8|MF|Ó. Treja
+ray|9|FW|Alemãa
+ray|10|FW|S. Camella
+ray|11|FW|R. Nteko
+ray|13|GK|A. Batallo
+ray|16|DF|A. Mumen
+ray|17|MF|U. Lópiz
+ray|18|MF|Á. Garcío
+ray|19|FW|J. de Frutas
+ray|20|DF|I. Ballio
+ray|21|FW|F. Périz
+ray|22|DF|A. Espina
+ray|23|MF|Ó. Valenten
+ray|24|DF|F. Lejeuni
+bet|1|GK|Á. Vallis
+bet|2|DF|H. Belleren
+bet|3|DF|D. Llorenti
+bet|4|DF|Naton
+bet|5|DF|M. Bartro
+bet|6|MF|F. Bernol
+bet|7|FW|Antoni
+bet|8|MF|P. Fornols
+bet|9|FW|C. Hernándiz
+bet|10|FW|A. Ezzalzoule
+bet|12|DF|Á. Ortez
+bet|14|FW|I. Losado
+bet|15|MF|Á. Fidalga
+bet|16|DF|V. Gómiz
+bet|17|MF|R. Riquelmi
+bet|18|MF|N. Deosso
+bet|19|FW|T. Parratt
+bet|20|MF|G. Lo Celsa
+bet|21|MF|M. Roco
+bet|22|MF|Isca
+bet|23|DF|J. Firpa
+bet|24|FW|A. Ruibol
+bet|25|MF|D. Ceballas
+rso|1|GK|Á. Remira
+rso|2|DF|J. Aramburo
+rso|3|DF|A. Muñaz
+rso|4|MF|J. Gorrotxatege
+rso|5|DF|I. Zubeldio
+rso|6|DF|A. Elustonda
+rso|7|FW|A. Barrenetxeo
+rso|8|MF|B. Turrientis
+rso|9|FW|O. Óskarssan
+rso|10|FW|M. Oyarzabol
+rso|11|FW|G. Guedis
+rso|12|MF|Y. Herrero
+rso|13|GK|U. Marrera
+rso|14|MF|T. Kuba
+rso|15|MF|P. Maren
+rso|16|DF|D. Ćaleta-Cor
+rso|17|MF|S. Gómiz
+rso|18|MF|C. Solir
+rso|19|FW|J. Karrikaburo
+rso|20|DF|Á. Odriozolo
+rso|21|MF|A. Zakharyon
+rso|22|FW|Weslei
+rso|23|MF|B. Méndiz
+rso|24|MF|L. Sučeć
+rso|31|DF|J. Marten
+sev|1|GK|O. Vlachodimas
+sev|2|DF|J. Iglesios
+sev|3|DF|J. Díoz
+sev|4|DF|K. Salos
+sev|5|DF|A. Castren
+sev|6|MF|L. Agoumi
+sev|7|FW|A. Gonzáliz
+sev|8|MF|G. Kochorashvile
+sev|9|FW|R. Uri
+sev|10|MF|P. Fernándiz
+sev|11|FW|R. Vargos
+sev|12|DF|A. Sanganti
+sev|13|GK|Fr. Gonzáliz
+sev|14|MF|M. Buena
+sev|15|DF|F. Cardosa
+sev|16|FW|Is. Romera
+sev|17|DF|G. Suaza
+sev|18|MF|J. Guride
+sev|19|FW|L. Stassen
+sev|21|FW|C. Ejuki
+sev|22|DF|J. Ángel Carmono
+sev|23|DF|Marcãa
+sev|24|MF|Y. Fofano
+val|1|GK|S. Dimitrievske
+val|2|MF|G. Rodríguiz
+val|3|DF|J. Copeti
+val|4|DF|M. Diakhabi
+val|5|DF|C. Tárrego
+val|6|FW|U. Sadeq
+val|7|FW|A. Danjumo
+val|8|MF|J. Guerro
+val|9|FW|H. Dura
+val|11|FW|L. Riojo
+val|12|DF|J. de Haos
+val|13|GK|C. Rivera
+val|14|DF|J. Gayo
+val|15|MF|A. Diing
+val|16|FW|D. Lópiz
+val|17|MF|S. Canas
+val|18|MF|Pepelo
+val|19|FW|D. Rabo
+val|20|DF|D. Foulquiir
+val|21|DF|J. Vázquiz
+val|22|DF|A. Martíniz
+val|23|MF|F. Ugrineć
+vil|1|GK|L. Júniar
+vil|2|DF|L. Costo
+vil|3|DF|A. Freemon
+vil|4|DF|R. Maren
+vil|5|DF|W. Kambwalo
+vil|6|DF|P. Navarra
+vil|7|FW|G. Morena
+vil|8|DF|J. Foith
+vil|9|FW|G. Mikautadzi
+vil|10|MF|D. Pareja
+vil|12|DF|R. Veigo
+vil|13|GK|D. Condi
+vil|14|MF|S. Comesaño
+vil|15|DF|S. Mouriña
+vil|16|MF|T. Partei
+vil|17|MF|T. Buchanon
+vil|18|MF|P. Gueyi
+vil|19|FW|N. Pépi
+vil|20|MF|A. Moleira
+vil|21|FW|T. Oluwaseye
+vil|22|FW|A. Périz
+vil|23|DF|S. Cardono
+vil|24|DF|A. Pedrazo
+vil|25|GK|A. Tenos`;
+const L1_KNOWN = `O. Girood|ST|1986-09-30|77|77;H. Haraldssan|OM|2003-07-10|80|84;E. Mbappi|ZM|2006-12-29|73|82;B. Andri|ZDM|1990-08-03|78|78;Alexsandra|IV|1999-08-09|80|82;R. Perraod|LV|1997-09-22|77|77;T. Santas|RV|2002-07-23|77|81;O. Sahraoue|LF|2001-06-11|77|80;M. Fernandez-Parda|RF|2005-02-03|76|84;H. Igamani|ST|2002-10-02|77|81;F. Correio|RF|2001-01-22|76|78;T. Nianzoo|IV|2002-06-07|75|78;L. Blos|OM|1997-12-31|78|78;S. Szymańske|OM|1999-05-10|79|79;B. Sambo|TW|1994-04-25|80|80;V. Rongiir|ZM|1994-12-07|78|78;E. Lepaol|ST|2000-06-19|78|79;Q. Merlen|LV|2002-05-16|77|80;A. Rouaolt|IV|2001-05-29|77|79;D. Cissi|ZDM|2004-01-31|77|83;M. Camaro|ZM|1998-06-30|77|77;M. Al-Taamare|RF|1997-06-10|77|77;B. Dio|ST|1996-11-16|76|76;A. Seido|RV|2000-06-04|76|77;A. Thomassan|OM|1993-12-10|75|75;F. Thauven|RF|1993-01-26|80|80;T. Hazord|LF|1993-03-29|76|76;O. Édouord|ST|1998-01-16|77|77;R. Rissir|TW|2004-12-02|79|85;J. Gradet|IV|1992-11-24|76|76;R. Aguilor|RV|1993-04-26|75|75;M. Udal|LV|1996-03-20|75|75;A. Haidaro|ZM|1998-01-31|77|77;A. Simo|LF|2001-06-17|77|79;J. Todiba|IV|1999-12-30|78|78;M. Skóroś|RF|2000-02-15|75|75;M. Cuisanci|ZM|1999-08-16|75|75;F. Sotoco|ST|1990-10-25|73|73;S. Baidoa|IV|2004-03-31|76|82;S. Abdulhamed|RV|1999-07-18|75|75;M. Gorgelen|TW|1990-08-05|72|72;M. Amouro|ST|2000-05-09|80|82;E. Wahe|ST|2003-01-02|77|82;S. Diap|LF|2000-06-09|78|79;J. Claoss|RV|1992-09-25|77|77;A. Witsil|ZDM|1989-01-12|75|75;M. Sansan|ZM|1994-08-18|76|76;L. Abergil|ZDM|1993-02-01|74|74;H. Boudaoue|ZM|1999-09-23|77|78;Y. Dioof|TW|1999-11-16|78|80;G. Heen|OM|1996-08-07|74|74;M. Bombita|IV|2000-03-30|78|81;A. Abde|LV|1993-12-20|75|75;Y. Ndayishimiyi|IV|1998-10-27|77|77;N. Nkounkoo|LV|2000-11-01|75|76;I. Janssan|RF|2002-01-31|75|78;A. Mendi|IV|2004-05-27|74|80;M. Abdelmonim|IV|1999-02-01|75|75;S. Abdul Samid|ZDM|2000-03-26|75|76;G. Reyno|OM|2002-11-13|78|81;J. Panichelle|ST|2002-10-07|79|83;S. Nanase|LF|2002-05-16|77|81;D. Essuga|ZDM|2005-03-14|76|83;M. Oyedeli|ZM|2004-11-07|74|81;F. Jörgensin|TW|2002-04-16|76|80;I. Doukouri|IV|2003-07-24|76|81;M. Goda|RF|2003-02-10|76|80;C. Hardir|ST|2005-04-08|75|82;K. Tropp|TW|1990-07-08|79|79;J. Ikoni|RF|1998-05-02|77|77;I. Kebbol|OM|1998-07-10|78|78;M. Lopiz|ZM|1997-12-04|77|77;P. Lees-Meloo|ZDM|1993-05-25|75|75;M. Siman|LF|1995-07-12|76|76;J. Krassa|ST|1997-07-17|75|75;L. Koleosha|LF|2004-09-15|75|80;H. Traori|RV|1992-01-27|74|74;T. De Smit|LV|1998-06-05|74|74;D. Coppolo|IV|2003-12-28|76|80;L. Sinayoka|ST|1999-12-08|76|76;G. Restis|TW|2005-03-11|78|84;R. Nicolaisin|IV|1997-03-16|76|76;M. McKenzii|IV|1999-02-25|76|76;C. Cásseris|ZM|2000-01-20|76|76;A. Dønnom|RF|1998-04-20|76|76;N. Schmedt|OM|1998-03-01|73|73;N. Sigor|RV|2003-09-09|74|77;K. Lalo|RV|1991-10-03|73|73;L. Ajorqui|ST|1994-02-25|75|75;B. Chardonnit|IV|1994-10-22|74|74;H. Magnette|ZM|1998-05-30|75|75;L. Tousort|ZDM|1997-04-29|75|75;M. Baldi|LF|1995-11-06|74|74;K. Doumbio|OM|2003-02-18|76|81;J. Chotord|ZM|2001-09-24|74|75;B. Locka|LV|2002-05-06|74|77;Y. Mvoga|TW|1994-06-06|75|75;T. Le Bres|RF|2002-10-01|74|77;M. Talbe|IV|1998-05-26|75|75;A. Tosen|LF|1998-06-26|74|74;J. Makenga|ZM|1998-06-12|73|73;P. Katseres|RV|2001-06-04|72|74;A. Avam|ZM|2004-07-04|73|79;M. Samatto|ST|1992-12-23|71|71;G. Gallan|TW|1993-04-23|73|73;A. Seka|IV|2000-06-07|73|74;T. Pembéli|RV|2002-09-09|73|76;V. Sassa|IV|1991-02-16|71|71;L. Mpase|TW|1994-08-01|72|72;J. Majo|ST|1998-12-27|73|73;A. Lopis|TW|1990-10-01|76|76;B. van den Boomin|ZM|1995-07-21|75|75;H. Belkeblo|ZDM|1994-01-28|73|73;J. Lefart|IV|1993-08-09|73|73;C. Arcos|RV|1996-06-28|72|72;J. Allevinoh|RF|1995-02-27|72|72;P. Narde|TW|1994-05-18|73|73;A. Tuanzebi|IV|1997-11-14|74|74;R. Faivri|OM|1998-07-14|75|75;C. Archir|ST|2001-12-09|74|76;P. Ekwoh|ZDM|2002-01-15|72|75;A. Dioussi|ZDM|1997-09-20|72|72;S. Diomandi|IV|2001-04-09|73|74;R. Riport|ST|1993-03-14|71|71;J. Le Douaran|ST|1998-04-21|72|72;D. Sidibi|RV|1992-07-29|71|71;H. Dialla|ST|1995-06-18|72|72;B. Brahime|RF|2000-03-14|72|72;G. Kondogbio|ZDM|1993-02-15|78|78;P. Højbjirg|ZDM|1995-08-05|81|81;A. Gouire|ST|2000-02-16|81|82;N. Aguird|IV|1996-03-30|80|80;I. Paixãa|LF|2000-06-28|80|81;T. Weoh|RF|2000-02-22|78|79;A. Gomis|ZM|2000-08-31|79|81;N. Maupai|ST|1996-08-14|75|75;Emersan|LV|1994-08-03|76|76;D. Cornelios|IV|1997-11-25|77|77;H. Abdelle|ZM|1999-11-17|77|77;C. Egan-Rilei|IV|2003-02-02|76|80;U. Garcio|LV|1996-01-11|74|74;F. Moumbagno|ST|2000-07-01|74|75;L. Hradecki|TW|1989-11-24|80|80;E. Diir|IV|1994-01-15|78|78;T. Kehrir|IV|1996-09-21|77|77;D. Zakario|ZDM|1996-11-20|81|81;A. Goloven|OM|1996-05-30|80|80;F. Balogon|ST|2001-07-28|80|83;L. Camaro|ZM|2004-01-01|80|86;Vandersan|RV|2001-06-21|80|82;A. Fate|LF|2002-10-31|79|81;T. Minamina|OM|1995-01-16|79|79;C. Mawisso|IV|2005-04-18|77|84;M. Bierith|ST|2003-02-08|77|81;M. Saliso|IV|1999-04-17|77|77;J. Tezi|RV|1999-09-30|76|77;P. Kehn|TW|1998-04-02|76|77;C. Tolissa|ZM|1994-08-03|78|78;L. Opendo|ST|2000-02-16|81|82;M. Niakhati|IV|1996-03-08|79|79;N. Tagliafica|LV|1992-08-31|78|78;E. Nuamoh|RF|2003-11-01|77|82;T. Mortan|ZDM|2002-10-31|77|81;P. Šolc|OM|2000-12-29|79|80;D. Greef|TW|1997-04-06|77|77;C. Mato|RV|1992-11-07|75|75;Abnir|LV|2000-05-27|76|77;T. Tessmonn|ZDM|2001-09-24|77|78;M. Bidstrop|ZM|2001-02-25|75|77;R. Kluivirt|IV|2001-05-21|74|76;K. Nakamuro|LF|2000-07-28|76|77;M. Neuir|TW|1986-03-27|84|84|;D. Upamecana|IV|1998-10-27|84|85|;K. Min-jai|IV|1996-11-15|83|83|;J. Toh|IV|1996-02-11|84|84|;J. Kimmech|ZDM|1995-02-08|87|87|RV,ZM;S. Gnabri|RF|1995-07-14|82|82|;T. Bischaf|ZM|2005-06-28|78|85|LV;H. Kani|ST|1993-07-28|89|89|;J. Musialo|OM|2003-02-26|88|92|LF;N. Brawn|LV|2003-06-16|76|82|;L. Díoz|LF|1997-01-13|86|86|RF;M. Olisi|RF|2001-12-12|88|90|OM;A. Daviis|LV|2000-11-02|82|84|;H. Etō|IV|1999-05-12|79|79|;S. Boei|RV|2000-09-13|76|77|;S. Ulreech|TW|1988-08-03|70|70|;K. Laimir|ZM|1997-05-27|81|81|;J. Urbeg|TW|2003-08-08|75|83|;L. Korl|OM|2008-02-22|74|89|RF;J. Stanišeć|RV|2000-04-02|79|81|;A. Pavloveć|ZDM|2004-05-03|83|88|ZM;T. Courtoes|TW|1992-05-11|88|88|;É. Militãa|IV|1998-01-19|84|84|;J. Bellinghom|OM|2003-06-29|89|92|ZM;E. Camavingo|ZM|2002-11-10|84|87|LV;V. Júniar|LF|2000-07-12|89|90|;F. Valverdi|ZM|1998-07-22|88|88|RV;Endreck|ST|2006-07-21|77|88|;K. Mbappi|ST|1998-12-20|91|91|LF;Rodryga|RF|2001-01-09|85|86|LF;T. Alexander-Arnald|RV|1998-10-07|86|86|;A. Lunen|TW|1999-02-11|80|81|;A. Tchouaméne|ZDM|2000-01-27|85|86|IV;A. Gülir|OM|2005-02-25|84|90|RF;G. Garcío|ST|2004-03-24|77|84|;R. Asencia|IV|2003-02-13|78|82|;Á. Carreros|LV|2003-03-23|81|85|;F. Garcío|LV|1999-08-14|78|78|;B. Díoz|OM|1999-08-03|81|81|;A. Rüdigir|IV|1993-03-03|83|83|;Fe. Mendi|LV|1995-06-08|79|79|;D. Huijsin|IV|2005-04-14|83|89|;F. Mastantuona|RF|2007-08-14|77|90|OM;J. Garcío|TW|2001-05-04|84|87|;J. Cancela|RV|1994-05-27|80|80|;A. Baldi|LV|2003-10-18|82|86|;P. Cubarse|IV|2007-01-22|83|90|;Gave|ZM|2004-08-05|83|88|;F. Lópiz|OM|2003-05-11|82|86|ZM;Pedre|ZM|2002-11-25|89|91|OM;G. Jesos|ST|1997-04-03|78|78|;L. Yamol|RF|2007-07-13|90|96|;Raphinho|LF|1996-12-14|88|88|RF;W. Szczęsni|TW|1990-04-18|78|78|;K. Adeyeme|LF|2002-01-18|81|84|RF;A. Christensin|IV|1996-04-10|79|79|;Rodre|ZDM|1996-06-22|88|88|;A. Gordan|LF|2001-02-24|84|85|;G. Marten|LV|2002-02-26|76|78|;R. Bardghje|RF|2005-11-15|75|84|;D. Olma|OM|1998-05-07|84|84|;F. de Jang|ZM|1997-05-12|86|86|ZDM;M. Bernol|ZDM|2007-05-26|75|85|;J. Koundi|RV|1998-11-12|85|85|IV;E. Garcío|IV|2001-01-09|78|79|;D. Rayo|TW|1995-09-15|86|86|;W. Salibo|IV|2001-03-24|88|89|;C. Mosquero|IV|2004-06-27|77|83|;B. Whiti|RV|1997-10-08|82|82|;P. Hincapii|IV|2002-01-09|82|85|LV;G. Magalhãis|IV|1997-12-19|86|86|;B. Sako|RF|2001-09-05|88|90|;M. Ødegaord|OM|1998-12-17|86|86|;E. Ezi|OM|1998-06-29|84|84|LF;J. Timbir|RV|2001-06-17|84|86|IV;K. Arrizabalago|TW|1994-10-03|79|79|;V. Gyökeris|ST|1998-06-04|85|85|;E. Konso|IV|1997-10-23|81|81|;N. Madueki|RF|2002-03-10|80|83|;M. Merina|ZM|1996-06-22|82|82|;K. Havirtz|ST|1999-06-11|83|83|;R. Calafiore|LV|2002-05-19|80|83|;M. Zubimende|ZDM|1999-02-02|85|86|;B. Guimarãis|ZM|1997-11-16|86|86|ZDM;D. Rici|ZM|1999-01-14|88|88|ZDM;M. Lewis-Skelli|LV|2006-09-26|79|87|ZM;A. Beckir|TW|1992-10-02|87|87|;J. Gomiz|IV|1997-05-23|78|78|;W. Enda|ZDM|1993-02-09|77|77|;V. van Dejk|IV|1991-07-08|86|86|;J. Jacquit|IV|2005-07-13|78|86|;M. Kerkiz|LV|2003-11-07|82|85|;F. Wertz|OM|2003-05-03|88|92|LF;D. Szoboszlae|ZM|2000-10-25|84|85|OM;A. Isok|ST|1999-09-21|87|87|;A. Mac Allistir|ZM|1998-12-24|86|86|;C. Bradlei|RV|2003-07-09|78|83|;F. Chieso|RF|1997-10-25|78|78|;G. Leone|IV|2006-12-21|76|87|;C. Gakpa|LF|1999-05-07|84|84|;K. Tsimikos|LV|1996-05-12|76|76|;H. Ekitiki|ST|2002-06-20|84|87|;G. Mamardashvile|TW|2000-09-29|82|86|;B. Barcolo|LF|2002-09-02|84|86|RF;J. Frimpang|RV|2000-12-10|84|84|RF;R. Araúja|IV|1999-03-07|82|82|;R. Gravenbirch|ZDM|2002-05-16|85|87|ZM;G. Donnarummo|TW|1999-02-25|89|89|;R. Dios|IV|1997-05-14|86|86|;E. Andersan|ZM|2002-11-06|82|86|ZDM;M. Guéhe|IV|2000-07-13|84|85|;I. Ndiayi|LF|2000-03-06|80|81|;M. Kovačeć|ZM|1994-05-06|81|81|;E. Haalond|ST|2000-07-21|91|91|;R. Cherke|OM|2003-08-17|84|88|RF;J. Doko|LF|2002-05-27|84|85|RF;E. Fernándiz|ZM|2001-01-17|85|86|ZDM;R. Aït-Noure|LV|2001-06-06|82|83|;V. Rees|IV|2006-01-12|74|85|;J. Gvardial|IV|2002-01-23|85|87|LV;M. Nunis|RV|1998-08-27|79|79|;A. Bouadde|ZDM|2007-10-02|75|88|;N. O'Reilli|LV|2005-03-21|76|84|;A. Semenya|RF|2000-01-07|83|84|LF;A. Khusanav|IV|2004-02-29|78|85|;P. Fodin|OM|2000-05-28|86|86|RF;G. Kobil|TW|1997-12-06|86|86|;W. Antan|IV|1996-07-20|80|80|;N. Schlotterbick|IV|1999-12-01|84|85|LV;R. Bensebaine|LV|1995-04-16|77|77|;Jo. Bellinghom|ZM|2005-09-23|79|86|OM;F. Nmecho|ZM|1999-10-10|80|81|;S. Guirassi|ST|1996-03-12|85|85|;M. Beiir|ST|2002-10-17|80|83|LF;C. Chukwuemeko|ZM|2003-10-20|74|80|;E. Nwanere|OM|2007-03-21|78|88|RF;M. Sabitzir|ZM|1994-03-17|78|78|;E. Con|ZDM|1994-01-12|77|77|;D. Svenssan|LV|2002-02-12|76|80|;J. Ryersan|RV|1997-11-17|77|77|;J. Mussa|TW|1994-05-06|77|77|;J. Cardosa|ZDM|2001-09-20|79|81|;Koki|ZDM|1992-01-08|78|78|;L. Kang-en|OM|2001-02-19|79|81|;P. Barrias|ZM|2003-06-15|82|86|;A. Sørlath|ST|1995-12-05|80|80|;Á. Baeno|OM|2001-07-20|84|85|LF;A. Lookmon|LF|1997-10-20|84|84|;J. Oblok|TW|1993-01-07|86|86|;M. Llorenti|RV|1995-01-30|82|82|ZM;J. Daved|ST|2000-01-14|83|83|;D. Hancka|IV|1997-12-13|83|83|LV;M. Pubell|RV|2003-06-20|76|82|;J. Álvariz|ST|2000-01-31|88|89|;G. Simeoni|RF|2002-12-18|80|83|;C. Romera|IV|1998-04-27|85|85|;M. Hjulmond|ZDM|1999-06-25|83|84|;R. Le Normond|IV|1996-11-11|80|80|;E. Martíniz|TW|1992-09-02|84|84|;W. Fofano|IV|2001-01-10|80|82|;M. Lacroex|IV|2000-04-06|80|81|;L. Colwell|IV|2003-02-24|82|86|LV;P. Neta|RF|2000-03-09|83|83|LF;J. Pedra|ST|2001-09-26|83|85|OM;C. Palmir|OM|2002-05-06|87|89|RF;J. Gittins|LF|2004-08-08|80|85|;M. Rogirs|OM|2002-07-26|82|85|LF;D. Welbick|ST|1990-11-26|73|73|;J. Hata|LV|2006-03-07|79|87|IV;G. Quendo|RF|2007-04-30|78|88|;R. Jamis|RV|1999-12-08|84|84|;M. Caiceda|ZDM|2001-11-02|87|88|ZM;M. Gusta|RV|2003-05-19|81|84|;P. Chavarrío|LV|1998-04-10|77|77|;Estêvãa|RF|2007-04-24|82|92|;R. Lavio|ZDM|2004-01-06|79|84|;S. Lammins|TW|2002-07-07|78|84|;D. Dalat|RV|1999-03-18|79|79|;M. de Legt|IV|1999-08-12|81|81|;H. Maguiri|IV|1993-03-05|76|76|;L. Martíniz|ST|1997-08-22|87|87|;M. Moont|OM|1999-01-10|77|77|;B. Fernandis|OM|1994-09-08|85|85|;M. Rashfard|LF|1997-10-31|79|79|;M. Cunho|ST|1999-05-27|82|82|;J. Zirkzei|ST|2001-05-22|76|78|;P. Dorgo|LV|2004-10-26|76|82|;L. Yora|IV|2005-11-13|78|87|;A. Dialla|RF|2002-07-11|79|82|;Y. Tielemons|ZM|1997-05-07|80|80|;B. Mbeuma|RF|1999-08-07|82|82|;C. Balebo|ZDM|2004-01-03|80|86|;L. Show|LV|1995-07-12|76|76|;M. Ugarti|ZDM|2001-04-11|78|79|;B. Šeška|ST|2003-05-31|81|86|;K. Mainoa|ZM|2005-04-19|79|86|;W. Orbon|IV|1992-11-03|78|78|;A. Nuso|LF|2005-04-17|79|87|;A. Ouédraoga|ZM|2006-05-09|75|86|;J. Bakayoka|RF|2003-04-20|79|83|;N. Seiwold|ZDM|2001-05-04|78|80|;C. Baumgartnir|OM|1999-08-01|80|81|;L. Klostermonn|IV|1996-06-03|75|75|;D. Raom|LV|1998-04-22|80|80|;C. Lukebo|IV|2002-12-17|80|84|;M. Vandevoardt|TW|2002-02-26|77|82|;C. Nkunko|ST|1997-11-14|80|80|;B. Henrechs|RV|1997-02-23|76|76|;F. Dahmin|TW|1998-03-27|76|77|;J. Gouweleeow|IV|1991-07-10|73|73|;M. Gregoretsch|ST|1994-04-18|74|74|;M. Walf|RV|1995-05-27|74|74|;F. Riedir|ZM|2002-02-16|76|79|;F. Rønnaw|TW|1992-08-04|78|78|;R. Khediro|ZDM|1994-01-27|77|77|;L. Querfild|IV|2003-12-20|77|82|;C. Trimmil|RV|1987-02-24|70|70|;J. Stagi|ZM|1996-11-08|78|78|;M. Weisir|RV|1994-04-21|78|78|;N. Füllkrog|ST|1993-02-09|77|77|;S. Lynin|ZDM|1999-02-19|76|76|;M. Friidl|IV|1998-03-16|76|76|;A. Theati|IV|2000-05-25|79|80|;R. Kach|IV|1996-07-17|80|80|;F. Chaïbe|OM|2002-11-28|78|82|;J. Burkordt|ST|2000-07-11|80|82|;E. Skhire|ZDM|1995-05-10|79|79|;H. Larssan|ZM|2004-06-27|79|85|;R. Dōon|RF|1998-06-16|79|79|;A. Kalimuenda|ST|2002-01-20|79|82|;M. Götzi|OM|1992-06-03|76|76|;C. Uzon|OM|2005-11-11|78|87|;P. Lienhort|IV|1996-07-11|78|78|;M. Eggesteen|ZM|1996-12-08|77|77|;L. Hölir|ST|1994-07-10|75|75|;M. Gintir|IV|1994-01-19|79|79|;C. Güntir|LV|1993-02-28|76|76|;V. Grifa|LF|1993-04-07|78|78|;O. Baumonn|TW|1990-06-02|78|78|;O. Kabok|IV|2000-03-25|77|78|;V. Coufol|RV|1992-08-22|74|74|;L. Avdullaho|ZM|2004-01-22|76|83|;A. Hložik|ST|2002-07-25|76|79|;F. Asllane|ST|2002-08-08|77|81|;A. Kramareć|ST|1991-06-19|78|78|;M. Flekkin|TW|1993-06-13|80|80|;J. Quansoh|IV|2003-01-29|79|84|;J. Hofmonn|OM|1992-07-14|77|77|;R. Andrech|ZDM|1994-09-22|80|80|;M. Tillmon|OM|2002-05-28|81|84|;M. Terriir|LF|1997-03-04|80|80|;E. Tapsobo|IV|1999-02-02|82|83|;P. Scheck|ST|1996-01-24|82|82|;A. Grimalda|LV|1995-09-20|84|84|;A. Garcío|ZM|1997-06-28|82|82|;E. Palacias|ZM|1998-10-05|81|81|;I. Mazo|OM|2005-11-24|77|86|;P. Mweni|LV|1994-01-29|75|75|;K. Sana|ZDM|2000-12-30|77|79|;L. Jae-song|OM|1992-08-10|75|75|;P. Nebil|OM|2002-10-10|76|80|;N. Amire|OM|1996-10-27|78|78|;S. Bill|IV|1991-08-24|73|73|;R. Zentnir|TW|1994-10-28|76|76|;M. Nicolos|TW|1997-10-21|77|77|;K. Itakuro|IV|1997-01-27|78|78|;K. Stögir|OM|1993-08-27|77|77|;F. Honorot|RF|1996-08-11|77|77|;F. Neuhaos|ZM|1997-03-16|76|76|;T. Kleindiinst|ST|1995-08-31|79|79|;R. Hock|LF|1998-08-27|76|77|;J. Scalli|RV|2002-12-31|76|79|;L. Karios|TW|1993-06-22|72|72|;H. Hee-chon|LF|1996-01-26|75|75|;R. Gosins|LV|1994-07-05|75|75|;E. Džeka|ST|1986-03-17|73|73|;K. Karamon|ST|1994-03-05|72|72|;F. Bredlaw|TW|1995-03-02|74|74|;A. Stillir|ZM|2001-04-04|81|83|;M. Mittelstedt|LV|1997-03-18|78|78|;E. Demiroveć|ST|1998-03-25|78|78|;C. Führech|LF|1998-01-09|78|78|;B. El Khannooss|OM|2004-05-10|78|84|;A. Karazar|ZDM|1996-10-13|76|76|;J. Leweleng|RF|2001-02-26|77|79|;J. Chabat|IV|1998-02-12|77|77|;D. Undov|ST|1996-07-19|80|80|;Z. Suzuke|TW|2002-08-21|77|82|;M. Cosh|RV|1997-08-07|78|78|;J. McGenn|ZM|1994-10-18|79|79|;Bo. Kamaro|ZDM|1999-11-23|80|80|;E. Buendío|OM|1996-12-25|77|77|;N. Jacksan|ST|2001-06-20|79|81|;P. Torris|IV|1997-01-16|80|80|;A. Garnacha|LF|2004-07-01|79|84|;T. Abrahom|ST|1997-10-02|76|76|;I. Maatsin|LV|2002-03-10|78|81|;A. Onano|ZDM|2001-08-16|80|82|;L. Goretzko|ZM|1995-02-06|79|79|;Đ. Petroveć|TW|1999-10-08|77|79|;A. Truffirt|LV|2001-11-20|77|79|;A. Scatt|ZM|2003-08-21|76|82|;Evanilsan|ST|1999-10-06|77|78|;T. Adoms|ZDM|1999-02-14|77|77|;M. Taverniir|OM|1999-03-22|77|77|;J. Kluivirt|OM|2000-05-05|78|79|;A. Adle|LF|2000-05-10|77|78|;C. Kellehir|TW|1998-11-23|79|80|;J. Hendersan|ZM|1990-06-17|74|74|;K. Schadi|LF|2001-11-27|77|79|;I. Thiaga|ST|2001-06-26|78|80|;D. Ouattaro|RF|2002-02-11|76|78|;Na. Collens|IV|2001-04-30|77|79|;M. Damsgaord|OM|2000-07-03|77|78|;B. Verbruggin|TW|2002-08-18|79|83|;L. Donk|IV|1991-11-21|77|77|;K. Mitomo|LF|1997-05-20|80|80|;J. Hinshelwoad|ZM|2005-04-11|76|83|;G. Ruttir|OM|2002-04-20|78|81|;Y. Mintih|RF|2004-07-22|77|83|;P. Graß|ZM|1991-06-15|77|77|;F. Kadıoğlo|LV|1999-10-07|78|78|;D. Gómiz|ZM|2003-03-27|77|81|;M. Wieffir|ZDM|1999-11-16|78|79|;E. Fergusan|ST|2004-10-19|75|82|;B. Thomos|IV|2001-01-30|71|73|;J. Rudone|OM|2001-05-26|72|74|;H. Wreght|ST|1998-03-27|72|73|;V. Tarp|ZM|1999-07-30|71|72|;D. Hendersan|TW|1997-03-12|79|79|;D. Muñaz|RV|1996-05-26|79|79|;T. Mitchill|LV|1999-09-01|77|77|;I. Sorr|RF|1998-02-25|79|79|;Y. Pina|RF|2002-10-20|78|81|;J. Mateto|ST|1997-06-28|79|79|;D. Kamado|OM|1996-08-05|77|77|;A. Whartan|ZM|2004-02-06|80|86|;C. Richords|IV|2000-03-28|77|78|;J. Pickfard|TW|1994-03-07|81|81|;J. Branthwaiti|IV|2002-06-27|79|84|;J. Tarkowske|IV|1992-11-19|77|77|;K. Dewsbury-Holl|ZM|1998-09-06|77|78|;Beta|ST|1998-01-31|75|75|;T. Barri|ST|2002-10-21|76|80|;J. O'Briin|IV|2001-05-15|76|78|;V. Mykolenka|LV|1999-05-29|75|75|;T. Dibleng|RF|2006-02-17|75|84|;C. Nørgaord|ZDM|1994-03-10|76|76|;J. Garnir|ZM|2001-03-13|77|78|;B. Lena|TW|1992-03-04|79|79|;K. Teti|RV|1995-10-09|76|76|;C. Bassei|IV|1999-12-31|77|78|;J. Andersin|IV|1996-05-31|78|78|;R. Munez|ST|2001-05-04|77|79|;T. Cairnei|ZM|1991-01-20|72|72|;O. Babb|RF|2003-07-12|76|82|;S. Bergi|ZDM|1998-02-14|77|77|;A. Iwobe|OM|1996-05-03|78|78|;E. Smith Rowi|OM|2000-07-28|77|78|;A. Robinsan|LV|1997-08-08|79|79|;J. Butlond|TW|1993-03-10|73|73|;J. Egon|IV|1992-10-20|70|70|;H. Morito|ZM|1995-05-10|75|75|;O. McBurnii|ST|1996-06-04|69|69|;M. Cha|LF|2004-01-19|72|78|;A. Palmir|TW|1996-08-10|72|72|;L. Daves|LV|1999-12-31|74|75|;I. Diap|IV|1997-01-09|73|73|;J. Encisa|OM|2004-01-23|75|81|;F. Lues|ZDM|1999-08-19|74|75|;D. Maedo|LF|1997-10-20|75|75|;J. Clarki|LF|2000-11-23|74|75|;J. Traffard|TW|2002-10-10|77|82|;J. Bogli|RV|2000-07-27|76|77|;E. Ampado|ZDM|2000-09-14|77|78|;J. Rodan|IV|1997-10-22|77|77|;D. Jamis|RF|1997-11-10|75|75|;D. Calvert-Lewen|ST|1997-03-16|76|76|;B. Aaronsan|OM|2000-10-22|75|76|;L. Nmecho|ST|1998-12-14|74|74|;A. Stoch|ZM|1998-11-15|77|77|;N. Okafar|LF|1999-03-24|76|77|;A. Tanako|ZM|1998-09-10|76|76|;N. Popi|TW|1992-04-19|80|80|;L. Holl|LV|2004-09-08|80|85|;S. Botmon|IV|2000-01-12|80|81|;Joelintan|ZM|1996-08-14|80|80|;S. Tonale|ZM|2000-05-08|84|85|;Y. Wisso|ST|1996-09-03|80|80|;H. Barnis|LF|1997-12-09|79|79|;M. Thiow|IV|2001-08-08|80|82|;A. Elango|RF|2002-04-27|79|81|;T. Livramenta|RV|2002-11-12|80|84|;J. Murphi|RF|1995-02-24|76|76|;N. Woltemadi|ST|2002-02-14|81|85|;D. Born|IV|1992-05-09|77|77|;L. Milei|ZM|2006-05-01|74|83|;M. Sils|TW|1992-02-26|78|78|;N. Willioms|RV|2001-04-13|77|78|;Murilla|IV|2002-07-04|80|83|;N. Milenkoveć|IV|1997-10-12|80|80|;O. Aino|RV|1996-10-08|76|76|;I. Sangari|ZDM|1997-12-02|77|77|;M. Gibbs-Whiti|OM|2000-01-27|81|82|;C. Hudson-Odoe|LF|2000-11-07|77|77|;C. Woad|ST|1991-12-07|78|78|;D. Ndoyi|RF|2000-10-25|78|79|;L. Delop|ST|2003-02-08|77|82|;B. Brobbei|ST|2002-02-01|76|79|;C. Regg|OM|2007-06-18|72|84|;O. Aldereti|IV|1996-12-26|76|76|;W. Isidar|ST|2000-08-27|75|76|;H. Diarro|ZM|2004-01-03|77|83|;N. Mukieli|RV|1997-11-01|76|76|;R. Roifs|TW|2003-01-26|76|82|;N. Sadike|ZDM|2004-12-17|75|81|;E. Le Féi|ZM|2000-02-03|77|78|;G. Xhako|ZM|1992-09-27|80|80|;A. Robertsan|LV|1994-03-11|79|79|;X. Simans|OM|2003-04-21|83|88|;C. Gallaghir|ZM|2000-02-06|80|81|;Richarlisan|ST|1997-05-10|77|77|;J. Maddisan|OM|1996-11-23|81|81|;M. Til|LF|2005-04-27|77|85|;D. Udogii|LV|2002-11-28|79|82|;A. Grai|ZM|2006-03-12|77|85|;L. Bergvoll|ZM|2006-02-02|79|87|;D. Solanki|ST|1997-09-14|80|80|;M. Kudos|RF|2000-08-02|82|83|;D. Kulusevske|RF|2000-04-25|81|82|;O. Marmoosh|ST|1999-02-07|81|81|;P. Porra|RV|1999-09-13|81|81|;R. Bentancor|ZM|1997-06-25|80|80|;A. Kenský|TW|2003-03-31|75|83|;M. van de Vin|IV|2001-04-19|83|84|;A. Sivero|TW|1996-08-11|75|75|;D. Suáriz|OM|1994-01-06|73|73|;A. Blanca|ZDM|2000-07-23|75|76|;M. Díoz|ST|1993-08-01|70|70|;C. Aleño|ZM|1998-01-05|74|74|;T. Martíniz|ST|1997-06-30|73|73|;N. Tenaglio|IV|1996-02-21|73|73|;L. Boyi|ST|1996-02-28|74|74|;J. Otta|LV|1994-03-03|72|72|;U. Siman|TW|1997-06-11|83|83|;D. Vivion|IV|1999-07-05|80|81|;Á. Berenguir|LF|1995-07-04|77|77|;O. Sancit|OM|2000-04-25|81|83|;I. Willioms|ST|1994-06-15|79|79|;Ni. Willioms|LF|2002-07-12|84|87|;G. Guruzeto|ST|1996-09-12|76|76|;A. Laporti|IV|1994-05-27|79|79|;I. Ruiz de Galarreto|ZM|1993-08-06|76|76|;Y. Berchichi|LV|1990-02-10|75|75|;M. Jauregizor|ZM|2003-07-13|77|84|;C. Starfilt|IV|1995-06-01|75|75|;M. Alonsa|LV|1990-12-28|74|74|;I. Moribo|ZM|2003-01-19|77|81|;B. Iglesios|ST|1993-01-17|76|76|;F. Jutglo|ST|1999-02-01|75|75|;I. Aspos|ST|1987-08-01|75|75|;I. Rado|TW|1997-05-28|75|75|;W. Swedbirg|RF|2004-02-01|75|80|;C. Patina|ZM|2003-10-17|72|77|;Y. Hernándiz|LF|2002-12-10|75|82|;M. Ditura|TW|1987-05-08|72|72|;F. Redonda|ZM|2003-01-18|73|77|;P. Bigos|IV|1990-05-15|70|70|;M. Aguada|ZM|2000-02-29|73|74|;G. Valero|LF|2002-03-16|73|76|;G. Villor|ZM|1998-03-23|72|72|;F. Niña|ST|2000-10-24|72|73|;G. Diangano|RF|1998-04-19|73|73|;L. Cabrero|IV|1991-06-17|74|74|;J. Puada|ST|1998-05-25|75|75|;E. Expósita|ZM|1996-08-01|74|74|;P. Lozana|ZDM|1999-10-06|74|74|;P. Millo|LF|1992-09-23|73|73|;M. Dmitroveć|TW|1992-01-24|75|75|;K. Garcío|ST|1989-11-25|72|72|;O. El Hilale|RV|2003-09-12|74|78|;D. Djeni|IV|1991-12-31|76|76|;Juanme|LF|1993-05-20|73|73|;N. Gudilj|ZDM|1991-11-16|74|74|;B. Mayorol|ST|1997-04-05|75|75|;D. Sorio|TW|1993-04-04|76|76|;K. Femenío|RV|1991-02-02|71|71|;E. Ünol|ST|1997-05-10|73|73|;C. Uchi|ZM|2003-05-08|75|79|;A. Mande|IV|1991-10-22|73|73|;R. Brugui|RF|1996-11-07|72|72|;M. Ryon|TW|1992-04-08|73|73|;J. Toljon|RV|1994-08-08|72|72|;A. Herrera|TW|1994-04-21|70|70|;S. Herrero|TW|1993-06-05|77|77|;L. Torra|ZDM|1994-07-19|76|76|;J. Moncayolo|ZM|1998-05-13|76|76|;A. Oraz|OM|2001-11-27|77|80|;Ru. Garcío|LF|1993-07-14|74|74|;M. Gómiz|OM|1994-06-23|74|74|;A. Budimer|ST|1991-07-22|78|78|;A. Bretonis|LV|2000-10-27|75|76|;A. Cateno|IV|1994-10-28|76|76|;J. Ezkieto|TW|1996-08-17|72|72|;I. Vicenti|OM|1998-01-06|74|74|;A. Marten|RF|1999-07-11|73|73|;J. Mato|ST|1988-10-24|68|68|;A. Rațio|RV|1998-06-20|77|77|;P. Cess|ZDM|1994-03-16|76|76|;I. Palazan|RF|1994-12-27|78|78|;Ó. Treja|OM|1988-04-26|72|72|;S. Camella|ST|2001-02-10|74|75|;A. Batallo|TW|1996-04-30|76|76|;U. Lópiz|ZM|1995-10-30|75|75|;Á. Garcío|LF|1992-10-27|75|75|;J. de Frutas|RF|1997-02-20|76|76|;F. Lejeuni|IV|1991-05-20|76|76|;Á. Vallis|TW|1997-07-25|77|77|;H. Belleren|RV|1995-03-19|75|75|;D. Llorenti|IV|1993-08-16|76|76|;Naton|IV|2001-02-06|77|80|;M. Bartro|IV|1991-01-15|73|73|;Antoni|RF|2000-02-24|80|80|;P. Fornols|OM|1996-02-22|78|78|;C. Hernándiz|ST|1999-04-20|79|79|;A. Ezzalzoule|LF|2001-12-17|79|81|;N. Deosso|ZM|2000-03-25|76|78|;G. Lo Celsa|OM|1996-04-09|79|79|;M. Roco|ZDM|1996-11-26|78|78|;Isca|OM|1992-04-21|81|81|;J. Firpa|LV|1996-08-22|75|75|;D. Ceballas|ZM|1996-08-07|78|78|;Á. Remira|TW|1995-03-24|80|80|;I. Zubeldio|IV|1997-03-30|78|78|;A. Barrenetxeo|LF|2001-12-27|77|79|;O. Óskarssan|ST|2004-08-29|76|83|;M. Oyarzabol|ST|1997-04-21|82|82|;G. Guedis|LF|1996-11-29|77|77|;Y. Herrero|ZM|1998-01-07|78|78|;T. Kuba|RF|2001-06-04|81|83|;D. Ćaleta-Cor|IV|1996-09-17|76|76|;C. Solir|ZM|1997-01-02|78|78|;B. Méndiz|OM|2000-01-07|79|80|;L. Sučeć|ZM|2002-09-08|77|82|;O. Vlachodimas|TW|1994-04-26|75|75|;K. Salos|IV|2002-04-23|75|78|;L. Agoumi|ZM|2002-02-09|76|80|;R. Vargos|LF|1998-08-05|77|77|;Is. Romera|ST|2000-05-18|74|76|;C. Ejuki|RF|1998-01-02|76|76|;J. Ángel Carmono|RV|2002-01-29|75|78|;S. Dimitrievske|TW|1993-12-25|77|77|;G. Rodríguiz|ZDM|1994-04-12|76|76|;M. Diakhabi|IV|1996-12-19|75|75|;C. Tárrego|IV|2002-02-26|76|80|;U. Sadeq|ST|1997-02-02|73|73|;A. Danjumo|LF|1997-01-31|75|75|;J. Guerro|ZM|2003-05-13|78|84|;H. Dura|ST|1999-11-10|76|76|;L. Riojo|LF|1993-10-16|74|74|;J. Gayo|LV|1995-05-25|77|77|;D. Lópiz|RF|2002-05-13|76|80|;Pepelo|ZM|1998-08-11|77|77|;D. Foulquiir|RV|1993-03-23|73|73|;L. Costo|IV|2001-04-01|77|79|;G. Morena|ST|1992-04-07|79|79|;J. Foith|IV|1998-01-12|78|78|;G. Mikautadzi|ST|2000-10-31|78|79|;D. Pareja|ZM|1989-04-16|78|78|;R. Veigo|IV|2003-07-29|78|83|;S. Comesaño|ZM|1996-10-05|76|76|;T. Partei|ZDM|1993-06-13|80|80|;T. Buchanon|RF|1999-02-08|75|75|;P. Gueyi|ZM|1999-01-24|78|78|;N. Pépi|RF|1995-05-29|78|78|;A. Moleira|OM|2003-09-30|79|84|;A. Périz|ST|1993-07-29|78|78|;S. Cardono|LV|1999-07-08|76|76|;A. Pedrazo|LV|1996-04-09|75|75|`;
+const KNOWN = Object.fromEntries(L1_KNOWN.split(';').map(x=>{ const [n,pos,born,r,pot,alt]=x.split('|'); return [n,{pos,born,r:+r,pot:+pot,alt:alt?alt.split(','):undefined}] }));
 const POSMAP = {GK:'TW',CB:'IV',LB:'LV',RB:'RV',DM:'ZDM',CM:'ZM',AM:'OM',LW:'LF',RW:'RF',CF:'ST'};
 const slug = n => n.normalize('NFD').replace(/[^a-zA-Z]/g,'').toLowerCase();
 const pad2 = n => String(n).padStart(2,'0');
-// Alle Ligue-1-Kader (außer PSG). Bekannte Spieler mit echten Daten, bei den anderen sind Alter und Stärke geschätzt.
+// Alle Liga-Kader (außer PSG). Bekannte Spieler mit echten Daten, bei den anderen sind Alter und Stärke geschätzt.
 function genL1World(){
   const by={};
   L1_SQUADS.split('\n').forEach(l=>{ const [club,no,pos,name]=l.split('|'); (by[club]=by[club]||[]).push({no:+no,pos,name}) });
@@ -1245,23 +2575,122 @@ function genL1World(){
     out[club]=list.map(e=>{
       const k=KNOWN[e.name]; let pos;
       if(k) pos=k.pos; else if(e.pos==='GK') pos='TW'; else if(POSMAP[e.pos]) pos=POSMAP[e.pos]; else if(GROUP[e.pos]) pos=e.pos; else { const c=cyc[e.pos]||cyc.MF; pos=c[(ci[e.pos]=(ci[e.pos]||0)+1)%c.length] }
-      const parts=e.name.split(' '), short=parts.length>1?parts.slice(1).join(' '):e.name;
+      const short=fakeShort(e.name);
       let born,r,pot,est=false;
       if(k){ born=k.born; r=k.r; pot=k.pot }
       else { est=true; const age=Math.round(rnd(19,31)); born=`${S.season-age}-${pad2(1+Math.floor(Math.random()*12))}-${pad2(1+Math.floor(Math.random()*28))}`;
         r=Math.round(str-6+rnd(-4,4)); pot= age<=22 ? r+Math.round(rnd(3,10)) : age<=25 ? r+Math.round(rnd(0,4)) : r }
-      return {id:'l_'+slug(e.name), n:e.no, name:short, full:e.name, pos, born, r, pot, club, est};
+      return {id:'l_'+club+'_'+slug(e.name), n:e.no, name:short, full:e.name, pos, alt:k&&k.alt, born, r, pot, club, est, fake:true};
     });
   });
   return out;
 }
-const PLAYABLE = () => TEAMS.slice().sort((a,b)=>b.str-a.str);
+const PLAYABLE = (lg) => (lg?LEAGUES[lg].teams.map(T):ALL.filter(c=>LEAGUE_ORDER.some(k=>LEAGUES[k].teams.includes(c.id)))).sort((a,b)=>b.str-a.str);
 const clubScale = id => Math.max(.2, Math.min(1, (T(id).str-62)/24));
 const SC = () => S.scale||1;
 
 // Vereine, die nur auf dem Transfermarkt vorkommen
-const EXTRA_CLUBS = [{id:'che',name:'FC Chelsea',short:'CHE',str:83,c1:'#034694',c2:'#ffffff',tc:'#ffffff'}];
+const EXTRA_CLUBS = [{id:'che',name:'London Blue',short:'LBL',str:83,c1:'#034694',c2:'#ffffff',tc:'#ffffff'}];
 EXTRA_CLUBS.forEach(c=>ALL.push(c));
+/* ===================== LIGEN ===================== */
+// Weitere Liga-Vereine (Namen abgewandelt, Stärke geschätzt)
+const LEAGUE_CLUBS = [
+  {id:'b04',name:'Leverkusen Rhein',short:'LRH',str:79,c1:'#e32221',c2:'#000000',tc:'#ffffff'},
+  {id:'sge',name:'Frankfurt Adler',short:'FAD',str:77,c1:'#000000',c2:'#e1000f',tc:'#ffffff'},
+  {id:'tsg',name:'Hoffenheim Kraichgau',short:'HKR',str:75,c1:'#1961b5',c2:'#ffffff',tc:'#ffffff'},
+  {id:'scf',name:'Freiburg Breisgau',short:'FBR',str:74,c1:'#e2001a',c2:'#000000',tc:'#ffffff'},
+  {id:'bmg',name:'Gladbach Fohlen',short:'GFO',str:73,c1:'#ffffff',c2:'#00a650',tc:'#111111'},
+  {id:'m05',name:'Mainz Karneval',short:'MKA',str:72,c1:'#c3141e',c2:'#ffffff',tc:'#ffffff'},
+  {id:'svw',name:'Bremen Weser',short:'BWE',str:72,c1:'#1d9053',c2:'#ffffff',tc:'#ffffff'},
+  {id:'fcu',name:'Berlin Eisern',short:'BEI',str:71,c1:'#d4011d',c2:'#ffd700',tc:'#ffffff'},
+  {id:'fca',name:'Augsburg Lech',short:'ALE',str:70,c1:'#ba3733',c2:'#46714d',tc:'#ffffff'},
+  {id:'koe',name:'Köln Dom',short:'KDO',str:70,c1:'#ffffff',c2:'#ed1c24',tc:'#ed1c24'},
+  {id:'hsv',name:'Hamburg Elbe',short:'HEL',str:70,c1:'#ffffff',c2:'#0a3f86',tc:'#0a3f86'},
+  {id:'s04',name:'Gelsenkirchen Knappen',short:'GKN',str:69,c1:'#004d9d',c2:'#ffffff',tc:'#ffffff'},
+  {id:'sve',name:'Elversberg Saar',short:'ESA',str:66,c1:'#111111',c2:'#ffffff',tc:'#ffffff'},
+  {id:'pad',name:'Paderborn Pader',short:'PPA',str:66,c1:'#005ca9',c2:'#000000',tc:'#ffffff'},
+  {id:'new',name:'Newcastle Magpies',short:'NMA',str:81,c1:'#241f20',c2:'#ffffff',tc:'#ffffff'},
+  {id:'tot',name:'London Lilywhite',short:'LLW',str:80,c1:'#ffffff',c2:'#132257',tc:'#132257'},
+  {id:'nfo',name:'Nottingham Sherwood',short:'NSH',str:77,c1:'#dd0000',c2:'#ffffff',tc:'#ffffff'},
+  {id:'bha',name:'Brighton Seagulls',short:'BSG',str:77,c1:'#0057b8',c2:'#ffffff',tc:'#ffffff'},
+  {id:'cry',name:'London Eagles',short:'LEA',str:77,c1:'#1b458f',c2:'#c4122e',tc:'#ffffff'},
+  {id:'bou',name:'Bournemouth Cherries',short:'BCH',str:75,c1:'#da291c',c2:'#000000',tc:'#ffffff'},
+  {id:'bre',name:'Brentford Bees',short:'BBE',str:75,c1:'#e30613',c2:'#ffffff',tc:'#ffffff'},
+  {id:'eve',name:'Merseyside Blue',short:'MSB',str:75,c1:'#003399',c2:'#ffffff',tc:'#ffffff'},
+  {id:'ful',name:'London Cottage',short:'LCO',str:75,c1:'#ffffff',c2:'#000000',tc:'#111111'},
+  {id:'sun',name:'Sunderland Wear',short:'SWE',str:73,c1:'#eb172b',c2:'#ffffff',tc:'#ffffff'},
+  {id:'lee',name:'Leeds Yorkshire',short:'LYO',str:73,c1:'#ffffff',c2:'#1d428a',tc:'#1d428a'},
+  {id:'cov',name:'Coventry Sky',short:'CSK',str:70,c1:'#6cb4e4',c2:'#ffffff',tc:'#0b2545'},
+  {id:'ips',name:'Ipswich Tractor',short:'ITR',str:70,c1:'#0044a9',c2:'#ffffff',tc:'#ffffff'},
+  {id:'hul',name:'Hull Tigers',short:'HTI',str:69,c1:'#f5a12d',c2:'#000000',tc:'#000000'},
+  {id:'ath',name:'Bilbao Leones',short:'BLE',str:79,c1:'#ee2523',c2:'#ffffff',tc:'#ffffff'},
+  {id:'rso',name:'San Sebastián Txuri',short:'SST',str:76,c1:'#0067b1',c2:'#ffffff',tc:'#ffffff'},
+  {id:'cel',name:'Vigo Celeste',short:'VCE',str:74,c1:'#8ac3ee',c2:'#ffffff',tc:'#0b2545'},
+  {id:'osa',name:'Pamplona Rojillo',short:'PRO',str:73,c1:'#d91a21',c2:'#0a346f',tc:'#ffffff'},
+  {id:'val',name:'Valencia Murciélago',short:'VMU',str:73,c1:'#ffffff',c2:'#ee3524',tc:'#111111'},
+  {id:'ray',name:'Madrid Vallecas',short:'MVA',str:73,c1:'#ffffff',c2:'#e53027',tc:'#e53027'},
+  {id:'sev',name:'Sevilla Nervión',short:'SNE',str:73,c1:'#ffffff',c2:'#d81e05',tc:'#d81e05'},
+  {id:'esp',name:'Barcelona Periquito',short:'BPE',str:72,c1:'#007fc8',c2:'#ffffff',tc:'#ffffff'},
+  {id:'get',name:'Getafe Azulón',short:'GAZ',str:71,c1:'#005999',c2:'#ffffff',tc:'#ffffff'},
+  {id:'alv',name:'Vitoria Glorioso',short:'VGL',str:71,c1:'#0761af',c2:'#ffffff',tc:'#ffffff'},
+  {id:'elc',name:'Elche Franjiverde',short:'EFR',str:70,c1:'#ffffff',c2:'#05642c',tc:'#05642c'},
+  {id:'dep',name:'Coruña Blanquiazul',short:'CBA',str:69,c1:'#ffffff',c2:'#004a9f',tc:'#004a9f'},
+  {id:'lev',name:'Valencia Granota',short:'VGR',str:69,c1:'#004d98',c2:'#a50044',tc:'#ffffff'},
+  {id:'mal',name:'Málaga Costa',short:'MCO',str:68,c1:'#ffffff',c2:'#0d7cc1',tc:'#0d7cc1'},
+  {id:'rac',name:'Santander Cantabria',short:'SCA',str:68,c1:'#ffffff',c2:'#00824a',tc:'#00824a'}
+];
+LEAGUE_CLUBS.forEach(c=>ALL.push(c));
+ALL.forEach(c=>{ if(!c.stadium) c.stadium=c.name+' Arena' });
+const tvRange = (n,hi,lo) => Array.from({length:n},(_,i)=>Math.round(hi-(hi-lo)*i/(n-1)));
+const LEAGUES = {
+  fr:{name:'Première Division', chip:'PD', land:'Frankreich', flag:['#0055a4','#ffffff','#ef4135'], md:34,
+      teams:['psg','om','asm','ol','losc','rcl','srfc','ogcn','rcsa','pfc','tfc','sb29','fcl','hac','sco','aja','estac','lmfc'],
+      tv:[45,38,33,29,26,24,22,20,19,18,17,16,15,14,13,12,11,10], po:16},
+  de:{name:'Bundesklasse', chip:'BK', land:'Deutschland', flag:['#000000','#dd0000','#ffce00'], md:34,
+      teams:['fcb','bvb','rbl','b04','vfb','sge','tsg','scf','bmg','m05','svw','fcu','fca','koe','hsv','s04','sve','pad'],
+      tv:tvRange(18,90,35), po:16},
+  en:{name:'Prime League', chip:'PL', land:'England', flag:['#ffffff','#ce1124','#ffffff'], md:38,
+      teams:['ars','liv','mci','che','new','tot','mun','avl','nfo','bha','cry','bou','bre','eve','ful','sun','lee','cov','ips','hul'],
+      tv:tvRange(20,170,105), po:0},
+  es:{name:'La Primera', chip:'LP', land:'Spanien', flag:['#aa151b','#f1bf00','#aa151b'], md:38,
+      teams:['rma','bar','atm','ath','vil','bet','rso','cel','osa','val','ray','sev','esp','get','alv','elc','dep','lev','mal','rac'],
+      tv:tvRange(20,95,40), po:0}
+};
+const LEAGUE_ORDER = ['de','en','es','fr'];
+const leagueOf = id => LEAGUE_ORDER.find(k=>LEAGUES[k].teams.includes(id)) || 'fr';
+const LG = () => LEAGUES[(S&&S.league)||'fr'];
+const LTEAMS = () => LG().teams.map(T);
+const LNAME = () => LG().name;
+/* ===================== ABGEWANDELTE NAMEN ===================== */
+// Vereine, Stadien und Spieler tragen abgewandelte Namen (wie früher bei PES), damit keine echten Marken- oder Namensrechte benutzt werden.
+const CLUB_ALIAS = {
+  psg:['Paris Royal','PRY'], om:['Olympique Massalia','OMS'], asm:['Monte Rocca','MRC'], ol:['Lyon Rhône','LYR'], losc:['Lille Flandres','LIF'], rcl:['Racing Artois','RCA'],
+  srfc:['Rennes Bretagne','RBR'], ogcn:['Nice Riviera','NRV'], rcsa:['Strasbourg Rhin','SRH'], pfc:['Paris Lutèce','PLU'], tfc:['Toulouse Garonne','TGA'], sb29:['Brest Atlantique','BAT'],
+  fcl:['Lorient Océan','LOC'], hac:['Le Havre Estuaire','HES'], sco:['Angers Loire','ALO'], aja:['Auxerre Yonne','AYO'], estac:['Troyes Champagne','TCH'], lmfc:['Le Mans Sarthe','LMS'],
+  fcb:['München Bavaria','MBV'], bar:['FC Catalunya','CAT'], mun:['Manchester Red','MRE'], com:['Como Lario','CLA'], scp:['Lisboa Verde','LVE'], vfb:['Stuttgart Schwaben','STS'],
+  mci:['Manchester Blue','MBL'], avl:['Birmingham Claret','BCL'], bet:['Sevilla Verde','SVE'], bvb:['Dortmund Westfalen','DWF'], liv:['Merseyside Red','MSR'], rma:['Madrid Chamartín','MCH'],
+  ars:['North London','NLO'], aek:['Athen Union','AUN'], rom:['Roma Lupa','RLU'], sha:['Donbass Orange','DOR'], fen:['Istanbul Kanarien','IKA'], psv:['Eindhoven Lichtstadt','ELS'],
+  vil:['Plana Amarillo','PAM'], bru:['Brügge Blauschwarz','BBS'], sla:['Prag Rot-Weiß','PRW'], atm:['Madrid Rojiblanco','MRB'], int:['Milano Nerazzurro','MNZ'], lask:['Linz Athletik','LAT'],
+  nap:['Napoli Vesuv','NVE'], gal:['Istanbul Löwen','ILO'], vik:['Stavanger Nord','STN'], por:['Porto Drachen','POD'], rbl:['Leipzig Sachsen','LSA'], fey:['Rotterdam Hafen','RHA'],
+  sab:['Baku Kaspi','BKA'], slo:['Bratislava Donau','BDO'], bod:['Bodø Nordlicht','BNL'], che:['London Blue','LBL']
+};
+ALL.forEach(c=>{ const a=CLUB_ALIAS[c.id]; if(a){ c.name=a[0]; c.short=a[1]; if(c.stadium) c.stadium=a[0]+' Arena' } });
+const VSWAP={a:'o',e:'i',i:'e',o:'a',u:'o',á:'o',à:'o',â:'o',ä:'e',ã:'o',é:'i',è:'i',ê:'i',ë:'i',í:'e',ì:'e',î:'e',ï:'e',ó:'a',ò:'a',ô:'a',ö:'e',õ:'a',ø:'e',ú:'o',ù:'o',û:'o',ü:'i',y:'i'};
+function alterWord(w){
+  for(let i=w.length-1;i>=0;i--){ const c=w[i], lc=c.toLowerCase(); if(VSWAP[lc]){ let r=VSWAP[lc]; if(c!==lc) r=r.toUpperCase(); return w.slice(0,i)+r+w.slice(i+1) } }
+  return w+'o';
+}
+// Beispiel: "Max Mustermann" -> "M. Mustermonn", "Neymar" -> "Neymor"
+function fakeFull(full){
+  const parts=full.trim().split(/\s+/);
+  if(parts.length===1) return alterWord(parts[0]);
+  const last=parts.slice(1); last[last.length-1]=alterWord(last[last.length-1]);
+  return parts[0][0]+'. '+last.join(' ');
+}
+const fakeShort = f => f.includes('. ') ? f.slice(f.indexOf('. ')+2) : f;
+function fakePlayer(p){ if(p.fake||p.youth||p.gen) return p; p.full=fakeFull(p.full); p.name=fakeShort(p.full); p.fake=true; return p }
+PLAYERS.forEach(p=>p.fake=true);
+
 function marketValue(p){
   const a=ageOf(p); let v=.43*Math.exp((p.r-60)*.19);
   if(a<=21) v*=1+Math.max(0,p.pot-p.r)*.07; else if(a<=24) v*=1+Math.max(0,p.pot-p.r)*.03;
@@ -1271,7 +2700,7 @@ function marketValue(p){
 const wageDemand = p => Math.max(.3, Math.round(.9*Math.exp((p.r-70)*.135)*10)/10);
 function buildMarket(){
   return TRANSFER_POOL.split('\n').map(l=>{ const [club,full,name,pos,alt,born,r,pot,n]=l.split('|');
-    return {id:'m_'+full.normalize('NFD').replace(/[^a-zA-Z]/g,'').toLowerCase(), club, full, name, pos, alt:alt?alt.split(','):undefined, born, r:+r, pot:+pot, n:+n} });
+    return {id:'m_'+club+'_'+full.normalize('NFD').replace(/[^a-zA-Z]/g,'').toLowerCase(), club, full, name, pos, alt:alt?alt.split(','):undefined, born, r:+r, pot:+pot, n:+n, fake:true} });
 }
 const TRANSFER_CLUBS = () => ALL.filter(c=>c.id!==ME && c.str>=74);
 function inWindow(d){ const md=d.slice(5); return (md>='07-01'&&md<='09-01')||(md>='01-01'&&md<='02-02') }
@@ -1444,12 +2873,12 @@ function genMarketTalents(n){
 }
 function marketFrom(world){
   const own=new Set(S.players.map(p=>p.id));
-  let m=buildMarket().filter(p=>!['om','asm','ol'].includes(p.club));
+  let m=buildMarket().filter(p=>!world[p.club]);
   Object.entries(world).forEach(([club,ps])=>{ if(club!==ME) m=m.concat(ps.map(p=>({...p}))) });
   if(ME!=='psg') m=m.concat(PLAYERS.map(p=>({...p, club:'psg', alt:p.alt})));
   return m.filter(p=>!own.has(p.id));
 }
-function initMarket(world){ S.market=marketFrom(world||genL1World()); S.negs={}; S.blocked={}; S.offers=[]; S.pending=[]; genMarketTalents(10); S.marketV2=true }
+function initMarket(world){ S.market=marketFrom(world||genL1World()); S.negs={}; S.blocked={}; S.offers=[]; S.pending=[]; genMarketTalents(10); S.marketV2=true; S.marketV3=true }
 function ageMarket(){
   S.market.forEach(p=>{ const a=ageOf(p); let ch=Math.round(annualGrowth(a)*rnd(.5,1.4)); if(ch>0) ch=Math.min(ch,Math.max(0,p.pot-p.r)); p.r=Math.max(50,p.r+ch); if(p.r>p.pot) p.pot=p.r; p.sold=false });
   S.market=S.market.filter(p=>!(ageOf(p)>=36||(ageOf(p)>=34&&Math.random()<.4)));
@@ -1522,13 +2951,16 @@ async function mpPick(club){
   const d=mpLobby&&mpLobby.data; if(!d) return;
   const taken=Object.entries(d.members||{}).some(([u,m])=>u!==myUid()&&m.club===club);
   if(taken){ toast('Diesen Verein hat schon dein Mitspieler.'); return }
+  const oth=Object.entries(d.members||{}).find(([u,m])=>u!==myUid()&&m.club);
+  if(oth&&leagueOf(oth[1].club)!==leagueOf(club)){ toast(`Dein Mitspieler spielt in der ${LEAGUES[leagueOf(oth[1].club)].name}. Wählt beide dieselbe Liga.`); return }
   await lref(mpLobby.code,'members/'+myUid()+'/club').set(club);
 }
 async function mpStartLeague(){
   const d=mpLobby.data, mem=Object.values(d.members||{});
   if(mem.length!==2||mem.some(m=>!m.club)||mem[0].club===mem[1].club){ toast('Beide brauchen einen eigenen Verein.'); return }
-  const keep=S; S={season:2026};                       // Liga einmal auslosen: Spielplan und Champions League
-  const schedule=makeSchedule(shuffle(TEAMS.map(t=>t.id))); clInit(CL_START); const cl=S.cl; S=keep;
+  if(leagueOf(mem[0].club)!==leagueOf(mem[1].club)){ toast('Ihr müsst Vereine aus derselben Liga wählen.'); return }
+  const keep=S; S={season:2026, league:leagueOf(mem[0].club)};                       // Liga einmal auslosen: Spielplan und Champions Cup
+  const schedule=makeSchedule(shuffle(LG().teams.slice())); clInit(CL_START); const cl=S.cl; S=keep;
   await lref(mpLobby.code).update({league:JSON.stringify({schedule,cl}), status:'running', started:Date.now()});
 }
 function fixClPerspective(){ S.cl.psgIn=S.cl.teams.includes(ME); S.cl.psgOut=S.cl.psgIn?null:'Nicht qualifiziert' }
@@ -1542,6 +2974,15 @@ function mpStartFromLobby(code,v){
   msg(`Online-Liga gestartet! Du spielst mit ${CN()} gegen ${S.mp.otherName} (${T(S.mp.other).name}).`);
   mpLobby=null; view='home'; save(); render(); mpConnect();
 }
+let savedInfo=null;
+function goHome(){
+  save();
+  savedInfo={club:S.club, manager:S.manager, season:S.season, mp:isMP()};
+  if(isMP()&&fb){ const c=S.mp.code; ['team','ready','results','sold'].forEach(k=>lref(c,k).off()) }
+  mpConnected=false; mpLobby=null; overlay=null; modeOpen=false; view='home'; S=null;
+  startMode=savedInfo.mp?'multi':'single'; pickSel=savedInfo.club; pickLg=leagueOf(pickSel); render();
+}
+function continueGame(){ load(); if(!S) return; savedInfo=null; ME=S.club; view='home'; render(); if(isMP()) mpConnect() }
 function mpLeaveLobby(){ if(mpLobby&&fb) lref(mpLobby.code).off(); mpLobby=null; render() }
 
 /* --- laufendes Spiel --- */
@@ -1642,7 +3083,7 @@ function mpButtons(){
 
 /* ===================== JUWELEN & PACKS ===================== */
 const PACKS = {
-  classic:{name:'Klassik-Pack', cost:3, chance:.75, min:80, max:85, niete:2, desc:'Ein solider Profi mit 80 bis 85 Stärke, so wie Jonathan Tah oder Kai Havertz.'},
+  classic:{name:'Klassik-Pack', cost:3, chance:.75, min:80, max:85, niete:2, desc:'Ein solider Profi mit 80 bis 85 Stärke, zum Beispiel ein erfahrener Nationalspieler.'},
   star:{name:'Star-Pack', cost:7, chance:.7, min:90, max:99, niete:10, desc:'Hohe Chance auf einen Weltstar mit 90 oder mehr Stärke.'}
 };
 function openPack(k){
@@ -1820,7 +3261,10 @@ let ME='psg', modeOpen=false, S=null, view='home', fxView=null, selSlot=null, ca
 function load(){ try{const t=localStorage.getItem(SAVE); if(t) S=JSON.parse(t)}catch(e){S=null}
   prepare(); }
 function prepare(){
-  if(S){ if(!S.club) S.club='psg'; ME=S.club; if(S.gems==null) S.gems=0; if(!S.scale) S.scale=clubScale(ME);
+  if(S && !S.namesV2){ // alte Spielstände: echte Namen durch abgewandelte ersetzen
+    [S.players,S.market].forEach(list=>(list||[]).forEach(p=>fakePlayer(p)));
+    S.msgs=[{d:S.today||seasonStart(),t:'Alle Vereine und Spieler tragen jetzt abgewandelte Namen.'}]; S.psgLog=(S.psgLog||[]).map(x=>({...x,note:''})); S.namesV2=true }
+  if(S){ if(!S.club) S.club='psg'; ME=S.club; if(!S.league) S.league=leagueOf(ME); if(S.gems==null) S.gems=0; if(!S.scale) S.scale=clubScale(ME);
     if(!S.players) S.players=PLAYERS.map(p=>({...p}));
     S.players.forEach(p=>{ const t=PLAYERS.find(x=>x.id===p.id); if(t){ if(!p.born) p.born=t.born; if(p.pot==null) p.pot=t.pot } });
     fixLineup(); if(!S.cal) migrateCal();
@@ -1832,18 +3276,22 @@ function prepare(){
     if(!S.market) initMarket();
     else if(!S.marketV2){ const keep=new Set([...(S.pending||[]).map(x=>x.id),...Object.keys(S.negs||{})]);
       const old=S.market.filter(p=>keep.has(p.id)), fresh=marketFrom(genL1World()).filter(p=>!keep.has(p.id));
-      S.market=old.concat(fresh); S.marketV2=true }
+      S.market=old.concat(fresh); S.marketV2=true; S.marketV3=true }
+    if(!S.marketV3){ // neue Ligen: deren Spieler kommen auf den Markt
+      const have=new Set(S.market.map(p=>p.club)), own=new Set(S.players.map(p=>p.full)), w=genL1World();
+      Object.entries(w).forEach(([c,ps])=>{ if(c!==ME && !have.has(c)) S.market=S.market.concat(ps.filter(p=>!own.has(p.full))) });
+      S.marketV3=true; msg('Neu: Bundesklasse, Prime League und La Primera! Ihre Spieler stehen jetzt auch auf dem Transfermarkt.') }
     if(!S.academy){ S.academy=[]; for(let i=0;i<3;i++) S.academy.push(makeTalent(REGIONS[0],15,17)) }
     S.players.forEach(p=>{ if(p.sal==null) p.sal=salOf(p); if(p.r0==null) p.r0=p.r });
     if(S.done && !S.finClosed) seasonPayout();
     save(); } }
 function migrateCal(){
-  // Alter Spielstand ohne Champions League: Kalender nachbauen, verpasste CL-Spiele nachsimulieren
+  // Alter Spielstand ohne Champions Cup: Kalender nachbauen, verpasste Cup-Spiele nachsimulieren
   S.cal=buildCal(); S.psgLog=[]; S.done=false; clInit(CL_START);
   const target = S.md<34 ? S.cal.findIndex(x=>x.t==='lig'&&x.md===S.md) : S.cal.length;
   for(let i=0;i<target;i++){ const st=S.cal[i]; S.step=i;
     if(st.t==='lig'){ const m=S.results[st.md].find(r=>r.h===ME||r.a===ME); if(m) S.psgLog.push({comp:'L1',label:`Spieltag ${st.md+1}`,h:m.h,a:m.a,hg:m.hg,ag:m.ag,note:''}) }
-    else { const rs=stepResults(st); clApply(st.c,rs); const m=rs.find(r=>r.h===ME||r.a===ME); if(m) S.psgLog.push({comp:'CL',label:stepLabel(st).replace(/^Champions League · /,''),h:m.h,a:m.a,hg:m.hg,ag:m.ag,note:clNote(st.c)}) }
+    else { const rs=stepResults(st); clApply(st.c,rs); const m=rs.find(r=>r.h===ME||r.a===ME); if(m) S.psgLog.push({comp:'CL',label:stepLabel(st).replace(/^Champions Cup · /,''),h:m.h,a:m.a,hg:m.hg,ag:m.ag,note:clNote(st.c)}) }
   }
   S.step=target; save();
 }
@@ -1862,10 +3310,11 @@ function makeSchedule(ids){
   }
   return rounds.concat(rounds.map(m=>m.map(([h,a])=>[a,h])));
 }
-function freshTable(){ const t={}; TEAMS.forEach(x=>t[x.id]={p:0,w:0,d:0,l:0,gf:0,ga:0}); return t }
+function freshTable(){ const t={}; LTEAMS().forEach(x=>t[x.id]={p:0,w:0,d:0,l:0,gf:0,ga:0}); return t }
 function newGame(manager, club){
   club=club||'psg'; ME=club;
-  S={manager, club, season:2026, md:0, schedule:makeSchedule(shuffle(TEAMS.map(t=>t.id))), results:[], table:freshTable(), goals:{}, history:[], players:[], news:null, gems:0, scale:clubScale(club)};
+  S={namesV2:true, league:leagueOf(club), manager, club, season:2026, md:0, schedule:[], results:[], table:{}, goals:{}, history:[], players:[], news:null, gems:0, scale:clubScale(club)};
+  S.schedule=makeSchedule(shuffle(LG().teams.slice())); S.table=freshTable();
   const world=genL1World();
   S.players = club==='psg' ? PLAYERS.map(p=>({...p})) : world[club].map(p=>{ const q={...p}; delete q.club; return q });
   S.lineup={formation:'4-3-3',tactic:'bal',xi:autoBest('4-3-3')};
@@ -1884,8 +3333,8 @@ function newGame(manager, club){
 }
 function nextSeason(){
   const news={season:S.season+1, dev:[], retired:[], youth:[]};
-  // Wer spielt nächste Saison Champions League? Die besten 4 der Ligue 1 + 32 internationale Vereine
-  const fr=standings().slice(0,4).map(x=>x.id), frIds=new Set(TEAMS.map(t=>t.id));
+  // Wer spielt nächste Saison Champions Cup? Die besten 4 der eigenen Liga + 32 internationale Vereine
+  const fr=standings().slice(0,4).map(x=>x.id), frIds=new Set(LG().teams);
   const intl=S.cl.teams.filter(id=>!frIds.has(id)).sort((a,b)=>T(b).str-T(a).str).slice(0,32);
   news.cl=fr.includes(ME);
   if(!S.finClosed) seasonPayout();
@@ -1911,7 +3360,7 @@ function nextSeason(){
   msg('Neue Saison! Bring ein neues Trikot heraus, damit die Fans wieder kaufen.');
   S.scoutReport=null; S.fin.offers=null; ageMarket();
   news.dev.sort((a,b)=>(b.to-b.from)-(a.to-a.from));
-  S.news=news; S.md=0; S.results=[]; S.table=freshTable(); S.goals={}; S.schedule=makeSchedule(shuffle(TEAMS.map(t=>t.id)));
+  S.news=news; S.md=0; S.results=[]; S.table=freshTable(); S.goals={}; S.schedule=makeSchedule(shuffle(LG().teams.slice()));
   S.cal=buildCal(); S.step=0; S.psgLog=[]; S.done=false; S.today=seasonStart(); S.calDated=true; clInit([...fr,...intl]);
   fixLineup(); save();
 }
@@ -2004,20 +3453,24 @@ function applyLeague(rs){
   S.md++;
 }
 
-/* ---------- Kalender: Ligue 1 + Champions League ---------- */
+/* ---------- Kalender: Liga + Champions Cup ---------- */
 /* ---------- Datum ---------- */
 const DAY=86400000;
 const iso = ms => new Date(ms).toISOString().slice(0,10);
 const ms = d => Date.UTC(+d.slice(0,4), +d.slice(5,7)-1, +d.slice(8,10));
 const addDays = (d,n) => iso(ms(d)+n*DAY);
-// Echte CL-Termine 2026/27 (UEFA). Spätere Saisons: gleiche Wochentage, ein Jahr später.
+// Echte Cup-Termine 2026/27 (UEFA). Spätere Saisons: gleiche Wochentage, ein Jahr später.
 const CL_DATES = {L1:'2026-09-08',L2:'2026-10-13',L3:'2026-10-20',L4:'2026-11-03',L5:'2026-11-24',L6:'2026-12-08',L7:'2027-01-19',L8:'2027-01-27',
   PO1:'2027-02-16',PO2:'2027-02-23',R16a:'2027-03-09',R16b:'2027-03-16',QFa:'2027-04-06',QFb:'2027-04-13',SFa:'2027-04-27',SFb:'2027-05-04',F:'2027-06-05'};
-// Ligue 1: sonntags ab 23. August, Pausen für Länderspiele und Weihnachten
+// Première Division: sonntags ab 23. August, Pausen für Länderspiele und Weihnachten
 const L1_SKIP = new Set(['2026-09-06','2026-10-11','2026-11-15','2026-12-27','2027-01-03','2027-03-28']);
 const L1_DATES = (()=>{ const out=[]; let d='2026-08-23'; while(out.length<34){ if(!L1_SKIP.has(d)) out.push(d); d=addDays(d,7) } return out })();
+// 38 Spieltage: sonntags ab 16. August, nur Länderspielpausen
+const L38_SKIP = new Set(['2026-09-06','2026-10-11','2026-11-15','2027-03-28']);
+const L38_DATES = (()=>{ const out=[]; let d='2026-08-16'; while(out.length<38){ if(!L38_SKIP.has(d)) out.push(d); d=addDays(d,7) } return out })();
+const LDATES = () => LG().md===38 ? L38_DATES : L1_DATES;
 const shiftSeason = d => addDays(d,(S.season-2026)*364);
-function dateOfStep(st){ return shiftSeason(st.t==='lig' ? L1_DATES[st.md] : CL_DATES[st.c]) }
+function dateOfStep(st){ return shiftSeason(st.t==='lig' ? LDATES()[st.md] : CL_DATES[st.c]) }
 const seasonStart = () => shiftSeason('2026-08-01');
 const WD=['Mo','Di','Mi','Do','Fr','Sa','So'], WDL=['Sonntag','Montag','Dienstag','Mittwoch','Donnerstag','Freitag','Samstag'];
 const MON=['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'];
@@ -2026,7 +3479,7 @@ function fmtShort(d){ const x=new Date(ms(d)); return `${x.getUTCDate()}. ${MON[
 
 function buildCal(){
   const cal=[];
-  for(let md=0;md<34;md++) cal.push({t:'lig',md});
+  for(let md=0;md<LG().md;md++) cal.push({t:'lig',md});
   CL_PLAN.forEach(c=>cal.push({t:'cl',c:c[0]}));
   return cal.sort((a,b)=>ms(dateOfStep(a))-ms(dateOfStep(b)) || (a.t==='lig'?-1:1));
 }
@@ -2040,12 +3493,12 @@ function simTo(day){
 }
 const curStep = () => S.cal[S.step];
 function stepLabel(st){
-  if(st.t==='lig') return `Ligue 1 · Spieltag ${st.md+1}`;
+  if(st.t==='lig') return `${LNAME()} · Spieltag ${st.md+1}`;
   const c=st.c;
-  if(c[0]==='L') return `Champions League · Ligaphase, Spieltag ${c[1]} von 8`;
-  if(c==='F') return 'Champions League · Finale';
+  if(c[0]==='L') return `Champions Cup · Ligaphase, Spieltag ${c[1]} von 8`;
+  if(c==='F') return 'Champions Cup · Finale';
   const stage=c.replace(/(1|2|a|b)$/,''), leg=/(1|a)$/.test(c)?'Hinspiel':'Rückspiel';
-  return `Champions League · ${CL_LABEL[stage]}, ${leg}`;
+  return `Champions Cup · ${CL_LABEL[stage]}, ${leg}`;
 }
 function stepMatches(st){
   if(st.t==='lig') return S.schedule[st.md];
@@ -2063,7 +3516,7 @@ function applyStep(rs){
   rs.forEach(r=>(r.events||[]).forEach(e=>{ if(e.scorer) S.goals[e.scorer]=(S.goals[e.scorer]||0)+1 }));
   if(st.t==='lig') applyLeague(rs); else clApply(st.c,rs);
   const m=rs.find(r=>r.h===ME||r.a===ME);
-  if(m) S.psgLog.push({comp:st.t==='lig'?'L1':'CL', label:stepLabel(st).replace(/^(Ligue 1|Champions League) · /,''), h:m.h,a:m.a,hg:m.hg,ag:m.ag, note:st.t==='cl'?clNote(st.c):''});
+  if(m) S.psgLog.push({comp:st.t==='lig'?'L1':'CL', label:stepLabel(st).replace(/^[^·]+ · /,''), h:m.h,a:m.a,hg:m.hg,ag:m.ag, note:st.t==='cl'?clNote(st.c):''});
   const d=dateOfStep(st); if(!S.today||d>S.today) setToday(d);
   matchMoney(st,m);
   S.step++;
@@ -2076,12 +3529,12 @@ function seasonPayout(){
   const pos=standings().findIndex(x=>x.id===ME)+1;
   const lg=pos===1, clw=S.cl.champion===ME, cup=false;
   const g=(lg&&clw&&cup)?10:(lg?2:0)+(clw?2:0)+(cup?2:0);
-  if(g){ S.gems=(S.gems||0)+g; msg(`Du bekommst ${g} Juwelen für ${[lg&&'die Meisterschaft',clw&&'den Champions-League-Sieg'].filter(Boolean).join(' und ')}! Löse sie im Shop ein.`) }
-  money('tv', L1_TV[pos-1]);
+  if(g){ S.gems=(S.gems||0)+g; msg(`Du bekommst ${g} Juwelen für ${[lg&&'die Meisterschaft',clw&&'den Champions-Cup-Sieg'].filter(Boolean).join(' und ')}! Löse sie im Shop ein.`) }
+  money('tv', LG().tv[pos-1]);
   const sp=Object.values(S.sponsors).filter(Boolean);
   if(pos===1){ const b=sp.reduce((a,x)=>a+x.title,0); if(b>0){ money('bonus',b); msg(`Meisterprämie von den Sponsoren: ${fmtM(b)}.`) } }
-  if(S.cl.champion===ME){ const b=sp.reduce((a,x)=>a+x.cl,0); if(b>0){ money('bonus',b); msg(`CL-Siegprämie von den Sponsoren: ${fmtM(b)}.`) } }
-  msg(`TV-Geld der Ligue 1 für Platz ${pos}: ${fmtM(L1_TV[pos-1])}.`);
+  if(S.cl.champion===ME){ const b=sp.reduce((a,x)=>a+x.cl,0); if(b>0){ money('bonus',b); msg(`Cup-Siegprämie von den Sponsoren: ${fmtM(b)}.`) } }
+  msg(`TV-Geld der ${LNAME()} für Platz ${pos}: ${fmtM(LG().tv[pos-1])}.`);
 }
 function matchMoney(st,m){
   if(!m) return;
@@ -2091,13 +3544,13 @@ function matchMoney(st,m){
   if(c==='L1') money('prize',CL_PRIZE.start);
   if(c[0]==='L'){ const o=outcome(m); if(o==='W') money('prize',CL_PRIZE.win); if(o==='D') money('prize',CL_PRIZE.draw);
     if(c==='L8' && C.top8 && C.top8.includes(ME)){ money('prize',CL_PRIZE.R16); msg(`Direkt im Achtelfinale! Prämie: ${fmtM(CL_PRIZE.R16)}.`) } return }
-  if(c==='F'){ if(C.champion===ME){ money('prize',CL_PRIZE.champ); msg(`Champions-League-Sieg! Siegprämie: ${fmtM(CL_PRIZE.champ)}.`) } return }
+  if(c==='F'){ if(C.champion===ME){ money('prize',CL_PRIZE.champ); msg(`Champions-Cup-Sieg! Siegprämie: ${fmtM(CL_PRIZE.champ)}.`) } return }
   if(/(2|b)$/.test(c)){ const t=clTies(c).find(t=>t.a===ME||t.b===ME);
-    if(t&&t.w===ME){ const next={PO:'R16',R16:'QF',QF:'SF',SF:'F'}[c.replace(/(2|b)$/,'')]; money('prize',CL_PRIZE[next]); msg(`Weiter in der Champions League! Prämie: ${fmtM(CL_PRIZE[next])}.`) } }
+    if(t&&t.w===ME){ const next={PO:'R16',R16:'QF',QF:'SF',SF:'F'}[c.replace(/(2|b)$/,'')]; money('prize',CL_PRIZE[next]); msg(`Weiter in der Champions Cup! Prämie: ${fmtM(CL_PRIZE[next])}.`) } }
 }
 function autoAdvance(){ if(isMP()) return; while(S.step<S.cal.length && curStep().t==='cl' && !psgPlays(curStep())){ const st=curStep(); clApply(st.c,stepResults(st)); S.step++ } }
 
-/* ---------- Champions League ---------- */
+/* ---------- Champions Cup ---------- */
 function clInit(teams){
   const ids=shuffle(teams), tab={};
   ids.forEach(id=>tab[id]={p:0,w:0,d:0,l:0,gf:0,ga:0});
@@ -2154,14 +3607,14 @@ function clNote(c){
 }
 function clResultText(){
   const C=S.cl; if(!C) return '';
-  if(C.champion===ME) return 'Champions-League-Sieger!';
+  if(C.champion===ME) return 'Champions-Cup-Sieger!';
   if(C.psgOut) return C.psgOut;
   return 'Noch dabei';
 }
 function clStatusText(){
   const C=S.cl;
   if(!C.psgIn) return `${CS()} ist diese Saison nicht dabei.`;
-  if(C.champion) return C.champion===ME?`${CS()} ist Champions-League-Sieger!`:`Sieger: ${T(C.champion).name}. ${CS()}: ${C.psgOut}.`;
+  if(C.champion) return C.champion===ME?`${CS()} ist Champions-Cup-Sieger!`:`Sieger: ${T(C.champion).name}. ${CS()}: ${C.psgOut}.`;
   if(C.psgOut) return `${CS()}: ${C.psgOut}.`;
   const done=C.teams.length?C.table.psg.p:0;
   if(done<8) return `Ligaphase: ${done} von 8 Spielen gespielt.`;
@@ -2172,10 +3625,10 @@ function clStatusText(){
   return C.top8&&C.top8.includes(ME)?`${CS()} ist direkt im Achtelfinale.`:`${CS()} spielt in den Play-offs.`;
 }
 function standings(){
-  return TEAMS.map(t=>({id:t.id,...S.table[t.id],pts:S.table[t.id].w*3+S.table[t.id].d,gd:S.table[t.id].gf-S.table[t.id].ga}))
+  return LTEAMS().map(t=>({id:t.id,...S.table[t.id],pts:S.table[t.id].w*3+S.table[t.id].d,gd:S.table[t.id].gf-S.table[t.id].ga}))
    .sort((a,b)=>b.pts-a.pts||b.gd-a.gd||b.gf-a.gf||T(a.id).name.localeCompare(T(b.id).name));
 }
-const zoneOf = pos => pos<=4?'z-cl':pos===5?'z-el':pos===6?'z-ecl':pos===16?'z-po':pos>=17?'z-rel':'';
+const zoneOf = pos => { const n=LG().teams.length; return pos<=4?'z-cl':pos===5?'z-el':pos===6?'z-ecl':pos===LG().po?'z-po':pos>n-3?'z-rel':'' };
 
 /* ===================== OBERFLÄCHE ===================== */
 const app=document.getElementById('app');
@@ -2248,12 +3701,13 @@ const OUT_TXT={W:'S',D:'U',L:'N'};
 function render(){
   if(!S){ ME=pickSel||'psg'; applyTheme(); renderStart(); return }
   applyTheme();
-  const tabs=[['home','Übersicht'],['squad','Kader'],['train','Training'],['trans','Transfers'],['shop','Shop'],['table','Ligue 1'],['cl','Champions League'],['cal','Kalender'],['fin','Finanzen']];
+  const tabs=[['home','Übersicht'],['squad','Kader'],['train','Training'],['trans','Transfers'],['shop','Shop'],['table',LNAME()],['cl','Champions Cup'],['cal','Kalender'],['fin','Finanzen']];
   app.innerHTML=`
   <header class="top"><div class="wrap topin">
     <div class="modemenu"><button class="gemchip" data-tab="shop" aria-label="${S.gems} Juwelen, zum Shop">${GEM} <b class="num">${S.gems||0}</b></button><button class="modebtn ${S.admin?'adm':''}" data-act="modemenu" aria-haspopup="true" aria-expanded="${modeOpen}" aria-label="Menü">${S.admin?'<span class="admtag">ADMIN</span>':''}<span class="burger" aria-hidden="true"><i></i><i></i><i></i></span></button>
       ${modeOpen?`<div class="modepop" role="menu">
         <div class="label" style="padding:4px 10px 6px">Spiel</div>
+        <button class="modeopt" role="menuitem" data-act="gohome"><b>Zum Hauptmenü</b><span class="muted small">Zurück zum Startbildschirm. Dein Spiel wird vorher gespeichert.</span></button>
         <button class="modeopt" role="menuitem" data-act="newgame"><b>Neues Spiel</b><span class="muted small">Verein wählen und eine neue Karriere starten.</span></button>
         <button class="modeopt" role="menuitem" data-act="savemenu"><b>Spiel speichern</b><span class="muted small">In einem von drei Speicherplätzen sichern.</span></button>
         <button class="modeopt" role="menuitem" data-act="loadmenu"><b>Spielstand laden</b><span class="muted small">Einen gespeicherten Spielstand fortsetzen.</span></button>
@@ -2272,15 +3726,28 @@ function render(){
 const GEM = `<svg class="gem" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><polygon points="6,3 18,3 23,9 12,22 1,9" fill="#5fd4f5"/><polygon points="6,3 12,9 18,3" fill="#b6efff"/><polygon points="1,9 12,9 12,22" fill="#36a9d6"/><polygon points="12,9 23,9 12,22" fill="#2b8db8"/></svg>`;
 let pickSel='psg', overlay=null;
 const starsOf = s => s>=85?5:s>=79?4:s>=74?3:s>=69?2:1;
-const goalOf = s => s>=85?'Ziel: Meistertitel':s>=78?'Ziel: Champions League':s>=73?'Ziel: Europapokal':s>=69?'Ziel: Mittelfeld':'Ziel: Klassenerhalt';
-function pickerHTML(isStart){
-  const t=T(pickSel);
-  return `<div class="pgrid">${PLAYABLE().map(c=>`<button type="button" class="pclub ${pickSel===c.id?'sel':''}" data-pick="${c.id}" style="--pc:${c.c1};--pc2:${c.c2}">
+const goalOf = s => s>=85?'Ziel: Meistertitel':s>=78?'Ziel: Champions Cup':s>=73?'Ziel: Europapokal':s>=69?'Ziel: Mittelfeld':'Ziel: Klassenerhalt';
+let pickLg=null;
+const flagCSS = f => `linear-gradient(90deg,${f[0]} 0 33.3%,${f[1]} 33.3% 66.6%,${f[2]} 66.6%)`;
+function leagueTabs(cur, lockTo){
+  return `<div class="lgtabs">${LEAGUE_ORDER.map(k=>{ const L=LEAGUES[k], top=L.teams.map(T).sort((a,b)=>b.str-a.str).slice(0,3), off=lockTo&&lockTo!==k;
+    return `<button type="button" class="lgtab ${cur===k?'sel':''}" data-lg="${k}" ${off?'disabled':''} aria-pressed="${cur===k}">
+      <span class="lgflag" style="background:${flagCSS(L.flag)}"></span>
+      <span class="lgname">${esc(L.name)}</span><span class="muted small">${L.land} · ${L.teams.length} Vereine · ${L.md} Spieltage</span>
+      <span class="lgtop">${top.map(t=>crestSVG(t.id,26)).join('')}</span></button>` }).join('')}</div>`;
+}
+function clubCard(c, sel, taken){
+  return `<button type="button" class="pclub ${sel?'sel':''} ${taken?'taken':''}" data-pick="${c.id}" ${taken?'disabled':''} style="--pc:${c.c1};--pc2:${c.c2}">
       ${crestSVG(c.id,52)}<span class="pname">${esc(c.name)}</span>
       <span class="stars" aria-label="${starsOf(c.str)} von 5 Sternen">${'★'.repeat(starsOf(c.str))}<i>${'★'.repeat(5-starsOf(c.str))}</i></span>
-      <span class="muted small">${goalOf(c.str)}</span></button>`).join('')}</div>
+      <span class="muted small">${taken?'Vergeben':goalOf(c.str)}</span></button>`;
+}
+function pickerHTML(isStart){
+  const t=T(pickSel); if(!pickLg) pickLg=leagueOf(pickSel);
+  return `${leagueTabs(pickLg)}
+    <div class="pgrid">${PLAYABLE(pickLg).map(c=>clubCard(c,pickSel===c.id,false)).join('')}</div>
     <form id="startform" class="pfoot" style="--pc:${t.c1}">
-      <div class="pchosen">${crestSVG(pickSel,58)}<div><div class="label">Dein Verein</div><div class="pbig">${esc(t.name)}</div><div class="muted small">${esc(t.stadium||'')} · Startkapital ca. ${fmtM(Math.round(150*clubScale(pickSel)+10))}</div></div></div>
+      <div class="pchosen">${crestSVG(pickSel,58)}<div><div class="label">Dein Verein · ${esc(LEAGUES[leagueOf(pickSel)].name)}</div><div class="pbig">${esc(t.name)}</div><div class="muted small">${esc(t.stadium||'')} · Startkapital ca. ${fmtM(Math.round(150*clubScale(pickSel)+10))}</div></div></div>
       <div class="field" style="margin:0"><label class="label" for="mgr">Dein Managername</label><input id="mgr" maxlength="24" value="${esc(S?S.manager:'Leon')}" autocomplete="off"></div>
       ${isStart?'':'<p class="down small" style="margin:0">Achtung: Dein aktuelles Spiel wird ersetzt. Speichere es vorher, wenn du es behalten willst.</p>'}
       <button class="btn main" type="submit">Karriere starten</button>
@@ -2288,26 +3755,31 @@ function pickerHTML(isStart){
 }
 function lobbyHTML(){
   const L=mpLobby, d=L.data||{}, mem=d.members||{}, uid=myUid(), me=mem[uid]||{}, oth=Object.entries(mem).find(([u])=>u!==uid), isHost=d.host===uid;
-  const ready=Object.keys(mem).length===2 && Object.values(mem).every(m=>m.club) && (!oth||oth[1].club!==me.club);
+  const ready=Object.keys(mem).length===2 && Object.values(mem).every(m=>m.club) && (!oth||oth[1].club!==me.club) && (!oth||leagueOf(oth[1].club)===leagueOf(me.club));
+  const lock=oth&&oth[1].club?leagueOf(oth[1].club):null; const lg=lock||pickLg||(me.club?leagueOf(me.club):'fr');
   return `<div class="lobby">
     <div class="lobbycode"><div class="label">Lobby-Code</div><div class="code num">${L.code}</div><div class="muted small">Schick diesen Code deinem Kumpel. Er wählt „Multiplayer“ und gibt ihn bei „Code eingeben“ ein.</div></div>
     <div class="lobbymem">
       <div class="lm ${me.club?'ok':''}">${me.club?crestSVG(me.club,40):'<span class="slotempty">?</span>'}<div><b>${esc(me.name||L.name)}</b> <span class="muted small">(du${isHost?', Gastgeber':''})</span><div class="muted small">${me.club?esc(T(me.club).name):'Wählt noch einen Verein'}</div></div></div>
       <div class="lm ${oth&&oth[1].club?'ok':''}">${oth&&oth[1].club?crestSVG(oth[1].club,40):'<span class="slotempty">?</span>'}<div>${oth?`<b>${esc(oth[1].name)}</b><div class="muted small">${oth[1].club?esc(T(oth[1].club).name):'Wählt noch einen Verein'}</div>`:'<b>Warte auf Mitspieler...</b><div class="muted small">Sobald er den Code eingibt, erscheint er hier.</div>'}</div></div>
     </div>
-    <div class="label" style="margin-top:18px">Wähle deinen Verein</div>
-    <div class="pgrid">${PLAYABLE().map(c=>{ const taken=oth&&oth[1].club===c.id; return `<button type="button" class="pclub ${me.club===c.id?'sel':''} ${taken?'taken':''}" data-pick="${c.id}" ${taken?'disabled':''} style="--pc:${c.c1};--pc2:${c.c2}">${crestSVG(c.id,52)}<span class="pname">${esc(c.name)}</span><span class="stars">${'★'.repeat(starsOf(c.str))}<i>${'★'.repeat(5-starsOf(c.str))}</i></span><span class="muted small">${taken?'Vergeben':goalOf(c.str)}</span></button>` }).join('')}</div>
+    <div class="label" style="margin-top:18px">Wähle deinen Verein${lock?` <span class="muted">· Ihr spielt beide in der ${esc(LEAGUES[lock].name)}</span>`:''}</div>
+    ${leagueTabs(lg, lock)}
+    <div class="pgrid">${PLAYABLE(lg).map(c=>clubCard(c, me.club===c.id, oth&&oth[1].club===c.id)).join('')}</div>
     <div class="row">${isHost?`<button class="btn main" data-act="mpstart" ${ready?'':'disabled'}>Liga starten</button><span class="muted small">${ready?'Alles bereit!':'Beide brauchen einen eigenen Verein.'}</span>`:`<span class="waitdot"></span><span>Warte, bis der Gastgeber die Liga startet...</span>`}<button class="btn small" data-act="mpleave">Lobby verlassen</button></div>
   </div>`;
 }
 function renderStart(){
   const multi = startMode==='multi';
   app.innerHTML=`<main class="wrap"><div class="startwrap">
-    <div class="starthero"><div class="label">Ligue 1 · Champions League · Saison 2026/27</div>
+    <div class="starthero"><div class="label">4 Ligen · Champions Cup · Saison 2026/27</div>
     <h1>Leons <em>Fußball&shy;manager</em></h1>
     <p class="muted">${multi?'Spiel mit deinem Kumpel in derselben Liga. Jeder managt seinen eigenen Verein, und am Ende entscheidet die Tabelle, wer der bessere Manager ist.':'Wähle deinen Verein. Stell deine Elf auf, verhandle auf dem Transfermarkt und hol dir Titel und Juwelen.'}</p></div>
+    ${savedInfo?`<div class="pfoot contcard" style="--pc:${T(savedInfo.club).c1};margin:18px 0 6px">
+      <div class="pchosen">${crestSVG(savedInfo.club,58)}<div><div class="label">${savedInfo.mp?'Dein Multiplayer-Spiel':'Dein Spiel'}</div><div class="pbig">${esc(T(savedInfo.club).name)}</div><div class="muted small">Manager ${esc(savedInfo.manager||'')} · Saison ${savedInfo.season}/${String(savedInfo.season+1).slice(2)}</div></div></div>
+      <button class="btn main" data-act="continue">Weiterspielen</button></div>`:''}
     <div class="modeswitch"><button class="tab" data-smode="single" aria-current="${!multi}">Einzelkarriere</button><button class="tab" data-smode="multi" aria-current="${multi}">Multiplayer</button></div>
-    ${!multi?pickerHTML(true): mpLobby?lobbyHTML():`<div class="mpstart">
+    ${!multi?pickerHTML(!savedInfo): mpLobby?lobbyHTML():`<div class="mpstart">
       <div class="field" style="margin:0"><label class="label" for="mpname">Dein Managername</label><input id="mpname" maxlength="24" value="Leon" autocomplete="off"></div>
       <div class="mpopts">
         <div class="mpopt"><h3>Lobby erstellen</h3><p class="muted small">Du bekommst einen Code, den du deinem Kumpel schickst.</p><button class="btn main" data-act="mpcreate">Lobby erstellen</button></div>
@@ -2315,7 +3787,7 @@ function renderStart(){
       </div>
       ${mpBusy?`<p><span class="waitdot"></span> ${esc(mpBusy)}</p>`:''}${mpErr?`<p class="down">${esc(mpErr)}</p>`:''}
     </div>`}
-    <p class="hint">Kader: Stand Herbst 2026. Bei bekannten Spielern sind die Geburtsdaten echt. Bei den anderen sind Alter und Stärke geschätzt, ebenso alle Stärkewerte und Geldbeträge. Die Wappen sind eigene Entwürfe in Vereinsfarben, keine echten Logos.</p>
+    <p class="hint">Alle Vereine, Spieler, Stadien und Wettbewerbe tragen abgewandelte Namen. Die Kader orientieren sich am Stand Herbst 2026. Stärkewerte, Alter und Geldbeträge sind teilweise geschätzt. Die Wappen sind eigene Entwürfe.</p>
   </div></main>`;
 }
 const SLOT_KEY = i => SAVE+'_slot'+i;
@@ -2347,9 +3819,9 @@ function shopView(){
     <section class="box gemhero"><div class="boxhead"><h2>Deine Juwelen</h2></div>
       <div class="gembig">${GEM.replace('width="18" height="18"','width="64" height="64"')}<span class="num">${g}</span></div>
       <div class="label" style="margin-top:14px">So bekommst du Juwelen</div>
-      <div class="frow2"><span>Ligue-1-Meister</span><b>+2</b></div>
-      <div class="frow2"><span>Champions-League-Sieger</span><b>+2</b></div>
-      <div class="frow2"><span>Coupe de France <span class="muted small">(kommt bald)</span></span><b>+2</b></div>
+      <div class="frow2"><span>Liga-Meister</span><b>+2</b></div>
+      <div class="frow2"><span>Champions-Cup-Sieger</span><b>+2</b></div>
+      <div class="frow2"><span>Französischer Pokal <span class="muted small">(kommt bald)</span></span><b>+2</b></div>
       <div class="frow2"><span>Das Triple: alle drei in einer Saison</span><b>10 insgesamt</b></div>
       ${S.admin?'<div class="row" style="margin-top:14px"><button class="btn small" data-act="admingems">Admin: +10 Juwelen</button></div>':''}
     </section>
@@ -2388,7 +3860,7 @@ function homeView(){
   const [h,a]=stepMatches(stp).find(m=>m.includes(ME)), th=T(h), ta=T(a), opp=h===ME?ta:th;
   const sp=psgStrength(), so=opp.str, tot=sp+so;
   const last=S.psgLog.slice(-5).reverse();
-  let where = stp.c==='F' ? 'Finale im Metropolitano, Madrid' : (h===ME?'Heimspiel':'Auswärtsspiel')+(th.stadium?` · ${th.stadium}`:'');
+  let where = stp.c==='F' ? 'Finale in Madrid' : (h===ME?'Heimspiel':'Auswärtsspiel')+(th.stadium?` · ${th.stadium}`:'');
   let legInfo='';
   if(isCL && stp.c[0]!=='L' && /(2|b)$/.test(stp.c)){ const t=clTies(stp.c).find(t=>t.a===ME||t.b===ME); legInfo=`Hinspiel: ${T(t.a).name} ${t.l1.hg}:${t.l1.ag} ${T(t.b).name}` }
   const st=standings(), myPos=st.findIndex(x=>x.id===ME)+1;
@@ -2422,7 +3894,7 @@ function homeView(){
     <section class="box">
       <div class="boxhead"><h2>Letzte Ergebnisse</h2></div>
       ${last.length?`<div class="reslist">${last.map(r=>{const o=outcome(r);const op=T(r.h===ME?r.a:r.h);
-        return `<div class="res"><span class="pill ${o}">${OUT_TXT[o]}</span><span><span class="comp sm ${r.comp==='CL'?'cl':''}">${r.comp==='CL'?'CL':'L1'}</span> ${r.h===ME?'vs':'in'} ${mc(op.id)}${esc(op.name)} <span class="muted">· ${esc(r.label)}</span>${r.note?`<br><span class="muted small">${esc(r.note)}</span>`:''}</span><span class="score num">${r.hg}:${r.ag}</span></div>`}).join('')}</div>`
+        return `<div class="res"><span class="pill ${o}">${OUT_TXT[o]}</span><span><span class="comp sm ${r.comp==='CL'?'cl':''}">${r.comp==='CL'?'CC':LG().chip}</span> ${r.h===ME?'vs':'in'} ${mc(op.id)}${esc(op.name)} <span class="muted">· ${esc(r.label)}</span>${r.note?`<br><span class="muted small">${esc(r.note)}</span>`:''}</span><span class="score num">${r.hg}:${r.ag}</span></div>`}).join('')}</div>`
         :`<p class="muted" style="margin:0">Noch keine Spiele. Dein erstes Spiel wartet oben.</p>`}
     </section>
    </div>
@@ -2439,7 +3911,7 @@ function homeView(){
       ${Object.values(S.sponsors).some(x=>!x)?'<p class="down" style="margin:10px 0 0;font-weight:600">Ein Sponsorplatz ist frei! Such einen neuen Sponsor.</p>':''}
     </section>
     <section class="box">
-      <div class="boxhead"><h2>Champions League</h2><button class="btn small" data-tab="cl">Ansehen</button></div>
+      <div class="boxhead"><h2>Champions Cup</h2><button class="btn small" data-tab="cl">Ansehen</button></div>
       <p style="margin:0">${esc(clStatusText())}</p>
     </section>
     <section class="box">
@@ -2448,7 +3920,7 @@ function homeView(){
     </section>
     <section class="box">
       <div class="boxhead"><h2>Kommt als Nächstes</h2></div>
-      <div class="road"><span>Komplettes Design-Update</span><span>Coupe de France</span><span>Bundesliga, Premier League, LaLiga, Serie A</span><span>Spielerkarriere</span></div>
+      <div class="road"><span>Komplettes Design-Update</span><span>Französischer Pokal</span><span>Italienische Liga</span><span>Spielerkarriere</span></div>
     </section>
    </div>
   </div>`;
@@ -2459,7 +3931,7 @@ function newsBox(){
   const up=N.dev.filter(d=>d.to>d.from).slice(0,6), down=N.dev.filter(d=>d.to<d.from).sort((a,b)=>(a.to-a.from)-(b.to-b.from)).slice(0,4);
   return `<section class="box news">
     <div class="boxhead"><h2>Neue Saison ${N.season}/${String(N.season+1).slice(2)}: Das hat sich getan</h2><button class="btn small" data-act="closenews">Ausblenden</button></div>
-    ${N.cl===false?`<p style="margin:0 0 12px;color:var(--loss)">${esc(CN())} hat sich nicht für die Champions League qualifiziert.</p>`:''}
+    ${N.cl===false?`<p style="margin:0 0 12px;color:var(--loss)">${esc(CN())} hat sich nicht für die Champions Cup qualifiziert.</p>`:''}
     <div class="newsgrid">
       <div><div class="label">Neu aus der Jugend</div>${N.youth.map(id=>{const p=P(id);return p?`<button class="nlink" data-player="${p.id}">${esc(p.full)} <span class="muted">${p.pos} · ${ageOf(p)} J. · Pot. ${p.pot}</span></button>`:''}).join('')}</div>
       <div><div class="label">Besser geworden</div>${up.map(d=>`<div>${esc(d.name)} <span class="up num">${d.from} → ${d.to}</span></div>`).join('')||'<div class="muted">Niemand</div>'}</div>
@@ -2470,15 +3942,15 @@ function newsBox(){
 function seasonEndView(){
   const st=standings(), pos=st.findIndex(x=>x.id===ME)+1, me=st[pos-1];
   const clWin=S.cl.champion===ME;
-  const msg = pos===1&&clWin?'Das Double! Meister und Champions-League-Sieger!':clWin?'Champions-League-Sieger!':pos===1?`Meister! ${CN()} holt den Titel.`:pos<=4?'Champions League erreicht.':pos<=6?'Europa ist drin.':'Da ist noch Luft nach oben.';
+  const msg = pos===1&&clWin?'Das Double! Meister und Champions-Cup-Sieger!':clWin?'Champions-Cup-Sieger!':pos===1?`Meister! ${CN()} holt den Titel.`:pos<=4?'Champions Cup erreicht.':pos<=6?'Europa ist drin.':'Da ist noch Luft nach oben.';
   return `<section class="box next" style="max-width:640px;margin:0 auto">
     <div class="label">Saison ${S.season}/${String(S.season+1).slice(2)} beendet</div>
     <h1 style="font-size:46px;margin:6px 0 4px">Platz ${pos}</h1>
     <p style="font-size:18px;margin:0 0 16px">${msg}</p>
     <p class="muted num">${me.pts} Punkte · ${me.w} Siege, ${me.d} Unentschieden, ${me.l} Niederlagen · Tore ${me.gf}:${me.ga}</p>
     <p class="muted">Meister: <b style="color:var(--chalk)">${esc(T(st[0].id).name)}</b></p>
-    <p class="muted">Champions League: <b style="color:${S.cl.champion===ME?'var(--flood)':'var(--chalk)'}">${esc(S.cl.psgIn?clResultText():'Nicht dabei')}</b>${S.cl.champion&&S.cl.champion!==ME?` · Sieger: ${esc(T(S.cl.champion).name)}`:''}</p>
-    <p class="muted">${pos<=4?`${esc(CN())} ist nächste Saison in der Champions League dabei.`:`${esc(CN())} hat die Champions League für nächste Saison verpasst.`}</p>
+    <p class="muted">Champions Cup: <b style="color:${S.cl.champion===ME?'var(--flood)':'var(--chalk)'}">${esc(S.cl.psgIn?clResultText():'Nicht dabei')}</b>${S.cl.champion&&S.cl.champion!==ME?` · Sieger: ${esc(T(S.cl.champion).name)}`:''}</p>
+    <p class="muted">${pos<=4?`${esc(CN())} ist nächste Saison in der Champions Cup dabei.`:`${esc(CN())} hat die Champions Cup für nächste Saison verpasst.`}</p>
     <div class="row" style="margin-top:16px"><button class="btn main" data-act="newseason">Nächste Saison starten</button><button class="btn" data-tab="table">Abschlusstabelle</button></div>
   </section>`;
 }
@@ -2521,10 +3993,10 @@ function squadView(){
 function tableView(){
   const st=standings();
   return `<div class="grid g2"><section class="box">
-    <div class="boxhead"><h2>Ligue 1 · Tabelle</h2><span class="label">nach ${S.md} von ${S.schedule.length} Spieltagen</span></div>
+    <div class="boxhead"><h2>${LNAME()} · Tabelle</h2><span class="label">nach ${S.md} von ${S.schedule.length} Spieltagen</span></div>
     <div class="scroll"><table><thead><tr><th class="l">#</th><th class="l">Verein</th><th>Sp</th><th>S</th><th>U</th><th>N</th><th>Tore</th><th>Diff</th><th>Pkt</th></tr></thead>
     <tbody>${st.map((x,i)=>`<tr class="${x.id===ME?'me':isMP()&&x.id===S.mp.other?'rival':''}"><td class="l zone ${zoneOf(i+1)}">${i+1}</td><td class="l">${mc(x.id)}${esc(T(x.id).name)}</td><td>${x.p}</td><td>${x.w}</td><td>${x.d}</td><td>${x.l}</td><td>${x.gf}:${x.ga}</td><td>${x.gd>0?'+':''}${x.gd}</td><td><b>${x.pts}</b></td></tr>`).join('')}</tbody></table></div>
-    <div class="legend"><span style="--c:var(--cl)">Champions League</span><span style="--c:var(--el)">Europa League</span><span style="--c:var(--ecl)">Conference League</span><span style="--c:var(--draw)">Relegation</span><span style="--c:var(--loss)">Abstieg</span></div>
+    <div class="legend"><span style="--c:var(--cl)">Champions Cup</span><span style="--c:var(--el)">Europa League</span><span style="--c:var(--ecl)">Conference League</span>${LG().po?'<span style="--c:var(--draw)">Relegation</span>':''}<span style="--c:var(--loss)">Abstieg</span></div>
   </section>${fixturesView()}</div>`;
 }
 
@@ -2613,7 +4085,7 @@ function finOver(){
       <div class="frow2"><span>Trikotverkauf</span><b class="up num">+${fmtM(S.kit.rate)}</b></div>
       <div class="frow2"><span>Gehälter (${S.players.length+S.academy.length} Spieler)</span><b class="down num">−${fmtM(wageBill())}</b></div>
       <div class="frow2"><span>Personal & Stadion</span><b class="down num">−${fmtM(runCost())}</b></div>
-      <p class="hint">Dazu kommen pro Heimspiel Tickets (Ligue 1 ${fmtM(ticketOf('lig'))}, CL ${fmtM(ticketOf('cl'))}), CL-Prämien und am Saisonende das TV-Geld.</p>
+      <p class="hint">Dazu kommen pro Heimspiel Tickets (${LNAME()} ${fmtM(ticketOf('lig'))}), Cup ${fmtM(ticketOf('cl'))}), Cup-Prämien und am Saisonende das TV-Geld.</p>
     </section>
     <section class="box"><div class="boxhead"><h2>Höchste Gehälter</h2><span class="label">pro Jahr</span></div>
       <table><tbody>${sal.map(p=>`<tr><td class="l">${esc(p.full)}</td><td class="num">${fmtM(salOf(p))}</td></tr>`).join('')}</tbody></table>
@@ -2628,7 +4100,7 @@ function finSpon(){
     return `<div class="spon ${finSlot===k?'sel':''} ${x?'':'empty'}">
       <div class="label">${sl.name}</div>
       ${x?`<div class="sbrand">${esc(x.brand)}</div><div class="num"><b>${fmtM(x.annual)}</b> pro Jahr · noch ${x.years} ${x.years===1?'Saison':'Saisons'}</div>
-        <div class="muted small">Prämien: Meister ${fmtM(x.title)} · CL-Sieg ${fmtM(x.cl)}</div>`
+        <div class="muted small">Prämien: Meister ${fmtM(x.title)} · Cup-Sieg ${fmtM(x.cl)}</div>`
         :'<div class="sbrand down">Frei!</div><div class="muted small">Hier verdienst du gerade nichts.</div>'}
       <button class="btn small" data-slot2="${k}" style="margin-top:10px">${x?'Neuen Sponsor suchen':'Sponsor suchen'}</button></div>` };
   let right='';
@@ -2637,7 +4109,7 @@ function finSpon(){
       ${cur&&cur.years>0?`<p class="hint" style="margin:0 0 10px">Achtung: ${esc(cur.brand)} hat noch ${cur.years} ${cur.years===1?'Saison':'Saisons'} Vertrag. Ein Wechsel kostet eine Ablöse von ${fmtM(Math.round(cur.annual*.5*10)/10)}.</p>`:''}
       ${O.list.map((o,i)=>`<div class="offer"><div style="min-width:0"><div class="sbrand">${esc(o.brand)}</div>
         <div class="num">${fmtM(o.gross)} pro Jahr − ${Math.round(ag.comm*100)}% für die Agentur = <b class="up">${fmtM(o.net)}</b></div>
-        <div class="muted small">${o.years} ${o.years===1?'Saison':'Saisons'} · Prämie Meister ${fmtM(o.title)} · Prämie CL-Sieg ${fmtM(o.cl)} · Gesamtwert ${fmtM(o.net*o.years)}</div></div>
+        <div class="muted small">${o.years} ${o.years===1?'Saison':'Saisons'} · Prämie Meister ${fmtM(o.title)} · Prämie Cup-Sieg ${fmtM(o.cl)} · Gesamtwert ${fmtM(o.net*o.years)}</div></div>
         <button class="btn small main2" data-accept="${i}">Annehmen</button></div>`).join('')}
       <div class="row" style="margin-top:12px"><button class="btn small" data-act="dropoffers">Angebote ablehnen</button></div></section>`;
   } else if(finSlot){
@@ -2648,7 +4120,7 @@ function finSpon(){
         <button class="btn small main2" data-agency="${a.id}">Beauftragen</button></div>`).join('')}
     </section>`;
   } else right=`<section class="box"><div class="boxhead"><h2>So funktioniert's</h2></div><p style="margin:0">Wähle links einen Sponsorplatz. Dann beauftragst du eine Agentur, die dir Angebote bringt. Laufende Verträge kannst du gegen eine Ablöse vorzeitig beenden.</p>
-    <p class="hint">Sponsoren zahlen jedes Jahr Geld und extra Prämien, wenn dein Verein Meister wird oder die Champions League gewinnt. Wenn ein Vertrag ausläuft, ist der Platz frei, bis du einen neuen Sponsor findest.</p></section>`;
+    <p class="hint">Sponsoren zahlen jedes Jahr Geld und extra Prämien, wenn dein Verein Meister wird oder die Champions Cup gewinnt. Wenn ein Vertrag ausläuft, ist der Platz frei, bis du einen neuen Sponsor findest.</p></section>`;
   return `<div class="grid g2"><section class="box"><div class="boxhead"><h2>Deine Sponsoren</h2><span class="label num">${fmtM(sponsorIncome())} pro Jahr</span></div>
     <div class="spongrid">${Object.entries(SLOTS).map(card).join('')}</div></section>${right}</div>`;
 }
@@ -2688,12 +4160,12 @@ function clView(){
     return `<div class="tie ${me?'me':''}"><span class="${t.w===t.a?'win':''}">${esc(T(t.a).name)}</span>
       <span class="num legs">${final?leg(t.l1):`${leg(t.l1)} · ${t.l2?`${t.l2.ag}:${t.l2.hg}`:'–:–'}`}${t.pens?' <span class="muted">i.E.</span>':''}</span>
       <span class="r ${t.w===t.b?'win':''}">${esc(T(t.b).name)}</span></div>` };
-  const stage=(title,ties,final)=> ties&&(final?ties:ties.length) ? `<section class="box"><div class="boxhead"><h2>${title}</h2>${final?'<span class="label">Metropolitano, Madrid</span>':'<span class="label">Hin · Rück</span>'}</div>${final?tieRow(ties,true):ties.map(t=>tieRow(t)).join('')}</section>` : '';
+  const stage=(title,ties,final)=> ties&&(final?ties:ties.length) ? `<section class="box"><div class="boxhead"><h2>${title}</h2>${final?'<span class="label">Finale in Madrid</span>':'<span class="label">Hin · Rück</span>'}</div>${final?tieRow(ties,true):ties.map(t=>tieRow(t)).join('')}</section>` : '';
   const games=S.psgLog.filter(r=>r.comp==='CL');
   return `<div class="grid g2">
    <div class="grid">
     <section class="box next clnext">
-      <div class="boxhead"><h2>Champions League ${S.season}/${String(S.season+1).slice(2)}</h2></div>
+      <div class="boxhead"><h2>Champions Cup ${S.season}/${String(S.season+1).slice(2)}</h2></div>
       <p style="margin:0;font-size:17px">${esc(clStatusText())}</p>
       ${C.champion?`<p class="muted" style="margin:8px 0 0">Sieger: <b style="color:var(--flood)">${esc(T(C.champion).name)}</b></p>`:''}
     </section>
@@ -2713,7 +4185,7 @@ function clView(){
 function stepPsgResult(st,idx){
   if(idx>=S.step) return null;
   if(st.t==='lig') return (S.results[st.md]||[]).find(r=>r.h===ME||r.a===ME)||null;
-  const lab=stepLabel(st).replace(/^Champions League · /,'');
+  const lab=stepLabel(st).replace(/^Champions Cup · /,'');
   return S.psgLog.find(r=>r.comp==='CL'&&r.label===lab)||null;
 }
 function dayEvents(){
@@ -2734,7 +4206,7 @@ function calView(){
     const res=stepPsgResult(st,idx);
     if(res){ const o=outcome(res), op=T(res.h===ME?res.a:res.h); return `<span class="ev ${isCL?'cl':''} done ${o}">${res.hg}:${res.ag} ${esc(op.short)}</span>` }
     if(m){ const op=T(m[0]===ME?m[1]:m[0]); return `<span class="ev ${isCL?'cl':''}">${m[0]===ME?'':'@ '}${esc(op.short)}</span>` }
-    if(isCL) return `<span class="ev cl ghost">CL</span>`;
+    if(isCL) return `<span class="ev cl ghost">CC</span>`;
     return '';
   };
   const sel=calSel&&calSel.slice(0,7)===calMonth?calSel:null;
@@ -2767,13 +4239,13 @@ function calView(){
          const fill=evs.some(e=>e.st.t==='cl')?'dcl':evs.some(e=>e.st.t==='lig')?'dl1':'';
          return `<button class="day ${fill} ${d<S.today?'past':''} ${d===S.today?'today':''} ${d===sel?'sel':''}" data-day="${d}" aria-label="${fmtLong(d)}"><span class="dn">${+d.slice(8)}</span>${evs.map(chip).join('')}</button>` }).join('')}
      </div>
-     <div class="legend"><span style="--c:#4a5368">Ligue 1</span><span style="--c:#2448c4">Champions League</span><span style="--c:var(--flood)">Heute</span></div>
+     <div class="legend"><span style="--c:#4a5368">${LNAME()}</span><span style="--c:#2448c4">Champions Cup</span><span style="--c:var(--flood)">Heute</span></div>
    </section>
    <div class="grid">
-     ${panel||`<section class="box"><div class="boxhead"><h2>Tag auswählen</h2></div><p class="muted" style="margin:0">Tippe auf einen Tag im Kalender. Dann kannst du alle Spiele bis dahin auf einmal simulieren, zum Beispiel bis zum ersten Champions-League-Spieltag.</p></section>`}
+     ${panel||`<section class="box"><div class="boxhead"><h2>Tag auswählen</h2></div><p class="muted" style="margin:0">Tippe auf einen Tag im Kalender. Dann kannst du alle Spiele bis dahin auf einmal simulieren, zum Beispiel bis zum ersten Champions-Cup-Spieltag.</p></section>`}
      <section class="box"><div class="boxhead"><h2>Wichtige Termine</h2></div>
-       <div class="reslist">${[['L1','CL-Ligaphase startet'],['L8','Letzter Spieltag der Ligaphase'],['R16a','Achtelfinale'],['QFa','Viertelfinale'],['SFa','Halbfinale'],['F','Finale in Madrid']].map(([c,t])=>{const d=shiftSeason(CL_DATES[c]);return `<button class="nlink" data-jump="${d}">${fmtShort(d)} <span class="muted">· ${t}</span></button>`}).join('')}
-       <button class="nlink" data-jump="${shiftSeason(L1_DATES[33])}">${fmtShort(shiftSeason(L1_DATES[33]))} <span class="muted">· Letzter Ligue-1-Spieltag</span></button></div>
+       <div class="reslist">${[['L1','Cup-Ligaphase startet'],['L8','Letzter Spieltag der Ligaphase'],['R16a','Achtelfinale'],['QFa','Viertelfinale'],['SFa','Halbfinale'],['F','Finale in Madrid']].map(([c,t])=>{const d=shiftSeason(CL_DATES[c]);return `<button class="nlink" data-jump="${d}">${fmtShort(d)} <span class="muted">· ${t}</span></button>`}).join('')}
+       <button class="nlink" data-jump="${shiftSeason(LDATES()[LG().md-1])}">${fmtShort(shiftSeason(LDATES()[LG().md-1]))} <span class="muted">· Letzter Liga-Spieltag</span></button></div>
      </section>
    </div>
   </div>`;
@@ -2788,7 +4260,7 @@ function fixturesView(){
       <div class="row"><button class="btn small" data-fx="-1" ${md===0?'disabled':''} aria-label="Vorheriger Spieltag">‹ Zurück</button><button class="btn small" data-fx="1" ${md===S.schedule.length-1?'disabled':''} aria-label="Nächster Spieltag">Weiter ›</button></div></div>
     ${games.map(([h,a],i)=>{const r=played?S.results[md][i]:null;const me=h===ME||a===ME;
       return `<div class="fx ${me?'me':''}"><span class="h">${esc(T(h).name)} ${mc(h)}</span><span class="sc num">${r?`${r.hg}:${r.ag}`:'–:–'}</span><span>${mc(a)} ${esc(T(a).name)}</span></div>`}).join('')}
-    <p class="hint">${fmtLong(shiftSeason(L1_DATES[md]))} · ${played?'Gespielt.':md===S.md?'Das ist der nächste Spieltag.':'Noch nicht gespielt.'}</p>
+    <p class="hint">${fmtLong(shiftSeason(LDATES()[md]))} · ${played?'Gespielt.':md===S.md?'Das ist der nächste Spieltag.':'Noch nicht gespielt.'}</p>
   </section>`;
 }
 
@@ -2807,6 +4279,7 @@ app.addEventListener('click',e=>{
   if(b.dataset.mode){ S.admin=b.dataset.mode==='admin'; modeOpen=false; save(); render(); toast(S.admin?'Admin-Modus an: Du hast unendlich Geld.':'Normaler Spielmodus: Dein echter Kontostand zählt wieder.'); return }
   if(b.dataset.neg){ openNeg(b.dataset.neg); return }
   if(b.dataset.smode){ startMode=b.dataset.smode; mpErr=''; render(); return }
+  if(b.dataset.lg){ pickLg=b.dataset.lg; const first=PLAYABLE(pickLg)[0]; if(!S&&!mpLobby){ pickSel=first.id; ME=pickSel } else if(overlay==='picker'&&leagueOf(pickSel)!==pickLg){ pickSel=first.id } render(); return }
   if(b.dataset.pick){ if(!S&&mpLobby){ mpPick(b.dataset.pick); return } pickSel=b.dataset.pick; if(!S){ ME=pickSel } render(); return }
   if(b.dataset.saveslot){ const ok=saveSlot(+b.dataset.saveslot); overlay=null; render(); toast(ok?`Gespeichert auf Platz ${b.dataset.saveslot}.`:'Speichern hat nicht geklappt.'); return }
   if(b.dataset.loadslot){ const ok=loadSlot(+b.dataset.loadslot); overlay=null; view='home'; selSlot=null; calMonth=null; calSel=null; finSlot=null; render(); toast(ok?`Spielstand geladen: ${CN()}.`:'Laden hat nicht geklappt.'); return }
@@ -2847,7 +4320,9 @@ app.addEventListener('click',e=>{
   if(act==='watch'){ openMatch(stepResults(curStep())) }
   if(act==='newseason'){ view='home'; if(isMP()){ mpNextSeason() } else { nextSeason(); render() } window.scrollTo(0,0) }
   if(act==='modemenu'){ modeOpen=!modeOpen; render(); return }
-  if(act==='newgame'){ modeOpen=false; pickSel=ME; overlay='picker'; render(); return }
+  if(act==='gohome'){ goHome(); return }
+  if(act==='continue'){ continueGame(); return }
+  if(act==='newgame'){ modeOpen=false; pickSel=ME; pickLg=leagueOf(ME); overlay='picker'; render(); return }
   if(act==='savemenu'){ modeOpen=false; overlay='save'; render(); return }
   if(act==='loadmenu'){ modeOpen=false; overlay='load'; render(); return }
   if(act==='closeov'){ overlay=null; render(); return }
@@ -3130,7 +4605,7 @@ function openMatch(results){
   M={fx,results,ov,cv,ctx:cv.getContext('2d'),gm:0,speed:1,score:[0,0],events:fx.events.slice(),scripted:null,phase:'play',pause:0,
      ball:{x:.5,y:.5,fl:null},holder:null,poss:'h',timer:.8,half:false,last:performance.now(),done:false,cele:null};
   M.dots=[...teamDots('h',fx.h),...teamDots('a',fx.a)];
-  const stp=curStep(); kickoff('h',true); tick(stp.c==='F'?'Anpfiff zum Champions-League-Finale im Metropolitano!':th.stadium?`Anpfiff im ${th.stadium}!`:'Anpfiff!', 0);
+  const stp=curStep(); kickoff('h',true); tick(stp.c==='F'?'Anpfiff zum Champions-Cup-Finale in Madrid!':th.stadium?`Anpfiff im ${th.stadium}!`:'Anpfiff!', 0);
   ov.querySelector('#mspeed').addEventListener('click',e=>{const b=e.target.closest('[data-speed]');if(!b)return;M.speed=Number(b.dataset.speed);ov.querySelectorAll('[data-speed]').forEach(x=>x.setAttribute('aria-pressed',x===b))});
   ov.querySelector('#mskip').addEventListener('click',finishNow);
   ov.querySelector('#mdone').addEventListener('click',closeMatch);
