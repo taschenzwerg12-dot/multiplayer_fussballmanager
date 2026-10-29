@@ -577,6 +577,15 @@ tr.me td{background:color-mix(in srgb,var(--flood) 16%,transparent)!important}
 .gbtns{grid-template-columns:auto auto auto;gap:8px}
 .gbtn.sw{background:#c9b8ff;width:60px;height:60px;font-size:10px;grid-column:1;grid-row:1}.gbtn.spr{background:#4fd6ff;width:60px;height:60px;font-size:11px;grid-column:2;grid-row:1}.gbtn.tk{background:#ffb347;width:60px;height:60px;font-size:9.5px;grid-column:3;grid-row:1}.gbtn.a{background:#5bf28a;width:70px;height:70px;grid-column:1/2;grid-row:2}.gbtn.b{background:#ff6b6b;width:84px;height:84px;grid-column:2/4;grid-row:2}
 @media (max-height:520px){.gpad{position:fixed;left:0;right:0;bottom:6px;max-width:none;pointer-events:none;padding:0 14px}.gpad>*{pointer-events:auto}.gjoy{width:120px;height:120px}}
+.gpbtn{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.3);color:#fff;border-radius:6px;width:40px;height:34px;font-size:16px;cursor:pointer}
+.gbar{grid-template-columns:1fr auto 1fr auto auto}
+.gpov{position:absolute;inset:0;z-index:5;display:grid;place-items:center;background:rgba(3,5,10,.82);backdrop-filter:blur(3px)}
+.gpbox{display:flex;flex-direction:column;gap:10px;align-items:stretch;width:min(320px,86vw);padding:24px;border:2px solid #ffd23f;border-radius:12px;background:#0b0f19}
+.gptitle{font-family:var(--display);font-weight:800;font-size:40px;text-align:center;color:#ffd23f;letter-spacing:.1em}.gpsc{text-align:center;color:var(--muted);margin-bottom:6px}
+.gphelp{color:var(--muted);font-size:13px;line-height:1.6;text-align:center;padding:6px;border:1px solid var(--line);border-radius:6px}
+.uslogin .box input{width:100%}
+.optrow{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:8px 0;border-bottom:1px solid var(--line)}.optrow.col{flex-direction:column;align-items:flex-start}.optrow input[type=range]{flex:1;max-width:220px}
+.gpad.swap{flex-direction:row-reverse}
 .gemshop{margin-top:18px}.gsgrid{display:grid;gap:8px}
 .gsitem .btn{display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
 .gsitem{display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center;padding:10px;border:1px solid var(--line);border-radius:4px;background:rgba(255,255,255,.03)}
@@ -634,6 +643,12 @@ tr.me td{background:color-mix(in srgb,var(--flood) 16%,transparent)!important}
 .fside .usmini{width:70px}
 .ustop .gemchip{display:inline-flex;align-items:center;padding:6px 10px}
 .ustop .tabs{flex-basis:100%;width:100%}
+.duelrw{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:4px 0 8px}.duelrw>div{background:var(--panel2,rgba(255,255,255,.05));border:1px solid var(--line);border-radius:10px;padding:10px;display:flex;flex-direction:column;gap:4px}.duelrw b{font-size:20px}.duelrw span{font-size:12px;color:var(--muted)}
+.duelcode{display:flex;align-items:baseline;gap:10px;margin:6px 0 12px}.duelcode b{font-size:34px;letter-spacing:6px;color:var(--flood)}
+.duelvs{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:0 0 12px}.duelp{display:flex;align-items:center;gap:8px;font-weight:700;padding:8px 12px;border:1px solid var(--line);border-radius:10px;min-width:120px}
+.codein{width:120px;text-transform:uppercase;letter-spacing:4px;font-weight:800;font-size:16px;padding:8px 10px;border-radius:8px;border:1px solid var(--line);background:transparent;color:inherit}
+.gonl{font-size:11px;font-weight:800;color:#3fd06a;border:1px solid #3fd06a;border-radius:6px;padding:2px 6px}
+.duelav{width:70px;height:70px;display:grid;place-items:center;font-size:40px;border-radius:50%;background:#2f7bf0}
 .usdiv{display:flex;gap:16px;align-items:center;margin:6px 0 10px}
 .usdivnum{font-family:var(--display);font-weight:800;font-size:64px;line-height:1;color:#ffd23f;min-width:70px;text-align:center;border:2px solid #ffd23f;border-radius:10px;padding:6px 0}
 .usres{display:flex;gap:6px;flex-wrap:wrap}.usres .pill{min-width:42px;text-align:center}.pill.ghost{opacity:.35}
@@ -4636,7 +4651,7 @@ function startGame(){
 }
 function showErr(t){ try{ const el=document.createElement('div'); el.className='errbox'; el.textContent=t+' (Bitte Screenshot an Claude schicken.)'; el.onclick=()=>el.remove(); document.body.appendChild(el); setTimeout(()=>el.remove(),15000) }catch(e){} }
 window.addEventListener('error',ev=>showErr('Fehler: '+(ev.message||'unbekannt')));
-app.addEventListener('keydown',e=>{ if(e.key!=='Enter') return; if(e.target.id==='mgr'){ e.preventDefault(); startGame() } if(e.target.id==='phin'){ e.preventDefault(); mpSendChat(e.target.value); e.target.value='' } });
+app.addEventListener('keydown',e=>{ if(e.key!=='Enter') return; if(e.target.id==='mgr'){ e.preventDefault(); startGame() } if(e.target.id==='phin'){ e.preventDefault(); mpSendChat(e.target.value); e.target.value='' } if(e.target.id==='usmail'||e.target.id==='uspw'){ e.preventDefault(); usLogin('login') } });
 app.addEventListener('click',e=>{
   if(justDragged){ justDragged=false; return }
   if(modeOpen && !e.target.closest('.modemenu')){ modeOpen=false; render(); return }
@@ -4984,7 +4999,7 @@ function sndCtx(){
 function sndNoise(c,sec){ const b=c.createBuffer(1,Math.floor(c.sampleRate*sec),c.sampleRate), d=b.getChannelData(0); let last=0; for(let i=0;i<d.length;i++){ const w=Math.random()*2-1; last=(last+.02*w)/1.02; d[i]=w*.6+last*3 } return b }
 function sndTone(type,freq,t0,dur,vol,glideTo){ const c=SND.ctx; const o=c.createOscillator(), g=c.createGain(); o.type=type; o.frequency.setValueAtTime(freq,t0); if(glideTo) o.frequency.exponentialRampToValueAtTime(glideTo,t0+dur);
   g.gain.setValueAtTime(0,t0); g.gain.linearRampToValueAtTime(vol,t0+.02); g.gain.exponentialRampToValueAtTime(.0001,t0+dur); o.connect(g); g.connect(SND.out()); o.start(t0); o.stop(t0+dur+.05) }
-SND.out=()=>{ const c=SND.ctx; if(!SND.master){ const comp=c.createDynamicsCompressor(); comp.threshold.value=-14; comp.ratio.value=6; comp.attack.value=.005; comp.release.value=.25; comp.connect(c.destination); SND.master=c.createGain(); SND.master.gain.value=.8; SND.master.connect(comp) } return SND.master };
+SND.out=()=>{ const c=SND.ctx; if(!SND.master){ const comp=c.createDynamicsCompressor(); comp.threshold.value=-14; comp.ratio.value=6; comp.attack.value=.005; comp.release.value=.25; comp.connect(c.destination); SND.master=c.createGain(); SND.master.gain.value=.8*(SND.vol!=null?SND.vol:1); SND.master.connect(comp) } return SND.master };
 function sndBurst(t0,dur,vol,f1,f2){ const c=SND.ctx, s=c.createBufferSource(); s.buffer=SND.nb||(SND.nb=sndNoise(c,4)); const bp=c.createBiquadFilter(); bp.type='bandpass'; bp.frequency.setValueAtTime(f1,t0); if(f2) bp.frequency.linearRampToValueAtTime(f2,t0+dur); bp.Q.value=.7;
   const g=c.createGain(); g.gain.setValueAtTime(0,t0); g.gain.linearRampToValueAtTime(vol,t0+.25); g.gain.exponentialRampToValueAtTime(.0001,t0+dur); s.connect(bp); bp.connect(g); g.connect(SND.out()); s.start(t0); s.stop(t0+dur+.1) }
 /* ---------- Fankurve: viele Stimmen singen gleichzeitig ---------- */
@@ -5886,8 +5901,59 @@ function usCardHTML(c,size,extra){
 const usQuick = c => Math.round((c.r>=75?400+Math.pow(c.r-75,2)*25:c.r>=65?120+(c.r-65)*15:30+(c.r-50)*3)*(c.sp?2.5:1)/10)*10;
 
 /* ---------- Spielstand ---------- */
-function usSave(){ try{ localStorage.setItem(US_KEY,JSON.stringify(US)) }catch(e){} }
-function usLoad(){ try{ const t=localStorage.getItem(US_KEY); if(t) US=JSON.parse(t) }catch(e){ US=null } }
+/* ---------- Konto: Anmeldung mit E-Mail (Firebase), Spielstand in der Cloud ---------- */
+let fbAuth=null, usUser=null, usAuth='unknown', usOffline=false, usAuthErr='', usAuthBusy=false, usCloudT=null;
+try{ usOffline=localStorage.getItem('us_offline')==='1' }catch(e){}
+const usKey = () => usUser ? US_KEY+'_'+usUser.uid : US_KEY;
+async function usAuthStart(){
+  if(usAuth!=='unknown') return; usAuth='loading';
+  try{ await fbInit(); if(!firebase.auth) await Promise.race([loadScript('https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js'), new Promise((_,r)=>setTimeout(()=>r(new Error('timeout')),10000))]);
+    fbAuth=firebase.auth();
+    fbAuth.onAuthStateChanged(async u=>{ usUser=u; if(u){ usAuth='syncing'; US=null; if(mode==='us') render(); await usCloudLoad(); usAuth='in' } else { usAuth='out'; US=null } if(mode==='us') render() });
+  }catch(e){ usAuth='noconn'; if(mode==='us') render() }
+}
+async function usCloudLoad(){
+  let local=null; try{ const t=localStorage.getItem(usKey()); if(t) local=JSON.parse(t) }catch(e){}
+  let cloud=null; try{ const sn=await fb.ref('users/'+usUser.uid+'/us').get(); const v=sn.val(); if(v&&v.data) cloud=JSON.parse(v.data) }catch(e){}
+  if(!cloud&&!local){ try{ const off=localStorage.getItem(US_KEY); if(off) local=JSON.parse(off) }catch(e){} }  // erster Login: Offline-Spielstand übernehmen
+  US = cloud&&local ? ((cloud.saved||0)>=(local.saved||0)?cloud:local) : (cloud||local);
+  if(!US) usNew(usUser.email.split('@')[0]); else usSave();
+}
+function usCloudPush(now){
+  if(!usUser||!fb||!US) return; clearTimeout(usCloudT);
+  const go=()=>{ try{ fb.ref('users/'+usUser.uid+'/us').set({data:JSON.stringify(US),saved:US.saved||Date.now(),email:usUser.email}) }catch(e){} };
+  if(now) go(); else usCloudT=setTimeout(go,1200);
+}
+async function usLogin(kind){
+  const em=(document.getElementById('usmail')||{}).value||'', pw=(document.getElementById('uspw')||{}).value||'';
+  usAuthErr=''; if(!em.includes('@')){ usAuthErr='Bitte gib eine gültige E-Mail-Adresse ein.'; render(); return }
+  if(kind!=='reset'&&pw.length<6){ usAuthErr='Das Passwort braucht mindestens 6 Zeichen.'; render(); return }
+  usAuthBusy=true; render();
+  try{
+    if(kind==='login') await fbAuth.signInWithEmailAndPassword(em,pw);
+    else if(kind==='new') await fbAuth.createUserWithEmailAndPassword(em,pw);
+    else { await fbAuth.sendPasswordResetEmail(em); usAuthErr='Wir haben dir eine E-Mail zum Zurücksetzen geschickt.' }
+  }catch(e){ const c=e&&e.code||''; usAuthErr = c.includes('wrong-password')||c.includes('invalid-credential')||c.includes('invalid-login')?'E-Mail oder Passwort stimmt nicht.' : c.includes('user-not-found')?'Zu dieser E-Mail gibt es noch kein Konto. Klick auf „Konto erstellen“.' : c.includes('email-already-in-use')?'Mit dieser E-Mail gibt es schon ein Konto. Melde dich an.' : c.includes('operation-not-allowed')||c.includes('configuration-not-found')?'Die E-Mail-Anmeldung ist im Firebase-Projekt noch nicht eingeschaltet (Authentication → Sign-in method → E-Mail/Passwort).' : c.includes('too-many-requests')?'Zu viele Versuche. Warte kurz.' : c.includes('network')?'Keine Internetverbindung.' : 'Das hat nicht geklappt: '+(e&&e.message||c) }
+  usAuthBusy=false; render();
+}
+function usLogout(){ usSave(); usCloudPush(true); US=null; usOffline=false; try{ localStorage.removeItem('us_offline') }catch(e){} if(fbAuth&&usUser) fbAuth.signOut(); else { usAuth='out'; render() } }
+function usLoginHTML(){
+  const nc=usAuth==='noconn', loading=usAuth==='loading'||usAuth==='unknown'||usAuth==='syncing';
+  return `<main class="wrap"><div class="hub uslogin">
+    <div class="hublogo" style="width:min(220px,50vw)">${US_LOGO}</div>
+    <section class="box" style="width:min(440px,100%)"><div class="boxhead"><h2>Ultimate Squad · Anmelden</h2></div>
+    ${loading?'<p><span class="waitdot"></span> Verbindung wird aufgebaut...</p>':nc?`<p class="muted">Die Anmeldung braucht Internet und funktioniert nur auf deiner eigenen Webseite (GitHub). Hier kannst du ohne Konto spielen, dann bleibt dein Team nur auf diesem Gerät gespeichert.</p>`:`
+      <p class="muted small" style="margin-top:0">Mit Konto ist dein Team auf jedem Gerät gleich. Melde dich einfach mit derselben E-Mail wieder an.</p>
+      <div class="field"><label class="label" for="usmail">E-Mail</label><input id="usmail" type="email" autocomplete="email" placeholder="name@beispiel.de"></div>
+      <div class="field"><label class="label" for="uspw">Passwort (mind. 6 Zeichen)</label><input id="uspw" type="password" autocomplete="current-password"></div>
+      ${usAuthErr?`<p class="${usAuthErr.startsWith('Wir haben')?'up':'down'}" style="font-weight:600">${esc(usAuthErr)}</p>`:''}
+      <div class="row"><button class="btn main" data-uslogin="login" ${usAuthBusy?'disabled':''}>Anmelden</button><button class="btn" data-uslogin="new" ${usAuthBusy?'disabled':''}>Konto erstellen</button></div>
+      <p style="margin:10px 0 0"><button class="nlink" data-uslogin="reset">Passwort vergessen?</button></p>`}
+    <div class="row" style="margin-top:14px;border-top:1px solid var(--line);padding-top:12px"><button class="btn small" data-us="offline">Ohne Konto spielen (nur dieses Gerät)</button><button class="btn small" data-us="hub">Hauptmenü</button></div></section>
+  </div></main>`;
+}
+function usSave(){ if(!US) return; US.saved=Date.now(); try{ localStorage.setItem(usKey(),JSON.stringify(US)) }catch(e){} usCloudPush(false) }
+function usLoad(){ try{ const t=localStorage.getItem(usKey()); if(t) US=JSON.parse(t) }catch(e){ US=null } }
 function usNew(name){
   usPool();
   US={v:1, name:name||'Leon', krypto:5000, club:[], form:'4-3-3', xi:new Array(11).fill(null), div:10, season:{g:0,w:0,d:0,l:0,pts:0,res:[]}, packs:{}, hist:[], stats:{games:0,w:0,goals:0}, starter:false};
@@ -5970,8 +6036,8 @@ function usPlay(){
   const scorers=[]; for(let i=0;i<g;i++){ const k=wpick(US.xi,US.xi.map((key,j)=>W[slots[j][0]]*Math.pow(usCard(key).r/80,4))); scorers.push(usCard(k).n) }
   usApply(opp,g,a,scorers,false);
 }
-function usApply(opp,g,a,scorers,live){
-  const o=g>a?'W':g<a?'L':'D', reward=Math.round(((o==='W'?usWinReward():o==='D'?150+(10-US.div)*15:50))*(live?1.5:1));
+function usApply(opp,g,a,scorers,live,rmul){
+  const o=g>a?'W':g<a?'L':'D', reward=Math.round(((o==='W'?usWinReward():o==='D'?150+(10-US.div)*15:50))*(live?1.5:1)*(rmul||1));
   US.krypto+=reward; const S2=US.season; S2.g++; S2[o==='W'?'w':o==='D'?'d':'l']++; S2.pts+=o==='W'?3:o==='D'?1:0; S2.res.push({opp:opp.name,club:opp.club,g,a,o,live});
   US.stats.games++; if(o==='W') US.stats.w++; US.stats.goals+=g;
   let seasonMsg=null;
@@ -5990,7 +6056,7 @@ function usShowResult(R){
   const word=R.o==='W'?'SIEG!':R.o==='D'?'UNENTSCHIEDEN':'NIEDERLAGE';
   ov.innerHTML=`<div class="final ${R.o}" style="--m1:#ffd23f;--m2:#2f7bf0">${R.o==='W'?'<div class="frays"></div><div class="fstrobe"></div>':''}${R.o==='W'?`<div class="fconf">${Array.from({length:36},(_,i)=>`<i style="--x:${(i*53)%100}%;--d:${(i%9)*.12}s;--r:${(i*47)%360}deg;--c:${['#ffd23f','#2f7bf0','#fff','#f7a400'][i%4]}"></i>`).join('')}</div>`:''}
     <div class="fword">${word}</div>
-    <div class="fscore"><div class="fside"><div class="usmini">${US_LOGO}</div><span>${esc(US.name)}</span></div><div class="fnum num">${R.g}<i>:</i>${R.a}</div><div class="fside">${crestSVG(R.opp.club,70)}<span>${esc(R.opp.name)}</span></div></div>
+    <div class="fscore"><div class="fside"><div class="usmini">${US_LOGO}</div><span>${esc(US.name)}</span></div><div class="fnum num">${R.g}<i>:</i>${R.a}</div><div class="fside">${R.duel?'<div class="duelav">🎮</div>':crestSVG(R.opp.club,70)}<span>${esc(R.opp.name)}</span></div></div>
     ${R.scorers.length?`<div class="fpts calm" style="font-size:16px">⚽ ${R.scorers.map(esc).join(', ')}</div>`:''}
     <div class="fpts">+${kfmt(R.reward)} Krypto</div>
     ${R.seasonMsg?`<div class="fstreak">${esc(R.seasonMsg)}</div>`:''}</div><div class="ftap">Tippen zum Schließen</div>`;
@@ -6011,10 +6077,10 @@ function usSbcDo(id){ const sb=US_SBC.find(x=>x.id===id), c=usSbcCands(sb); if(c
 
 /* ---------- Ansichten ---------- */
 function usHeader(){
-  const tabs=[['home','Home'],['team','Team'],['packs','Packs'],['club','Sammlung'],['sbc','Aufgaben']];
+  const tabs=[['home','Home'],['team','Team'],['packs','Packs'],['club','Sammlung'],['sbc','Aufgaben'],['duel','Online 1v1'],['opts','Optionen']];
   return `<header class="top ustop"><div class="wrap topin">
     <div class="modemenu"><button class="modebtn sndbtn" data-act="sound" aria-label="Ton an/aus">${SND.on?'🔊':'🔇'}</button><button class="btn small ${US.admin?'main':''}" data-us="admin" title="Admin-Modus: unendlich Krypto">${US.admin?'ADMIN AN':'Admin'}</button><span class="gemchip">${US.admin?`<span class="kamt">${KRYPTO}<b>∞</b></span>`:kTxt(US.krypto)}</span><button class="btn small" data-us="hub">Hauptmenü</button></div>
-    <div class="brand"><span class="usmini hdr">${US_LOGO}</span><div><div class="club">Ultimate Squad</div><div class="sub">Manager: ${esc(US.name)} · Division ${US.div} · ${US.club.length} Karten</div></div></div>
+    <div class="brand"><span class="usmini hdr">${US_LOGO}</span><div><div class="club">Ultimate Squad</div><div class="sub">Manager: ${esc(US.name)} · Division ${US.div} · ${US.club.length} Karten · ${usUser?`☁️ ${esc(usUser.email)} <button class="nlink" data-us="logout">Abmelden</button>`:'nur auf diesem Gerät <button class="nlink" data-us="login">Anmelden</button>'}</div></div></div>
     <nav class="tabs">${tabs.map(([k,l])=>`<button class="tab" data-usv="${k}" aria-current="${usView===k}">${l}</button>`).join('')}</nav>
   </div></header>`;
 }
@@ -6071,21 +6137,56 @@ function usPackOverlay(){
   if(!usPackRes) return '';
   return `<div class="ov2 uspackov" id="uspackov"><div class="uspackin"><h2>${US_PACKS[usPackRes.k].name}</h2><div class="usreveal" id="usreveal"></div><button class="btn main" id="usrevdone" data-us="packdone" hidden>Weiter</button></div></div>`;
 }
+/* ---------- Optionen ---------- */
+const US_OPT_DEF={vol:80,dur:4,diff:'normal',cam:'auto',swapMouse:false,joyRight:false};
+const usOpt = () => Object.assign({},US_OPT_DEF,(US&&US.opts)||{});
+const US_DIFF={easy:{l:'Leicht',k:.8,r:.7},normal:{l:'Normal',k:1,r:1},hard:{l:'Schwer',k:1.2,r:1.35},legend:{l:'Legende',k:1.4,r:1.7}};
+function usSetOpt(k,v){ US.opts=Object.assign({},usOpt(),{[k]:v}); usSave(); if(k==='vol') sndVol(); render() }
+function sndVol(){ const o=usOpt(); SND.vol=o.vol/100; if(SND.master) SND.master.gain.value=.8*SND.vol }
+function usOptsView(){
+  const o=usOpt(), seg=(k,list)=>`<div class="chips">${list.map(([v,l])=>`<button class="chip" data-usopt="${k}" data-usval="${v}" aria-pressed="${String(o[k])===String(v)}">${l}</button>`).join('')}</div>`;
+  return `<div class="grid g2">
+  <section class="box"><div class="boxhead"><h2>Ton</h2></div>
+    <div class="optrow"><span>Sound</span><button class="btn small ${SND.on?'main':''}" data-us="sndtoggle">${SND.on?'🔊 An':'🔇 Aus'}</button></div>
+    <div class="optrow"><span>Lautstärke</span><input type="range" id="usvol" min="0" max="100" step="5" value="${o.vol}"><b class="num">${o.vol}%</b></div></section>
+  <section class="box"><div class="boxhead"><h2>Spiel</h2></div>
+    <div class="optrow col"><span>Spieldauer (selbst spielen)</span>${seg('dur',[[2,'2 Min'],[4,'4 Min'],[6,'6 Min'],[8,'8 Min']])}</div>
+    <div class="optrow col"><span>Schwierigkeit</span>${seg('diff',Object.entries(US_DIFF).map(([k,v])=>[k,v.l]))}<span class="muted small">Schwerer = stärkere Gegner, aber mehr Krypto (${Object.values(US_DIFF).map(v=>v.l+' ×'+v.r).join(' · ')}).</span></div></section>
+  <section class="box"><div class="boxhead"><h2>Kamera</h2></div>
+    <div class="optrow col">${seg('cam',[['auto','Automatisch'],['full','Ganzes Feld'],['near','Nah dran']])}<span class="muted small">„Nah dran“ folgt dem Ball wie im echten Fußballspiel, die Spieler sind größer. „Automatisch“ nimmt am Handy „Nah dran“ und am PC das ganze Feld.</span></div></section>
+  <section class="box"><div class="boxhead"><h2>Steuerung</h2></div>
+    <div class="optrow"><span>Maustasten tauschen<br><span class="muted small">Links = Pass, Rechts = Schuss</span></span><button class="btn small ${o.swapMouse?'main':''}" data-usopt="swapMouse" data-usval="${!o.swapMouse}">${o.swapMouse?'An':'Aus'}</button></div>
+    <div class="optrow"><span>Handy: Joystick rechts<br><span class="muted small">Knöpfe links, für Linkshänder</span></span><button class="btn small ${o.joyRight?'main':''}" data-usopt="joyRight" data-usval="${!o.joyRight}">${o.joyRight?'An':'Aus'}</button></div>
+    <p class="muted small" style="margin:8px 0 0">PC: WASD laufen · Maus zielen · ${o.swapMouse?'Linksklick Pass · Rechtsklick Schuss':'Linksklick Schuss · Rechtsklick Pass'} · Shift Tackling · Leertaste Sprint · Q Wechsel · Esc Pause</p></section>
+  <section class="box"><div class="boxhead"><h2>Konto</h2></div>
+    ${usUser?`<p style="margin:0 0 10px">Angemeldet als <b>${esc(usUser.email)}</b>. Dein Team wird in der Cloud gespeichert.</p><div class="row"><button class="btn" data-us="logout">Abmelden</button></div>`
+      :`<p style="margin:0 0 10px">Du spielst ohne Konto. Dein Team ist nur auf diesem Gerät gespeichert.</p><div class="row"><button class="btn main" data-us="login">Anmelden oder Konto erstellen</button></div>`}
+    <div class="optrow" style="margin-top:12px"><span>Managername</span><input id="usname" maxlength="20" value="${esc(US.name)}" style="max-width:200px"></div></section>
+  </div>`;
+}
 function renderUS(){
-  usLoad(); if(!US){ usNew((savedInfo&&savedInfo.manager)||'Leon') }
+  if(usAuth==='unknown') usAuthStart();
+  if(!usOffline&&usAuth!=='in'){ document.documentElement.style.setProperty('--flood','#f7a400'); document.documentElement.style.setProperty('--flood-ink','#1a1200'); app.innerHTML=usLoginHTML(); return }
+  if(!US) usLoad(); if(!US){ usNew((savedInfo&&savedInfo.manager)||'Leon') }
   usPool();
   document.documentElement.style.setProperty('--flood','#f7a400'); document.documentElement.style.setProperty('--flood-ink','#1a1200');
-  const body = usView==='team'?usTeamView():usView==='packs'?usPacksView():usView==='club'?usClubView():usView==='sbc'?usSbcView():usHomeView();
+  const body = usView==='duel'?usDuelView():usView==='opts'?usOptsView():usView==='team'?usTeamView():usView==='packs'?usPacksView():usView==='club'?usClubView():usView==='sbc'?usSbcView():usHomeView();
   app.innerHTML = usHeader()+`<main class="wrap">${body}</main>`+usPackOverlay();
   if(usPackRes){ const el=document.getElementById('usreveal'); if(el){ usPackRes.res.slice(0,usPackRes.i).forEach((it)=>{ const c=usCard(it.key); const d=document.createElement('div'); d.className='usrv'; d.innerHTML=usCardHTML(c,'md')+(it.dup?`<div class="usdup">Doppelt · ${kTxt(it.v)}</div>`:'<div class="usnew">NEU</div>'); el.appendChild(d) }); if(usPackRes.i>=usPackRes.res.length) document.getElementById('usrevdone').hidden=false } }
 }
 function usEnter(){ mode='us'; try{ localStorage.setItem('us_mode','us') }catch(e){} usView='home'; render(); window.scrollTo(0,0) }
-function usLeave(){ usSave(); mode='career'; try{ localStorage.setItem('us_mode','career') }catch(e){} startScreen='hub'; usPackRes=null;
+function usLeave(){ if(DU.code&&!G) duelLeave(); usSave(); mode='career'; try{ localStorage.setItem('us_mode','career') }catch(e){} startScreen='hub'; usPackRes=null;
   if(S){ goHome(); return } render(); window.scrollTo(0,0) }
 app.addEventListener('click',e=>{
   if(mode!=='us') return;
   const b=e.target.closest('button,[data-us]'); if(!b) return; const d=b.dataset;
   if(d.us==='hub'){ usLeave(); return }
+  if(d.uslogin){ usLogin(d.uslogin); return }
+  if(d.us==='offline'){ usOffline=true; try{ localStorage.setItem('us_offline','1') }catch(e){} US=null; render(); return }
+  if(d.us==='logout'){ usLogout(); return }
+  if(d.us==='sndtoggle'){ sndToggle(); return }
+  if(d.usopt){ const v=d.usval; usSetOpt(d.usopt, v==='true'?true:v==='false'?false:isNaN(+v)?v:+v); return }
+  if(d.us==='login'){ usSave(); usOffline=false; try{ localStorage.removeItem('us_offline') }catch(e){} US=null; usAuthErr=''; if(usAuth==='noconn') usAuth='unknown'; render(); return }
   if(d.us==='admin'){ US.admin=!US.admin; usSave(); toast(US.admin?'Admin-Modus an: unendlich Krypto, alle Packs gratis.':'Admin-Modus aus: dein echter Krypto-Stand zählt wieder.'); render(); return }
   if(d.usv){ usView=d.usv; usSlot=null; render(); window.scrollTo(0,0); return }
   if(d.us==='play'){ usPlay(); return }
@@ -6099,9 +6200,13 @@ app.addEventListener('click',e=>{
   if(d.ustier){ usTier=d.ustier; render(); return }
   if(d.ussell){ const c=usCard(d.ussell); if(!c||US.xi.includes(c.key)) return; US.club=US.club.filter(k=>k!==c.key); US.krypto+=usQuick(c); usSave(); sfx.coin(); toast(`${c.n} verkauft für ${kfmt(usQuick(c))} Krypto.`); render(); return }
   if(d.ussbc){ usSbcDo(d.ussbc); return }
+  if(d.us==='duelcreate'){ duelCreate(); return }
+  if(d.us==='dueljoin'){ const el=document.getElementById('duelcode'); duelJoin(el?el.value:''); return }
+  if(d.us==='duelstart'){ duelKick(); return }
+  if(d.us==='duelleave'){ duelLeave(); return }
 });
-app.addEventListener('change',e=>{ if(mode==='us'&&e.target.id==='usform'){ US.form=e.target.value; usAutoXI(); usSave(); render() } });
-window.addEventListener('pagehide',()=>{ if(US) usSave() });
+app.addEventListener('change',e=>{ if(mode==='us'&&e.target.id==='usvol'){ usSetOpt('vol',+e.target.value); return } if(mode==='us'&&e.target.id==='usname'){ US.name=e.target.value.trim()||US.name; usSave(); render(); return } if(mode==='us'&&e.target.id==='usform'){ US.form=e.target.value; usAutoXI(); usSave(); render() } });
+window.addEventListener('pagehide',()=>{ if(US){ usSave(); usCloudPush(true) } });
 if(document.addEventListener) document.addEventListener('visibilitychange',()=>{ if(document.hidden&&US) usSave() });
 
 /* ===================================================================
@@ -6130,37 +6235,64 @@ function usPlayLive(){
   const opp=usOpponent(), slots=FORMATIONS[US.form], ch=usChem(), bonus=ch.total/33*4;
   const mine=US.xi.map((k,i)=>{ const c=usCard(k), f=fit(c,slots[i][0]); return gPlayer(0,{...c,r:Math.round(c.r*f+bonus)},slots[i],i) });
   const theirs=usOppTeam(opp).map((c,i)=>gPlayer(1,c,FORMATIONS['4-4-2'][i],i));
-  const diff=Math.min(1.35,.75+(10-US.div)*.065);
-  G={opp,P:mine.concat(theirs),ball:{x:FL/2,y:FW/2,vx:0,vy:0,z:0,vz:0,owner:null,last:null,shot:null},score:[0,0],t:0,dur:240,half:false,
+  const O=usOpt(), DF=US_DIFF[O.diff]||US_DIFF.normal; sndVol();
+  const diff=Math.min(1.35,.75+(10-US.div)*.065)*DF.k;
+  G={opp,P:mine.concat(theirs),ball:{x:FL/2,y:FW/2,vx:0,vy:0,z:0,vz:0,owner:null,last:null,shot:null},score:[0,0],t:0,dur:O.dur*60,rmul:DF.r,cam:O.cam==='auto'?(('ontouchstart' in window)||(window.matchMedia&&matchMedia('(pointer:coarse)').matches)?'near':'full'):O.cam,swap:O.swapMouse,half:false,
      ctrl:null,keys:{},joy:{x:0,y:0},charge:-1,phase:'kick',pause:1.2,scorers:[],diff,msg:'',msgT:0,kickTeam:0,ended:false,last:performance.now(),oppC:T(opp.club)};
-  gKickoff(0);
+  gKickoff(0); gStartUI(US.name,opp.name,G.oppC.c1);
+}
+function gStartUI(myName,oppName,oppCol){
+  const O=usOpt(), duel=!!G.duel;
   const ov=document.createElement('div'); ov.className='gov'; ov.id='gov';
   const touch=('ontouchstart' in window)||(window.matchMedia&&matchMedia('(pointer:coarse)').matches);
-  ov.innerHTML=`<div class="gwrap"><div class="gbar"><span class="gteam"><span class="gdot" style="background:#ffd23f"></span>${esc(US.name)}</span><span class="gsc num" id="gsc">0:0</span><span class="gteam r">${esc(opp.name)}<span class="gdot" style="background:${G.oppC.c1}"></span></span><span class="gclock num" id="gclk">0'</span></div>
+  ov.innerHTML=`<div class="gwrap"><div class="gbar"><span class="gteam"><span class="gdot" style="background:#ffd23f"></span>${esc(myName)}</span><span class="gsc num" id="gsc">0:0</span><span class="gteam r">${esc(oppName)}<span class="gdot" style="background:${oppCol}"></span></span><span class="gclock num" id="gclk">0'</span>${duel?'<span class="gonl">ONLINE</span>':'<button class="gpbtn" id="gpause" aria-label="Pause">⏸</button>'}</div>
     <div class="gcv"><canvas id="gcv"></canvas><div class="gmsg" id="gmsg"></div></div>
-    <div class="ghelp">${touch?'Joystick: laufen und zielen · PASS · SCHUSS gedrückt halten = mehr Kraft · SPRINT gedrückt halten · TACKLING · WECHSEL: Spieler am Ball steuern':'WASD: laufen · Maus: zielen · Linksklick: Schuss (gedrückt halten = mehr Kraft) · Rechtsklick: Pass · Shift: Tackling · Leertaste: Sprint · Q: Spieler wechseln'}</div>
+    <div class="ghelp">${touch?'Joystick: laufen und zielen · PASS · SCHUSS gedrückt halten = mehr Kraft · SPRINT gedrückt halten · TACKLING · WECHSEL: Spieler am Ball steuern':`WASD: laufen · Maus: zielen · ${O.swapMouse?'Rechtsklick':'Linksklick'}: Schuss (gedrückt halten = mehr Kraft) · ${O.swapMouse?'Linksklick':'Rechtsklick'}: Pass · Shift: Tackling · Leertaste: Sprint · Q: Spieler wechseln${duel?'':' · Esc: Pause'}`}</div>
     <div class="row grow"><button class="btn small" id="gquit">Aufgeben</button><button class="btn sndbtn small" id="gsnd">${SND.on?'🔊':'🔇'}</button></div>
-    ${touch?`<div class="gpad"><div class="gjoy" id="gjoy"><div class="gknob" id="gknob"></div></div><div class="gbtns"><button class="gbtn tk" id="gbT">TACKLING</button><button class="gbtn sw" id="gbW">WECHSEL</button><button class="gbtn spr" id="gbS">SPRINT</button><button class="gbtn a" id="gbA">PASS</button><button class="gbtn b" id="gbB">SCHUSS</button></div></div>`:''}</div>`;
+    ${touch?`<div class="gpad ${O.joyRight?'swap':''}"><div class="gjoy" id="gjoy"><div class="gknob" id="gknob"></div></div><div class="gbtns"><button class="gbtn tk" id="gbT">TACKLING</button><button class="gbtn sw" id="gbW">WECHSEL</button><button class="gbtn spr" id="gbS">SPRINT</button><button class="gbtn a" id="gbA">PASS</button><button class="gbtn b" id="gbB">SCHUSS</button></div></div>`:''}</div>`;
   document.body.appendChild(ov); document.body.style.overflow='hidden';
   G.cv=ov.querySelector('#gcv'); G.ctx=G.cv.getContext('2d'); G.touch=touch; gSize(); window.addEventListener('resize',gSize);
   window.addEventListener('keydown',gKey); window.addEventListener('keyup',gKey);
-  ov.querySelector('#gquit').onclick=()=>{ if(confirmQuit()) gEnd(true) };
+  ov.querySelector('#gquit').onclick=()=>{ if(duel){ if(window.confirm('Duell aufgeben? Es zählt als 0:3-Niederlage.')) duelQuit() } else if(confirmQuit()) gEnd(true) };
+  if(!duel) ov.querySelector('#gpause').onclick=()=>gPause(true);
   ov.querySelector('#gsnd').onclick=e=>{ sndToggle(); e.target.textContent=SND.on?'🔊':'🔇' };
   G.touch=touch; if(touch) gTouch(ov);
   else { const cv=G.cv; cv.addEventListener('mousemove',gMouse); cv.addEventListener('contextmenu',ev=>ev.preventDefault());
-    cv.addEventListener('mousedown',ev=>{ ev.preventDefault(); gMouse(ev); if(ev.button===2) gAction('pass',true); else if(ev.button===0) gAction('chargeStart',true) });
+    cv.addEventListener('mousedown',ev=>{ ev.preventDefault(); gMouse(ev); const pb=G.swap?0:2, sb=G.swap?2:0; if(ev.button===pb) gAction('pass',true); else if(ev.button===sb) gAction('chargeStart',true) });
     window.addEventListener('mouseup',gMouseUp) }
   sfx.crowdStart(); sfx.whistle(1); setTimeout(()=>{ if(SND.crowd) SND.crowd.chant('ole') },900);
-  gMsg('ANSTOSS',1.2); requestAnimationFrame(gLoop);
+  gMsg('ANSTOSS',1.2); G.last=performance.now(); requestAnimationFrame(gLoop);
 }
+function gPause(on){
+  if(!G||G.ended||G.duel) return; G.paused=on; G.charge=-1; G.keys={}; G.joy={x:0,y:0};
+  let el=document.getElementById('gpov');
+  if(!on){ if(el) el.remove(); G.last=performance.now(); return }
+  if(el) return; el=document.createElement('div'); el.className='gpov'; el.id='gpov';
+  el.innerHTML=`<div class="gpbox"><div class="gptitle">PAUSE</div><div class="gpsc num">${G.score[0]}:${G.score[1]} · ${Math.min(90,Math.floor(G.t/G.dur*90))}'</div>
+    <button class="btn main" data-gp="resume">Weiterspielen</button>
+    <button class="btn" data-gp="snd">${SND.on?'🔊 Ton aus':'🔇 Ton an'}</button>
+    <button class="btn" data-gp="help">Steuerung anzeigen</button><div class="gphelp" hidden>${G.touch?'Joystick: laufen und zielen<br>PASS · SCHUSS (halten = mehr Kraft)<br>SPRINT (halten) · TACKLING · WECHSEL':'WASD: laufen · Maus: zielen<br>Linksklick: Schuss (halten = mehr Kraft)<br>Rechtsklick: Pass · Shift: Tackling<br>Leertaste: Sprint · Q: Spieler wechseln<br>Esc oder P: Pause'}</div>
+    <button class="btn" data-gp="quit">Aufgeben (0:3)</button>
+    <button class="btn" data-gp="menu">Aufgeben und zum Hauptmenü</button></div>`;
+  el.addEventListener('click',e=>{ const b=e.target.closest('[data-gp]'); if(!b) return; const a=b.dataset.gp;
+    if(a==='resume') gPause(false);
+    if(a==='snd'){ sndToggle(); b.textContent=SND.on?'🔊 Ton aus':'🔇 Ton an'; const gs=document.getElementById('gsnd'); if(gs) gs.textContent=SND.on?'🔊':'🔇' }
+    if(a==='help'){ const h=el.querySelector('.gphelp'); h.hidden=!h.hidden }
+    if(a==='quit'){ if(window.confirm('Spiel aufgeben? Es zählt als 0:3-Niederlage.')) gEnd(true) }
+    if(a==='menu'){ if(window.confirm('Spiel aufgeben und zum Hauptmenü? Es zählt als 0:3-Niederlage.')){ gEnd(true); document.querySelectorAll('.finov').forEach(x=>x.remove()); usLeave() } } });
+  document.getElementById('gov').appendChild(el);
+}
+document.addEventListener&&document.addEventListener('visibilitychange',()=>{ if(document.hidden&&G&&G.phase&&!G.paused) gPause(true) });
 function confirmQuit(){ return !G||G.t<5||window.confirm('Spiel aufgeben? Es zählt dann als 0:3-Niederlage.') }
-function gMouse(ev){ if(!G) return; const r=G.cv.getBoundingClientRect(); G.mouse={x:(ev.clientX-r.left)/G.s-2,y:(ev.clientY-r.top)/G.s-2}; G.mouseT=performance.now() }
-function gMouseUp(ev){ if(G&&ev.button===0) gAction('shoot',true) }
+function gMouse(ev){ if(!G) return; const r=G.cv.getBoundingClientRect(); let lx=(ev.clientX-r.left)/G.s, ly=(ev.clientY-r.top)/G.s; const cm=G.camT; if(cm){ lx=(lx-54.5)/cm.z+cm.fx+2; ly=(ly-36)/cm.z+cm.fy+2 } G.mouse=G.mirror?{x:FL-(lx-2),y:FW-(ly-2)}:{x:lx-2,y:ly-2}; G.mouseT=performance.now() }
+function gMouseUp(ev){ if(G&&ev.button===(G.swap?2:0)) gAction('shoot',true) }
 function gSize(){ if(!G) return; G.rot=G.touch&&window.innerHeight>window.innerWidth;
   if(G.rot){ const dpr=window.devicePixelRatio||1, s=Math.min((G.cv.parentElement.clientWidth)/72,(window.innerHeight-290)/109); G.s=s; G.cv.style.width=(72*s)+'px'; G.cv.style.height=(109*s)+'px'; G.cv.width=Math.round(72*s*dpr); G.cv.height=Math.round(109*s*dpr); G.ctx.setTransform(dpr,0,0,dpr,0,0); G.ctx.translate(0,109*s); G.ctx.rotate(-Math.PI/2); return }
   const short=window.innerHeight<520, reserve=G.touch?(short?70:330):170; const w=Math.min(G.cv.parentElement.clientWidth, (window.innerHeight-reserve)*109/72); const dpr=window.devicePixelRatio||1;
   G.s=w/109; G.cv.style.width=w+'px'; G.cv.style.height=(72*G.s)+'px'; G.cv.width=Math.round(w*dpr); G.cv.height=Math.round(72*G.s*dpr); G.ctx.setTransform(dpr,0,0,dpr,0,0) }
 function gKey(e){ if(!G) return; const k=e.key.toLowerCase(), down=e.type==='keydown';
+  if(down&&(k==='escape'||k==='p')){ e.preventDefault(); gPause(!G.paused); return }
+  if(G.paused) return;
   if(['arrowup','arrowdown','arrowleft','arrowright',' ','w','a','s','d','j','k','q','shift'].includes(k)) e.preventDefault();
   if(down&&G.keys[k]) return; G.keys[k]=down;
   if(k==='j'){ if(down) gAction('pass') }
@@ -6183,34 +6315,41 @@ function gTouch(ov){
   B.addEventListener('pointerup',e=>{ e.preventDefault(); gAction('shoot') }); B.addEventListener('pointercancel',()=>gAction('shoot'));
 }
 function gInput(){ if(!G) return {x:0,y:0}; const k=G.keys; let x=(k.arrowright||k.d?1:0)-(k.arrowleft||k.a?1:0), y=(k.arrowdown||k.s?1:0)-(k.arrowup||k.w?1:0);
-  if(G.joy&&(G.joy.x||G.joy.y)){ x=G.rot?-G.joy.y:G.joy.x; y=G.rot?G.joy.x:G.joy.y } const l=Math.hypot(x,y); return l>1?{x:x/l,y:y/l}:{x,y} }
-function gMsg(t,sec){ G.msg=t; G.msgT=sec||1.6; const el=document.getElementById('gmsg'); if(el){ el.textContent=t; el.classList.add('on') } }
+  if(G.joy&&(G.joy.x||G.joy.y)){ x=G.rot?-G.joy.y:G.joy.x; y=G.rot?G.joy.x:G.joy.y } if(G.mirror){ x=-x; y=-y } const l=Math.hypot(x,y); return l>1?{x:x/l,y:y/l}:{x,y} }
+function gMsg(t,sec){ G.msgSeq=(G.msgSeq||0)+1; G.msg=t; G.msgT=sec||1.6; const el=document.getElementById('gmsg'); if(el){ el.textContent=t; el.classList.add('on') } }
 function gKickoff(team){
   G.P.forEach(p=>{ p.x=p.hx*(p.team===0?.55:1)+(p.team===1?(FL-p.hx)*0:0); if(p.team===1) p.x=FL-(FL-p.hx)*.55; p.y=p.hy; p.vx=p.vy=0; p.cool=0 });
   const b=G.ball; b.x=FL/2; b.y=FW/2; b.vx=b.vy=0; b.z=0; b.vz=0; b.shot=null;
   const taker=G.P.filter(p=>p.team===team&&!p.gk).sort((a,c)=>Math.hypot(a.x-FL/2,a.y-FW/2)-Math.hypot(c.x-FL/2,c.y-FW/2))[0];
   taker.x=FL/2+(team===0?-.8:.8); taker.y=FW/2; b.owner=taker; b.last=taker; G.phase='kick'; G.pause=1; G.kickTeam=team;
-  if(team===0) G.ctrl=taker;
+  if(team===0) G.ctrl=taker; else if(G.duel) G.ctrl1=taker;
 }
 const dist=(a,b)=>Math.hypot(a.x-b.x,a.y-b.y);
 function gOwnerTeam(){ return G.ball.owner?G.ball.owner.team:null }
-function gSwitch(){
-  if(!G||G.phase!=='play') return; const b=G.ball; if(b.owner&&b.owner.team===0) return;
-  const c=G.P.filter(p=>p.team===0&&!p.gk).sort((a,d)=>dist(a,b)-dist(d,b));
-  G.ctrl = c[0]===G.ctrl&&c[1] ? c[1] : c[0]; G.manualT=performance.now(); }
+function gSwitch(team){
+  if(G&&G.duel&&G.duel.role==='guest'&&!team){ duelGuestAct('switch'); return }
+  team=team||0; const C=team?'ctrl1':'ctrl';
+  if(!G||G.phase!=='play') return; const b=G.ball; if(b.owner&&b.owner.team===team) return;
+  const c=G.P.filter(p=>p.team===team&&!p.gk).sort((a,d)=>dist(a,b)-dist(d,b));
+  G[C] = c[0]===G[C]&&c[1] ? c[1] : c[0]; G[team?'manualT1':'manualT']=performance.now(); }
 function gAim(me,mouse){ if(mouse&&G.mouse){ const dx=G.mouse.x-me.x, dy=G.mouse.y-me.y, l=Math.hypot(dx,dy)||1; return {x:dx/l,y:dy/l,pt:G.mouse} } return gInput() }
-function gAction(a,mouse){
-  if(!G||G.phase!=='play') { if(G&&a==='shoot') G.charge=-1; return }
-  const b=G.ball, me=G.ctrl;
+function gAction(a,mouse,team,rem){
+  if(G&&G.duel&&G.duel.role==='guest'&&!rem){ duelGuestAct(a,mouse); return }
+  team=team||0;
+  if(G&&G.paused) return;
+  if(!G||G.phase!=='play') { if(G&&a==='shoot'&&!rem) G.charge=-1; return }
+  const b=G.ball, me=team?G.ctrl1:G.ctrl, aim=()=>rem?(rem.aim||{x:0,y:0}):gAim(me,mouse);
+  if(!me) return;
   if(a==='pass'){
-    if(b.owner&&b.owner===me){ gPass(me,gAim(me,mouse)) }
+    if(b.owner&&b.owner===me){ gPass(me,aim()) }
   }
   if(a==='tackle'){
-    if(me&&b.owner!==me){ // Tackling
-      const o=b.owner; if(o&&o.team===1&&dist(me,o)<2.6&&me.cool<=0){ me.cool=.8; const p=.55+(me.def-o.dri)*.012; if(Math.random()<p){ b.owner=me; b.last=me; me.cool=.3; gMsg('BALLGEWINN!',.8) } else { me.vx*=.2; me.vy*=.2; me.cool=1.1; gMsg('TACKLING VERFEHLT',.6) } } }
+    if(b.owner!==me){ // Tackling
+      const o=b.owner; if(o&&o.team!==team&&dist(me,o)<2.6&&me.cool<=0){ me.cool=.8; const p=.55+(me.def-o.dri)*.012; if(Math.random()<p){ b.owner=me; b.last=me; me.cool=.3; gMsg('BALLGEWINN!',.8) } else { me.vx*=.2; me.vy*=.2; me.cool=1.1; if(!G.duel) gMsg('TACKLING VERFEHLT',.6) } } }
   }
-  if(a==='chargeStart'&&b.owner===me) G.charge=0;
-  if(a==='shoot'){ if(G.charge>=0&&b.owner===me){ gShoot(me,Math.min(1,G.charge/.9),gAim(me,mouse)) } G.charge=-1 }
+  if(a==='chargeStart'&&!rem&&b.owner===me) G.charge=0;
+  if(a==='shoot'){ if(rem){ if(b.owner===me) gShoot(me,Math.max(0,Math.min(1,+rem.pw||0)),aim()) } else { if(G.charge>=0&&b.owner===me){ gShoot(me,Math.min(1,G.charge/.9),gAim(me,mouse)) } G.charge=-1 } }
+  if(a==='switch'&&rem) gSwitch(team);
 }
 function gPass(p,dir,target){
   const mates=G.P.filter(o=>o.team===p.team&&o!==p);
@@ -6222,7 +6361,7 @@ function gPass(p,dir,target){
   const err=(100-p.pas)/100*.18*(p.team===1?1/G.diff:1), ang=Math.atan2(dy,dx)+(Math.random()*2-1)*err;
   const sp=Math.min(28,11+l*.55);
   const b=G.ball; b.owner=null; b.vx=Math.cos(ang)*sp; b.vy=Math.sin(ang)*sp; b.vz=l>22?6:0; b.last=p; b.passTo=t; b.shot=null; p.cool=.35;
-  if(p.team===0) G.ctrl=t;
+  if(p.team===0) G.ctrl=t; else if(G.duel) G.ctrl1=t;
 }
 function gShoot(p,power,dir){
   const gx=p.team===0?FL:0, dg=Math.hypot(gx-p.x,FW/2-p.y), far=dg>18;
@@ -6237,8 +6376,11 @@ function gShoot(p,power,dir){
 }
 function gLoop(now){
   if(!G) return;
+  if(G.paused){ G.last=now; requestAnimationFrame(gLoop); return }
   const dt=Math.min(.05,(now-G.last)/1000); G.last=now;
+  if(G.duel&&G.duel.role==='guest'){ duelGuestTick(dt); if(!G) return; gDraw(); requestAnimationFrame(gLoop); return }
   let acc=dt; while(acc>0){ const st=Math.min(acc,1/120); gUpdate(st); acc-=st; if(!G) return }
+  if(G.duel) duelHostSend(now);
   gDraw(); requestAnimationFrame(gLoop);
 }
 function gUpdate(dt){
@@ -6252,16 +6394,12 @@ function gUpdate(dt){
   if(G.t>=G.dur){ gEnd(false); return }
   // Steuerung wählen: mit Ball der Ballführer, ohne Ball der Nächste zum Ball
   const own=gOwnerTeam();
-  if(G.lastOwn===0&&own===1) G.switchReq=true; if(own!==null) G.lastOwn=own;
-  const manual=G.manualT&&performance.now()-G.manualT<1500;
-  if(own===0) G.ctrl=b.owner;
-  else if(manual&&!G.switchReq){}
-  else { const near=G.P.filter(p=>p.team===0&&!p.gk).sort((a,c)=>dist(a,b)-dist(c,b))[0];
-    if(!G.ctrl||G.ctrl.gk||G.switchReq||(dist(G.ctrl,b)>dist(near,b)+6&&!(b.passTo&&b.passTo===G.ctrl))){ G.ctrl=near; G.switchReq=false } }
+  if(G.lastOwn===0&&own===1) G.switchReq=true; if(G.duel&&G.lastOwn===1&&own===0) G.switchReq1=true; if(own!==null) G.lastOwn=own;
+  gAutoCtrl(0); if(G.duel) gAutoCtrl(1);
   G.P.forEach(p=>{ if(p.cool>0) p.cool-=dt });
   // Bewegung
   G.P.forEach(p=>{ let tx,ty,sp=p.spd;
-    if(p===G.ctrl){ const inp=gInput(), sprint=G.keys[' ']||G.sprintBtn; sp*=sprint?1.22:1; if(b.owner===p) sp*=.9-(1-p.dri/100)*.15;
+    if(p===G.ctrl||(G.duel&&p===G.ctrl1)){ const rem=p!==G.ctrl, ri=G.rin||{}, inp=rem?{x:+ri.x||0,y:+ri.y||0}:gInput(), sprint=rem?!!ri.s:(G.keys[' ']||G.sprintBtn); sp*=sprint?1.22:1; if(b.owner===p) sp*=.9-(1-p.dri/100)*.15;
       p.vx+=(inp.x*sp-p.vx)*Math.min(1,dt*9); p.vy+=(inp.y*sp-p.vy)*Math.min(1,dt*9) }
     else { [tx,ty,sp]=gAI(p,dt,sp); const dx=tx-p.x, dy=ty-p.y, l=Math.hypot(dx,dy); const want=Math.min(sp,l*2.2); const wx=l>.05?dx/l*want:0, wy=l>.05?dy/l*want:0;
       p.vx+=(wx-p.vx)*Math.min(1,dt*5); p.vy+=(wy-p.vy)*Math.min(1,dt*5) }
@@ -6275,14 +6413,14 @@ function gUpdate(dt){
         if(Math.random()<p){ if(sp<27&&Math.random()<.6){ b.owner=gk; b.last=gk; b.vx=b.vy=0; gMsg('GEHALTEN!',1); gk.cool=.9; if(keeperTeam===1) sfx.uuh(); } else { b.vx=-b.vx*.35+(Math.random()*2-1)*3; b.vy=(Math.random()<.5?-1:1)*rnd(4,9); b.last=gk; gMsg('PARADE!',1); sfx.uuh() } b.shot=null } } }
     // Ballannahme
     if(!b.owner&&b.z<1.2){ let best=null,bd=1.25; G.P.forEach(p=>{ if(p.cool>0&&p!==b.passTo) return; const d=dist(p,b), reach=p.gk?1.9:1.25; if(d<reach&&d<bd+.3){ const sp=Math.hypot(b.vx,b.vy); if(sp>23&&!p.gk&&Math.random()<.6) return; if(!best||d<bd){ best=p; bd=d } } });
-      if(best){ b.owner=best; b.last=best; b.passTo=null; b.shot=null; if(best.team===0) G.ctrl=best } } }
+      if(best){ b.owner=best; b.last=best; b.passTo=null; b.shot=null; if(best.team===0) G.ctrl=best; else if(G.duel) G.ctrl1=best } } }
   // Zweikämpfe der KI
-  if(b.owner){ const o=b.owner; G.P.forEach(p=>{ if(p.team===o.team||p===G.ctrl||p.cool>0||p.gk) return; if(dist(p,o)<1.6){ const base=p.team===1?.9*G.diff:.35; const rate=base*Math.pow(p.def/Math.max(30,o.dri+(o.type==='Dribbler'?6:0)),2)*(p.type==='Kante'?1.25:1); p.cool=.25; if(Math.random()<rate*.25){ b.owner=p; b.last=p; o.cool=.7; if(p.team===1&&o.team===0) gMsg('BALL VERLOREN',.7) } } }) }
+  if(b.owner){ const o=b.owner; G.P.forEach(p=>{ if(p.team===o.team||p===G.ctrl||(G.duel&&p===G.ctrl1)||p.cool>0||p.gk) return; if(dist(p,o)<1.6){ const base=G.duel?.5:p.team===1?.9*G.diff:.35; const rate=base*Math.pow(p.def/Math.max(30,o.dri+(o.type==='Dribbler'?6:0)),2)*(p.type==='Kante'?1.25:1); p.cool=.25; if(Math.random()<rate*.25){ b.owner=p; b.last=p; o.cool=.7; if(p.team===1&&o.team===0&&!G.duel) gMsg('BALL VERLOREN',.7) } } }) }
   // Tor oder Aus
   if(b.x<0||b.x>FL){ const inGoal=Math.abs(b.y-FW/2)<GW_M/2&&b.z<2.44;
-    if(inGoal){ const team=b.x>FL?0:1; G.score[team]++; const sc=b.last&&b.last.team===team?b.last:null; if(team===0&&sc) G.scorers.push(sc.name);
+    if(inGoal){ const team=b.x>FL?0:1; G.score[team]++; const sc=b.last&&b.last.team===team?b.last:null; if(team===0&&sc) G.scorers.push(sc.name); if(G.duel&&sc) G.sc2[team].push(sc.name);
       document.getElementById('gsc').textContent=`${G.score[0]}:${G.score[1]}`; G.phase='goal'; G.pause=2.6; G.kickTeam=1-team;
-      gMsg(team===0?`TOR! ${sc?sc.name:''}`:`Gegentor${sc?' · '+sc.name:''}`,2.4); team===0?sfx.cheer(true):sfx.groan(); b.owner=null; b.vx*=.2; b.vy*=.2; return }
+      if(G.duel) gMsg(`TOR! ${sc?sc.name:''}`,2.4); else gMsg(team===0?`TOR! ${sc?sc.name:''}`:`Gegentor${sc?' · '+sc.name:''}`,2.4); team===0?sfx.cheer(true):sfx.groan(); b.owner=null; b.vx*=.2; b.vy*=.2; return }
     const atk=b.x>FL?0:1, lastAtk=b.last&&b.last.team===atk;
     if(lastAtk){ const gk=G.P.find(p=>p.team===1-atk&&p.gk); gk.x=atk===0?FL-5.5:5.5; gk.y=FW/2; b.owner=gk; b.last=gk; gk.cool=.8; gMsg('ABSTOSS',.9) }
     else { const cy=b.y<FW/2?.5:FW-.5, cx=atk===0?FL-.5:.5; const tk=G.P.filter(p=>p.team===atk&&!p.gk).sort((a,c)=>Math.hypot(a.x-cx,a.y-cy)-Math.hypot(c.x-cx,c.y-cy))[0]; tk.x=cx; tk.y=cy; b.owner=tk; b.last=tk; tk.cool=.4; gMsg('ECKE',.9) }
@@ -6298,7 +6436,7 @@ function gAI(p,dt,sp){
     if(b.owner===p){ p.hold=(p.hold||0)+dt; if(p.hold>1.2&&p.cool<=0){ p.hold=0; const t=G.P.filter(o=>o.team===p.team&&!o.gk).sort((a,c)=>dist(a,p)-dist(c,p))[Math.floor(Math.random()*3)]; gPass(p,{x:att,y:0},t) } }
     return [tx,b.owner===p?p.y:ty,sp] }
   if(!b.owner&&b.passTo===p) return [b.x+b.vx*.25,b.y+b.vy*.25,sp];
-  if(!b.owner&&!b.shot){ const mates=G.P.filter(o=>o.team===p.team&&!o.gk&&o!==G.ctrl).sort((a,c)=>dist(a,b)-dist(c,b)); if(mates[0]===p&&dist(p,b)<14) return [b.x,b.y,sp] }
+  if(!b.owner&&!b.shot){ const mates=G.P.filter(o=>o.team===p.team&&!o.gk&&o!==G.ctrl&&o!==G.ctrl1).sort((a,c)=>dist(a,b)-dist(c,b)); if(mates[0]===p&&dist(p,b)<14) return [b.x,b.y,sp] }
   // Ballführer der Gegner (und der eigene, falls der Spieler gerade nicht steuert)
   if(b.owner===p){ p.dec=(p.dec||0)-dt; const gx=p.team===0?FL:0, dg=Math.hypot(gx-p.x,FW/2-p.y);
     const near=G.P.filter(o=>o.team!==p.team).reduce((m,o)=>Math.min(m,dist(o,p)),99);
@@ -6312,7 +6450,7 @@ function gAI(p,dt,sp){
     const blocked=G.P.some(o=>o.team!==p.team&&(o.x-p.x)*att>0&&(o.x-p.x)*att<7&&Math.abs(o.y-p.y)<3);
     return [p.x+att*8,ty,sp*(blocked?.85:1)] }
   // Ohne Ball: Pressing und Formation
-  if(!mine){ const chasers=G.P.filter(o=>o.team===p.team&&!o.gk&&o!==G.ctrl).sort((a,c)=>dist(a,b)-dist(c,b)), n=p.team===1?2:1;
+  if(!mine){ const chasers=G.P.filter(o=>o.team===p.team&&!o.gk&&o!==G.ctrl&&o!==G.ctrl1).sort((a,c)=>dist(a,b)-dist(c,b)), n=G.duel?1:p.team===1?2:1;
     if(chasers.indexOf(p)>-1&&chasers.indexOf(p)<n){ const lead=chasers.indexOf(p)===0?0:.6; return [b.x+(b.vx||0)*lead-att*.8*chasers.indexOf(p),b.y+(b.vy||0)*lead,sp*(p.team===1?Math.min(1.08,G.diff):1)] } }
   const shift=(b.x-FL/2)*.55+(mine?att*9:-att*3);
   let tx=p.hx+shift, ty=p.hy+(b.y-FW/2)*.3;
@@ -6322,7 +6460,11 @@ function gAI(p,dt,sp){
 }
 function gTxt(c,t,x,y){ if(G.rot){ c.save(); c.translate(x,y); c.rotate(Math.PI/2); c.fillText(t,0,0); c.restore() } else c.fillText(t,x,y) }
 function gDraw(){
-  const c=G.ctx, s=G.s, X=x=>(x+2)*s, Y=y=>(y+2)*s, W=109*s, H=72*s;
+  const c=G.ctx, s=G.s, mr=!!G.mirror, W=109*s, H=72*s, MY=G.me||0; let X=x=>(x+2)*s, Y=y=>(y+2)*s;
+  c.fillStyle='#164f2c'; c.fillRect(0,0,W,H); c.save();
+  if(G.cam==='near'){ const z=G.rot?1.55:1.85, b=G.ball; G.camT=G.camT||{z,fx:b.x,fy:b.y}; const cm=G.camT; cm.z=z;
+    const hw=54.5/z, hh=36/z; const bx0=mr?FL-b.x:b.x, by0=mr?FW-b.y:b.y; cm.fx+=(Math.max(hw-2,Math.min(107-hw,bx0))-cm.fx)*.12; cm.fy+=(Math.max(hh-2,Math.min(70-hh,by0))-cm.fy)*.12;
+    c.translate(W/2,H/2); c.scale(z,z); c.translate(-(cm.fx+2)*s,-(cm.fy+2)*s) } else G.camT=null;
   c.fillStyle='#1d6b3a'; c.fillRect(0,0,W,H);
   for(let i=0;i<12;i++){ if(i%2) { c.fillStyle='rgba(255,255,255,.035)'; c.fillRect(X(i*FL/12),Y(0),FL/12*s,FW*s) } }
   c.strokeStyle='rgba(255,255,255,.75)'; c.lineWidth=Math.max(1.5,s*.15);
@@ -6332,13 +6474,14 @@ function gDraw(){
     const gx0=d>0?X(gx)-2*s:X(gx), gy0=Y(FW/2-GW_M/2); c.save(); c.fillStyle='rgba(255,255,255,.18)'; c.fillRect(gx0,gy0,2*s,GW_M*s);
     c.strokeStyle='rgba(255,255,255,.35)'; c.lineWidth=1; for(let k=1;k<6;k++){ c.beginPath(); c.moveTo(gx0,gy0+GW_M*s*k/6); c.lineTo(gx0+2*s,gy0+GW_M*s*k/6); c.stroke() }
     c.strokeStyle='#ffffff'; c.lineWidth=Math.max(2.5,s*.3); c.strokeRect(gx0,gy0,2*s,GW_M*s); c.restore() });
-  // Spieler
+  // Spieler (beim Gast gespiegelt; das Feld selbst ist symmetrisch)
+  if(mr){ X=x=>(FL-x+2)*s; Y=y=>(FW-y+2)*s }
   const oc=G.oppC;
   G.P.forEach(p=>{ const r=Math.max(G.rot?8:5,s*1.05), x=X(p.x), y=Y(p.y);
     c.fillStyle='rgba(0,0,0,.3)'; c.beginPath(); c.ellipse(x+1,y+r*.8,r,r*.45,0,0,7); c.fill();
-    c.fillStyle=p.team===0?(p.gk?'#ff8c2a':'#ffd23f'):(p.gk?'#3fd06a':oc.c1); c.beginPath(); c.arc(x,y,r,0,7); c.fill();
-    c.lineWidth=2; c.strokeStyle=p.team===0?'#3a2600':oc.c2; c.stroke();
-    c.fillStyle=p.team===0?'#3a2600':inkOn(oc.c1); c.font=`800 ${Math.round(r*1.05)}px Arial`; c.textAlign='center'; c.textBaseline='middle'; gTxt(c,p.num>99?'':String(p.num),x,y+.5);
+    const mine=p.team===MY; c.fillStyle=mine?(p.gk?'#ff8c2a':'#ffd23f'):(p.gk?'#3fd06a':oc.c1); c.beginPath(); c.arc(x,y,r,0,7); c.fill();
+    c.lineWidth=2; c.strokeStyle=mine?'#3a2600':oc.c2; c.stroke();
+    c.fillStyle=mine?'#3a2600':inkOn(oc.c1); c.font=`800 ${Math.round(r*1.05)}px Arial`; c.textAlign='center'; c.textBaseline='middle'; gTxt(c,p.num>99?'':String(p.num),x,y+.5);
     if(p===G.ctrl){ c.strokeStyle='#ffffff'; c.lineWidth=3; c.beginPath(); c.arc(x,y,r+4,0,7); c.stroke(); c.fillStyle='#fff'; c.beginPath(); c.moveTo(x,y-r-6); c.lineTo(x-5,y-r-13); c.lineTo(x+5,y-r-13); c.fill();
       c.font=`700 ${Math.max(10,Math.round(s*1.3))}px Arial`; if(G.rot) gTxt(c,p.name,x+r+16,y); else c.fillText(p.name,x,y-r-20);
       if(!G.touch&&G.mouse&&G.ball.owner===p){ c.save(); c.setLineDash([6,6]); c.strokeStyle='rgba(255,255,255,.55)'; c.lineWidth=2; c.beginPath(); c.moveTo(x,y); c.lineTo(X(G.mouse.x),Y(G.mouse.y)); c.stroke(); c.restore() }
@@ -6346,13 +6489,183 @@ function gDraw(){
   const b=G.ball, bx=X(b.x), by=Y(b.y), br=Math.max(3.5,s*.55);
   c.fillStyle='rgba(0,0,0,.35)'; c.beginPath(); c.ellipse(bx+b.z*s*.3,by+b.z*s*.2+br*.6,br,br*.5,0,0,7); c.fill();
   c.fillStyle='#fff'; c.beginPath(); c.arc(bx,by-b.z*s*.6,br*(1+b.z*.06),0,7); c.fill(); c.strokeStyle='#222'; c.lineWidth=1; c.stroke();
+  c.restore();
   const mn=Math.min(90,Math.floor(G.t/G.dur*90)), ce=document.getElementById('gclk'); if(ce) ce.textContent=mn+"'";
 }
 function gEnd(quit){
-  if(!G) return; const g=quit?0:G.score[0], a=quit?Math.max(3,G.score[1]):G.score[1], opp=G.opp, scorers=quit?[]:G.scorers;
+  if(!G) return; if(G.duel){ if(G.duel.role==='host') duelHostFinish(); return } const rmul=G.rmul||1, g=quit?0:G.score[0], a=quit?Math.max(3,G.score[1]):G.score[1], opp=G.opp, scorers=quit?[]:G.scorers;
   window.removeEventListener('resize',gSize); window.removeEventListener('keydown',gKey); window.removeEventListener('keyup',gKey); window.removeEventListener('mouseup',gMouseUp);
-  const ov=document.getElementById('gov'); if(ov) ov.remove(); document.body.style.overflow=''; G=null; sfx.whistle(3); sfx.crowdStop();
-  usApply(opp,g,a,scorers,true);
+  G.ended=true; const ov=document.getElementById('gov'); if(ov) ov.remove(); document.body.style.overflow=''; G=null; sfx.whistle(3); sfx.crowdStop();
+  usApply(opp,g,a,scorers,true,rmul);
+}
+
+function gAutoCtrl(t){
+  const b=G.ball, own=gOwnerTeam(), C=t?'ctrl1':'ctrl', SR=t?'switchReq1':'switchReq', MT=t?'manualT1':'manualT';
+  const manual=G[MT]&&performance.now()-G[MT]<1500;
+  if(own===t){ G[C]=b.owner; return }
+  if(manual&&!G[SR]) return;
+  const near=G.P.filter(p=>p.team===t&&!p.gk).sort((a,c)=>dist(a,b)-dist(c,b))[0], cur=G[C];
+  if(!cur||cur.gk||G[SR]||(dist(cur,b)>dist(near,b)+6&&!(b.passTo&&b.passTo===cur))){ G[C]=near; G[SR]=false }
+}
+
+/* ===================================================================
+   ULTIMATE SQUAD – ONLINE 1 GEGEN 1
+   Host rechnet das Spiel, der Gast schickt seine Eingaben und sieht den Spielstand gespiegelt.
+   Firebase: duels/{code}/meta · team/{host|guest} · st · in · acts · res · gone
+   =================================================================== */
+const DUEL_WIN=400, DUEL_STREAK=700;
+let DU={code:null,role:null,meta:null,busy:'',err:''}, duelOff=[];
+const dref=(code,path)=>fb.ref('duels/'+code+(path?'/'+path:''));
+function duelTeam(){ const slots=FORMATIONS[US.form], ch=usChem(), bonus=ch.total/33*4;
+  return {name:US.name, form:US.form, xi:US.xi.map((k,i)=>{ const c=usCard(k); return {k, r:Math.round(c.r*fit(c,slots[i][0])+bonus)} })} }
+function duelUnlisten(){ duelOff.forEach(f=>{ try{ f() }catch(e){} }); duelOff=[] }
+function duelOn(ref,ev,fn){ ref.on(ev,fn); duelOff.push(()=>ref.off(ev,fn)) }
+function duelFail(e){ DU.busy=''; DU.err=(e&&(e.message==='timeout'||e.message==='load'))?'Keine Verbindung zum Online-Speicher.':(e&&/permission/i.test(e.message||e.code||''))?'Keine Berechtigung. In Firebase fehlt noch die Regel für "duels".':(typeof e==='string'?e:'Da ist etwas schiefgelaufen: '+(e&&e.message||e)); render() }
+function duelReady(){ if(!usUser){ DU.err='Online 1v1 geht nur mit Konto.'; render(); return false } if(US.xi.some(k=>!k)){ DU.err='Stell zuerst 11 Spieler auf.'; render(); return false } return true }
+async function duelCreate(){
+  if(!duelReady()) return; DU.busy='Duell wird erstellt...'; DU.err=''; render();
+  try{ await fbInit(); const code=genCode();
+    await dref(code).set({meta:{host:{uid:usUser.uid,name:US.name},status:'wait',created:Date.now()},team:{host:duelTeam()}});
+    dref(code).onDisconnect().remove();
+    DU={code,role:'host',meta:null,busy:'',err:''}; duelWatch();
+  }catch(e){ duelFail(e) }
+}
+async function duelJoin(code){
+  if(!duelReady()) return; code=(code||'').toUpperCase().replace(/[^A-Z0-9]/g,'');
+  if(code.length!==5){ DU.err='Der Code hat 5 Zeichen.'; render(); return }
+  DU.busy='Duell wird gesucht...'; DU.err=''; render();
+  try{ await fbInit(); const m=(await dref(code,'meta').get()).val();
+    if(!m){ DU.busy=''; DU.err='Kein Duell mit diesem Code gefunden.'; render(); return }
+    if(m.host.uid===usUser.uid){ DU.busy=''; DU.err='Das ist dein eigenes Duell. Dein Gegner muss den Code eingeben.'; render(); return }
+    if(m.status!=='wait'||(m.guest&&m.guest.uid!==usUser.uid)){ DU.busy=''; DU.err='Dieses Duell ist schon voll.'; render(); return }
+    await dref(code,'team/guest').set(duelTeam()); await dref(code,'meta/guest').set({uid:usUser.uid,name:US.name});
+    dref(code,'meta/guest').onDisconnect().remove();
+    DU={code,role:'guest',meta:null,busy:'',err:''}; duelWatch();
+  }catch(e){ duelFail(e) }
+}
+function duelWatch(){
+  duelUnlisten();
+  duelOn(dref(DU.code,'meta'),'value',sn=>{ const m=sn.val();
+    if(!m){ if(!G){ const was=DU.code; duelUnlisten(); DU={code:null,role:null,meta:null,busy:'',err:was?'Das Duell wurde beendet.':''}; if(mode==='us') render() } return }
+    const prev=DU.meta; DU.meta=m;
+    if(m.status==='play'&&!G&&(!prev||prev.status!=='play')){ duelStartMatch(); return }
+    if(!G&&mode==='us'&&usView==='duel') render();
+    if(DU.role==='host'&&m.guest&&!(prev&&prev.guest)) sfx.coin&&sfx.coin();
+  });
+}
+async function duelKick(){ if(DU.role!=='host'||!DU.meta||!DU.meta.guest) return; try{ await dref(DU.code,'meta/status').set('play') }catch(e){ duelFail(e) } }
+async function duelLeave(){
+  const code=DU.code, role=DU.role; duelUnlisten(); DU={code:null,role:null,meta:null,busy:'',err:''}; render();
+  if(!code||!fb) return;
+  try{ if(role==='host') await dref(code).remove(); else { await dref(code,'meta/guest').remove(); await dref(code,'team/guest').remove() } }catch(e){}
+}
+async function duelStartMatch(){
+  if(mode!=='us'||G) return;
+  const code=DU.code, role=DU.role, m=DU.meta;
+  let th, tg; try{ th=(await dref(code,'team/host').get()).val(); tg=(await dref(code,'team/guest').get()).val() }catch(e){ duelFail(e); return }
+  if(!th||!tg){ duelFail('Die Teams konnten nicht geladen werden.'); return }
+  const mk=(team,T2)=>{ const sl=FORMATIONS[T2.form]||FORMATIONS['4-3-3']; return T2.xi.map((x,i)=>{ const c=usCard(x.k)||{id:'x'+i,full:'Spieler',n:'Spieler',pos:sl[i][0],r:x.r,club:''}; return gPlayer(team,{...c,r:+x.r||c.r},sl[i],i) }) };
+  const O=usOpt(); sndVol();
+  const isG=role==='guest', meName=isG?tg.name:th.name, oppName=isG?th.name:tg.name, oppUid=isG?m.host.uid:(m.guest&&m.guest.uid);
+  G={opp:{name:oppName,club:''},P:mk(0,th).concat(mk(1,tg)),ball:{x:FL/2,y:FW/2,vx:0,vy:0,z:0,vz:0,owner:null,last:null,shot:null},score:[0,0],t:0,dur:4*60,rmul:1,
+     cam:O.cam==='auto'?(('ontouchstart' in window)||(window.matchMedia&&matchMedia('(pointer:coarse)').matches)?'near':'full'):O.cam,swap:O.swapMouse,half:false,
+     ctrl:null,ctrl1:null,keys:{},joy:{x:0,y:0},charge:-1,phase:'kick',pause:1.6,scorers:[],sc2:[[],[]],diff:1,msg:'',msgT:0,kickTeam:0,ended:false,last:performance.now(),
+     oppC:{c1:'#2f7bf0',c2:'#0b2a66'},duel:{code,role,oppUid,oppName,sent:0,inT:0,lastIn:'',mq:0,score:'0,0',ph:'kick',done:false},me:isG?1:0,mirror:isG,rin:{x:0,y:0,s:0}};
+  gKickoff(0); G.phase='kick'; G.pause=1.6;
+  try{ dref(code).onDisconnect().cancel(); dref(code,'meta/guest').onDisconnect().cancel(); dref(code,'gone/'+role).onDisconnect().set(true) }catch(e){}
+  if(isG){ G.ctrl=null;
+    duelOn(dref(code,'st'),'value',sn=>{ const v=sn.val(); if(v&&G&&G.duel) duelGuestState(v) }) }
+  else { duelOn(dref(code,'in'),'value',sn=>{ const v=sn.val(); if(G&&v) G.rin=v });
+    duelOn(dref(code,'acts'),'child_added',sn=>{ const v=sn.val(); if(G&&v&&v.a) gAction(v.a,false,1,v) }) }
+  duelOn(dref(code,'res'),'value',sn=>{ const v=sn.val(); if(v) duelResult(v) });
+  duelOn(dref(code,'gone'),'value',sn=>{ const v=sn.val()||{}; const other=isG?'host':'guest'; if(v[other]&&G&&G.duel&&!G.duel.done) duelResult({quit:other,s:G.score.join(',')}) });
+  gStartUI(meName,oppName,G.oppC.c1);
+}
+// Host: Spielstand ca. 20x pro Sekunde senden
+function duelHostSend(now){
+  const D=G.duel; if(D.done||now-D.sent<50) return; D.sent=now; const b=G.ball, P=G.P;
+  const st={p:P.map(p=>p.x.toFixed(1)+','+p.y.toFixed(1)).join(';'), b:[b.x.toFixed(2),b.y.toFixed(2),b.z.toFixed(2),b.owner?P.indexOf(b.owner):-1].join(','),
+    c:G.ctrl1?P.indexOf(G.ctrl1):-1, s:G.score.join(','), t:Math.round(G.t*10)/10, ph:G.phase, mq:G.msgSeq||0, mt:G.msg||''};
+  dref(D.code,'st').set(st).catch(()=>{});
+}
+// Gast: neuen Stand übernehmen
+function duelGuestState(v){
+  const D=G.duel; G.tgt=v; G.t=+v.t||0;
+  if(v.s!==D.score){ const a=D.score.split(',').map(Number), n=v.s.split(',').map(Number); G.score=n;
+    const el=document.getElementById('gsc'); if(el) el.textContent=`${n[1]}:${n[0]}`;
+    if(n[1]>a[1]) sfx.cheer(true); else if(n[0]>a[0]) sfx.groan(); D.score=v.s }
+  if(v.ph!==D.ph){ if(v.ph==='half') sfx.whistle(2); if(D.ph==='half'&&v.ph!=='half'){ sfx.whistle(1); if(SND.crowd) SND.crowd.chant('ole') } D.ph=v.ph; G.phase=v.ph }
+  if(v.mq!==D.mq){ D.mq=v.mq; if(v.mt) gMsg(v.mt,1.4) }
+  G.ctrl=v.c>=0?G.P[v.c]:null;
+}
+function duelGuestTick(dt){
+  const v=G.tgt, D=G.duel;
+  if(G.msgT>0){ G.msgT-=dt; if(G.msgT<=0){ const el=document.getElementById('gmsg'); if(el) el.classList.remove('on') } }
+  if(G.charge>=0) G.charge+=dt;
+  if(v){ const ps=v.p.split(';'), k=Math.min(1,dt*14);
+    G.P.forEach((p,i)=>{ const q=(ps[i]||'').split(','), tx=+q[0], ty=+q[1]; if(isNaN(tx)) return; const d=Math.hypot(tx-p.x,ty-p.y);
+      if(d>8){ p.x=tx; p.y=ty } else { p.vx=(tx-p.x)*k/dt; p.vy=(ty-p.y)*k/dt; p.x+=(tx-p.x)*k; p.y+=(ty-p.y)*k } });
+    const bb=v.b.split(',').map(Number), b=G.ball, kb=Math.min(1,dt*18);
+    if(Math.hypot(bb[0]-b.x,bb[1]-b.y)>10){ b.x=bb[0]; b.y=bb[1] } else { b.x+=(bb[0]-b.x)*kb; b.y+=(bb[1]-b.y)*kb } b.z+=(bb[2]-b.z)*kb; b.owner=bb[3]>=0?G.P[bb[3]]:null }
+  // Eingaben an den Host
+  const now=performance.now(); if(now-D.inT>66){ const inp=gInput(), spr=(G.keys[' ']||G.sprintBtn)?1:0, key=inp.x.toFixed(2)+','+inp.y.toFixed(2)+','+spr;
+    if(key!==D.lastIn||now-D.inT>1000){ D.lastIn=key; D.inT=now; dref(D.code,'in').set({x:+inp.x.toFixed(2),y:+inp.y.toFixed(2),s:spr}).catch(()=>{}) } }
+}
+function duelGuestAct(a,mouse){
+  if(!G||G.paused) return; const D=G.duel;
+  if(a==='chargeStart'){ if(G.ball.owner&&G.ball.owner===G.ctrl) G.charge=0; return }
+  const m={a};
+  if(a==='pass'||a==='shoot'){ const me=G.ctrl||G.ball; const aim=gAim(me,mouse); m.aim={x:+(aim.x||0).toFixed(3),y:+(aim.y||0).toFixed(3)}; if(aim.pt) m.aim.pt={x:+aim.pt.x.toFixed(2),y:+aim.pt.y.toFixed(2)} }
+  if(a==='shoot'){ if(G.charge<0) return; m.pw=+Math.min(1,G.charge/.9).toFixed(2); G.charge=-1 }
+  dref(D.code,'acts').push(m).catch(()=>{});
+}
+function duelHostFinish(){ const D=G.duel; if(D.done||D.fin) return; D.fin=true; G.phase='over'; duelHostSend(1e12); dref(D.code,'res').set({s:G.score.join(','),end:1,sh:G.sc2[0],sg:G.sc2[1]}).catch(()=>duelResult({s:G.score.join(','),end:1})) }
+function duelQuit(){ if(!G||!G.duel) return; const D=G.duel; dref(D.code,'res').set({quit:D.role,s:G.score.join(',')}).catch(()=>duelResult({quit:D.role,s:G.score.join(',')})) }
+function duelResult(res){
+  if(!G||!G.duel||G.duel.done) return; const D=G.duel; D.done=true;
+  const sc=String(res.s||'0,0').split(',').map(Number), isG=D.role==='guest';
+  let g=isG?sc[1]:sc[0], a=isG?sc[0]:sc[1], note='';
+  if(res.quit){ if(res.quit===D.role){ g=0; a=Math.max(3,a) } else { g=Math.max(3,g); a=0; note=`${D.oppName} hat das Duell verlassen.` } }
+  const scorers=res.quit?[]:((isG?res.sg:res.sh)||[]);
+  duelUnlisten();
+  window.removeEventListener('resize',gSize); window.removeEventListener('keydown',gKey); window.removeEventListener('keyup',gKey); window.removeEventListener('mouseup',gMouseUp);
+  G.ended=true; const ov=document.getElementById('gov'); if(ov) ov.remove(); document.body.style.overflow=''; G=null; sfx.whistle(3); sfx.crowdStop();
+  try{ dref(D.code,'gone/'+D.role).onDisconnect().cancel() }catch(e){}
+  if(D.role==='host') setTimeout(()=>{ dref(D.code).remove().catch(()=>{}) },8000);
+  DU={code:null,role:null,meta:null,busy:'',err:''};
+  duelApply(D,g,a,scorers,note);
+}
+function duelApply(D,g,a,scorers,note){
+  const o=g>a?'W':g<a?'L':'D'; US.duel=US.duel||{w:0,d:0,l:0}; US.duelStreak=US.duelStreak||{};
+  const key=D.oppUid||D.oppName; let reward=0, msg;
+  if(o==='W'){ const n=(US.duelStreak[key]||0)+1; US.duelStreak[key]=n; reward=n>=2?DUEL_STREAK:DUEL_WIN; US.duel.w++;
+    msg=n>=2?`${n} Siege in Folge gegen ${D.oppName}!`:`Noch ein Sieg gegen ${D.oppName}, dann gibt es ${DUEL_STREAK} Krypto.` }
+  else { US.duelStreak[key]=0; US.duel[o==='D'?'d':'l']++; msg=o==='D'?`Unentschieden: keine Krypto. Deine Siegesserie gegen ${D.oppName} ist vorbei.`:'Niederlage: keine Krypto.' }
+  US.krypto+=reward; US.stats.games++; if(o==='W') US.stats.w++; US.stats.goals+=g;
+  usSave(); usView='duel'; render();
+  usShowResult({opp:{name:D.oppName,club:''},g,a,o,scorers,reward,seasonMsg:(note?note+' ':'')+msg,duel:true});
+}
+function usDuelView(){
+  if(!usUser) return `<section class="box"><div class="boxhead"><h2>Online 1 gegen 1</h2></div><p>Online-Duelle gehen nur mit Konto, damit klar ist, wer gegen wen spielt.</p><div class="row"><button class="btn main" data-us="login">Anmelden oder Konto erstellen</button></div></section>`;
+  const st=US.duel||{w:0,d:0,l:0}, m=DU.meta;
+  const info=`<section class="box"><div class="boxhead"><h2>Belohnung</h2></div>
+    <div class="duelrw"><div><b>${kTxt(DUEL_WIN)}</b><span>pro Sieg</span></div><div><b>${kTxt(DUEL_STREAK)}</b><span>ab 2 Siegen in Folge gegen denselben Gegner</span></div></div>
+    <p class="hint">Unentschieden und Niederlage bringen nichts und beenden die Serie. Wer aufgibt oder rausgeht, verliert 0:3. Spielzeit: 4 Minuten, keine Pause.</p>
+    <p class="muted small">Deine Duelle: ${st.w} Siege · ${st.d} Unentschieden · ${st.l} Niederlagen</p></section>`;
+  let main;
+  if(DU.code){ const host=m&&m.host, guest=m&&m.guest;
+    main=`<section class="box next"><div class="boxhead"><h2>Duell</h2><span class="label">${DU.role==='host'?'Du bist Gastgeber':'Du bist Gast'}</span></div>
+      <div class="duelcode"><span class="muted small">Code</span><b class="num">${DU.code}</b></div>
+      <div class="duelvs"><div class="duelp"><span class="gdot" style="background:#ffd23f"></span>${esc(host?host.name:'...')}</div><b>gegen</b><div class="duelp">${guest?`<span class="gdot" style="background:#2f7bf0"></span>${esc(guest.name)}`:'<span class="muted">wartet auf Gegner...</span>'}</div></div>
+      ${DU.role==='host'?(guest?`<div class="row"><button class="btn main" data-us="duelstart">⚽ Anpfiff</button><button class="btn" data-us="duelleave">Abbrechen</button></div>`:`<p class="hint">Gib deinem Gegner diesen Code. Er öffnet Ultimate Squad, geht auf „Online 1v1“ und tippt den Code ein.</p><div class="row"><button class="btn" data-us="duelleave">Abbrechen</button></div>`)
+        :`<p class="hint">Warte, bis ${esc(host?host.name:'der Gastgeber')} anpfeift.</p><div class="row"><button class="btn" data-us="duelleave">Verlassen</button></div>`}</section>`;
+  } else {
+    main=`<section class="box next"><div class="boxhead"><h2>Online 1 gegen 1</h2></div>
+      <p style="margin:0 0 12px">Spiel live gegen einen Freund mit deiner eigenen Elf. Einer erstellt das Duell, der andere gibt den Code ein.</p>
+      <div class="row"><button class="btn main" data-us="duelcreate" ${DU.busy?'disabled':''}>Duell erstellen</button></div>
+      <div class="row" style="margin-top:12px"><input id="duelcode" class="codein" maxlength="5" placeholder="CODE" autocomplete="off" autocapitalize="characters"><button class="btn" data-us="dueljoin" ${DU.busy?'disabled':''}>Beitreten</button></div></section>`;
+  }
+  return `<div class="grid g2"><div>${main}${DU.busy?`<p class="hint">${esc(DU.busy)}</p>`:''}${DU.err?`<p class="down" style="font-weight:600">${esc(DU.err)}</p>`:''}</div>${info}</div>`;
 }
 
 /* ===================== START ===================== */
